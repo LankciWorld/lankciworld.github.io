@@ -5,55 +5,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LankciWorld | Офіційний сайт</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background-color: #0d0d0d; color: #f0f0f0; margin: 0; scroll-behavior: smooth; }
-        header { background: linear-gradient(135deg, #7e22ce, #1a1a1a); padding: 70px 20px; text-align: center; border-bottom: 3px solid #ff0055; }
-        h1 { font-size: 60px; margin: 0; letter-spacing: 3px; color: #fff; text-shadow: 0 0 15px #ff0055; }
+        /* ОСНОВНІ СТИЛІ */
+        body { font-family: 'Segoe UI', sans-serif; background-color: #0d0d0d; color: #f0f0f0; margin: 0; scroll-behavior: smooth; overflow-x: hidden; }
+        header { background: linear-gradient(135deg, #7e22ce, #1a1a1a); padding: 50px 20px; text-align: center; border-bottom: 3px solid #ff0055; }
+        h1 { font-size: clamp(30px, 8vw, 60px); margin: 0; letter-spacing: 3px; color: #fff; text-shadow: 0 0 15px #ff0055; }
         
-        nav { background: #161616; position: sticky; top: 0; display: flex; justify-content: center; padding: 15px; z-index: 1000; border-bottom: 1px solid #333; align-items: center; }
-        nav a { color: #bbb; text-decoration: none; margin: 0 15px; font-weight: bold; text-transform: uppercase; transition: 0.3s; cursor: pointer; }
+        /* НАВІГАЦІЯ */
+        nav { background: #161616; position: sticky; top: 0; display: flex; flex-wrap: wrap; justify-content: center; padding: 10px; z-index: 1000; border-bottom: 1px solid #333; gap: 10px; }
+        nav a { color: #bbb; text-decoration: none; font-weight: bold; text-transform: uppercase; transition: 0.3s; cursor: pointer; font-size: 14px; padding: 5px 10px; }
         nav a:hover { color: #ff0055; }
 
-        .lang-switch { margin-left: 30px; display: flex; gap: 10px; }
-        .lang-btn { background: #333; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 12px; }
+        .lang-switch { display: flex; gap: 5px; align-items: center; }
+        .lang-btn { background: #333; color: white; border: none; padding: 5px 8px; border-radius: 5px; cursor: pointer; font-size: 11px; }
         .lang-btn.active { background: #ff0055; }
 
-        .container { max-width: 1200px; margin: 30px auto; padding: 20px; }
-        section { background: #111; padding: 40px; border-radius: 20px; margin-bottom: 50px; border: 1px solid #222; }
-        h2 { color: #ff0055; text-align: center; font-size: 36px; margin-bottom: 30px; }
+        /* КОНТЕЙНЕР */
+        .container { max-width: 1100px; margin: 20px auto; padding: 15px; }
+        section { background: #111; padding: clamp(20px, 5vw, 40px); border-radius: 20px; margin-bottom: 40px; border: 1px solid #222; }
+        h2 { color: #ff0055; text-align: center; font-size: clamp(24px, 6vw, 36px); margin-bottom: 30px; }
 
-        .donate-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
-        .card { background: #1a1a1a; border: 2px solid #333; padding: 30px; border-radius: 15px; text-align: center; transition: 0.4s; display: flex; flex-direction: column; align-items: center; }
-        .card:hover { transform: translateY(-10px); box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+        /* СІТКА ДОНАТУ */
+        .donate-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .card { background: #1a1a1a; border: 2px solid #333; padding: 25px; border-radius: 15px; text-align: center; transition: 0.4s; display: flex; flex-direction: column; align-items: center; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
         
+        /* КАРТИНКИ РАНГІВ */
         .rank-art {
-            width: 160px; 
+            width: 140px; 
             height: auto;
             margin-bottom: 15px;
+            image-rendering: pixelated; /* Щоб піксель-арт був чітким */
             transition: 0.3s;
-            /* Покращуємо відображення піксель-арту */
-            image-rendering: pixelated; 
         }
         .card:hover .rank-art { transform: scale(1.1); filter: brightness(1.2); }
 
+        /* ЕФЕКТИ ДЛЯ РАНГІВ */
         .sigma { border-color: #808080; }
         .tsc { border-color: #eab308; }
-        .tsc .rank-art { filter: drop-shadow(0 0 15px rgba(234, 179, 8, 0.6)); }
-        
+        .tsc .rank-art { filter: drop-shadow(0 0 10px rgba(234, 179, 8, 0.5)); }
         .dragon { border-color: #3b82f6; }
-        .dragon .rank-art { filter: drop-shadow(0 0 15px rgba(59, 130, 246, 0.6)); }
-        
+        .dragon .rank-art { filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.5)); }
         .chosen { border-color: #a855f7; }
-        .chosen .rank-art { filter: drop-shadow(0 0 15px rgba(168, 85, 247, 0.6)); }
-        
+        .chosen .rank-art { filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.5)); }
         .darklord { border-color: #ef4444; }
-        .darklord .rank-art { filter: drop-shadow(0 0 15px rgba(239, 68, 68, 0.6)); }
-        
+        .darklord .rank-art { filter: drop-shadow(0 0 10px rgba(239, 68, 68, 0.5)); }
         .hacker { border-color: #22c55e; background: linear-gradient(180deg, #1a1a1a 0%, #052e16 100%); }
-        .hacker .rank-art { filter: drop-shadow(0 0 15px rgba(34, 197, 94, 0.8)); }
+        .hacker .rank-art { filter: drop-shadow(0 0 10px rgba(34, 197, 94, 0.7)); }
 
-        .price { font-size: 28px; color: #22c55e; font-weight: bold; margin: 20px 0; display: block; }
-        .buy-btn { background: #ff0055; color: white; padding: 12px 25px; text-decoration: none; border-radius: 8px; font-weight: bold; display: inline-block; transition: 0.3s; }
-        .ip-box { background: #000; border: 2px dashed #ff0055; padding: 12px 25px; display: inline-block; margin-top: 25px; cursor: pointer; border-radius: 8px; font-weight: bold; }
+        .price { font-size: 24px; color: #22c55e; font-weight: bold; margin: 15px 0; display: block; }
+        .buy-btn { background: #ff0055; color: white; padding: 10px 20px; text-decoration: none; border-radius: 8px; font-weight: bold; width: 80%; transition: 0.3s; }
+        .buy-btn:hover { background: #cc0044; }
+
+        .ip-box { background: #000; border: 2px dashed #ff0055; padding: 10px 20px; display: inline-block; margin-top: 20px; cursor: pointer; border-radius: 8px; font-weight: bold; font-size: 14px; }
+
+        /* АДАПТИВНІСТЬ ДЛЯ ТЕЛЕФОНІВ */
+        @media (max-width: 600px) {
+            header { padding: 40px 10px; }
+            nav { padding: 5px; }
+            nav a { margin: 0 5px; font-size: 12px; }
+            section { padding: 20px 15px; }
+            .donate-grid { grid-template-columns: 1fr; } /* Картки в один стовпчик на смартфонах */
+            .card { padding: 20px; }
+        }
     </style>
 </head>
 <body>
@@ -77,16 +90,17 @@
 <div class="container">
     <section id="home">
         <h2 class="lang" data-ua="Вітаємо, Друже!" data-en="Welcome, friend!">Вітаємо, Друже!</h2>
-        <p style="text-align: center; font-size: 18px;" class="lang" 
-           data-ua="LankciWorld — це новий сервер унікальний функціонал та багато іншого." 
+        <p style="text-align: center; line-height: 1.6;" class="lang" 
+           data-ua="LankciWorld — це новий сервер, унікальний функціонал та багато іншого." 
            data-en="LankciWorld — this is a new server with unique functionality and much more.">
-           LankciWorld — це новий сервер унікальний функціонал та багато іншого.
+           LankciWorld — це новий сервер, унікальний функціонал та багато іншого.
         </p>
     </section>
 
     <section id="donate">
         <h2 class="lang" data-ua="Магазин Привілеїв" data-en="Privilege Shop">Магазин Привілеїв</h2>
         <div class="donate-grid">
+            
             <div class="card sigma">
                 <h3>Sigma</h3>
                 <p class="lang" data-ua="Почуй себе сігмою." data-en="Feel like a sigma.">Почуй себе сігмою.</p>
@@ -95,7 +109,7 @@
             </div>
 
             <div class="card tsc">
-                <img src="./img/second_coming.png" class="rank-art" onerror="this.src='https://via.placeholder.com/150?text=Error'">
+                <img src="./img/second_coming.PNG" class="rank-art" onerror="this.src='https://via.placeholder.com/150?text=PNG+Error'">
                 <h3>The Second Coming</h3>
                 <p class="lang" data-ua="Сила Творця: Політ та унікальні частки." data-en="Creator's Power: Flight and unique particles.">Сила Творця: Політ та унікальні частки.</p>
                 <span class="price">150 грн</span>
@@ -103,7 +117,7 @@
             </div>
 
             <div class="card dragon">
-                <img src="./img/dragon.png" class="rank-art" onerror="this.src='https://via.placeholder.com/150?text=Error'">
+                <img src="./img/dragon.PNG" class="rank-art" onerror="this.src='https://via.placeholder.com/150?text=PNG+Error'">
                 <h3>Dragon</h3>
                 <p class="lang" data-ua="Дихання дракона: Ефекти вогнестійкості." data-en="Dragon Breath: Fire resistance effects.">Дихання дракона: Ефекти вогнестійкості.</p>
                 <span class="price">110 грн</span>
@@ -111,7 +125,7 @@
             </div>
 
             <div class="card chosen">
-                <img src="./img/chosen_one.png" class="rank-art" onerror="this.src='https://via.placeholder.com/150?text=Error'">
+                <img src="./img/chosen_one.PNG" class="rank-art" onerror="this.src='https://via.placeholder.com/150?text=PNG+Error'">
                 <h3>The Chosen One</h3>
                 <p class="lang" data-ua="Обраний: Літання і лазери з очей." data-en="Chosen: Flying and lasers from the eyes.">Обраний: Літання і лазери з очей.</p>
                 <span class="price">190 грн</span>
@@ -119,7 +133,7 @@
             </div>
 
             <div class="card darklord">
-                <img src="./img/dark_lord.png" class="rank-art" onerror="this.src='https://via.placeholder.com/150?text=Error'">
+                <img src="./img/dark_lord.PNG" class="rank-art" onerror="this.src='https://via.placeholder.com/150?text=PNG+Error'">
                 <h3>The Dark Lord</h3>
                 <p class="lang" data-ua="Дарк Лорд: Літання і фаервол." data-en="Lord of Darkness: Flight and firewall.">Літання і фаервол.</p>
                 <span class="price">280 грн</span>
@@ -127,12 +141,13 @@
             </div>
 
             <div class="card hacker">
-                <img src="./img/h4ck3r.png" class="rank-art" onerror="this.src='https://via.placeholder.com/150?text=Error'">
+                <img src="./img/h4ck3r.PNG" class="rank-art" onerror="this.src='https://via.placeholder.com/150?text=PNG+Error'">
                 <h3>H4CK3R</h3>
                 <p class="lang" data-ua="Адмінські можливості та злам правил!" data-en="Admin abilities and rule breaking!">Адмінські можливості та злам правил!</p>
                 <span class="price">450 грн</span>
                 <a href="https://t.me/your_tg" class="buy-btn lang" data-ua="Придбати" data-en="Buy Now">Придбати</a>
             </div>
+
         </div>
     </section>
 
@@ -145,9 +160,8 @@
 
     <section id="rules">
         <h2 class="lang" data-ua="Правила" data-en="Rules">Правила</h2>
-        <p>1. <span class="lang" data-ua="Ніяких читів (навіть для Hacker) бан на 25 дн якщо зізнаєшся то 14 дн." data-en="No cheats (even for Hacker) 25 days ban, 14 days if you confess.">Ніяких читів (навіть для Hacker) бан на 25 дн якщо зізнаєшся то 14 дн.</span><br> 
-           2. <span class="lang" data-ua="Погрожувати адміну або власнику 3 години муту." data-en="Threatening admin or owner - 3 hours mute.">Погрожувати адміну або власнику 3 години муту.</span><br> 
-           3. <span class="lang" data-ua="Повага до гравців." data-en="Respect for players.">Повага до гравців.</span></p>
+        <p>1. <span class="lang" data-ua="Ніяких читів — бан на 25 дн." data-en="No cheats — 25 days ban.">Ніяких читів — бан на 25 дн.</span><br> 
+           2. <span class="lang" data-ua="Повага до гравців та адмінів." data-en="Respect for players and admins.">Повага до гравців та адмінів.</span></p>
     </section>
 </div>
 
