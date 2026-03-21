@@ -5,44 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LankciWorld | Офіційний сайт</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background-color: #0d0d0d; color: #f0f0f0; margin: 0; scroll-behavior: smooth; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #0d0d0d; color: #f0f0f0; margin: 0; scroll-behavior: smooth; overflow-x: hidden; }
         
-        /* ШАПКА ТА IP */
+        /* ШАПКА */
         header { background: linear-gradient(135deg, #ff8800, #1a1a1a); padding: 60px 20px; text-align: center; border-bottom: 5px solid #ff4400; }
         h1 { font-size: clamp(35px, 9vw, 75px); margin: 0; letter-spacing: 5px; color: #fff; text-shadow: 0 0 25px #ffcc00; text-transform: uppercase; }
         .ip-box { background: rgba(0,0,0,0.8); border: 3px dashed #ffcc00; padding: 15px 30px; display: inline-block; margin-top: 25px; cursor: pointer; border-radius: 12px; transition: 0.3s; }
         .ip-box:hover { box-shadow: 0 0 25px rgba(255, 204, 0, 0.6); }
 
-        /* НАВІГАЦІЯ */
-        nav { background: #000; position: sticky; top: 0; display: flex; justify-content: center; padding: 15px; z-index: 1000; border-bottom: 2px solid #ff4400; gap: 20px; }
+        /* НАВІГАЦІЯ ТА МОВА */
+        nav { background: #000; position: sticky; top: 0; display: flex; justify-content: center; align-items: center; padding: 15px; z-index: 1000; border-bottom: 2px solid #ff4400; gap: 20px; flex-wrap: wrap; }
         nav a { color: #fff; text-decoration: none; font-weight: bold; text-transform: uppercase; font-size: 13px; transition: 0.3s; }
         nav a:hover { color: #ffcc00; }
+        
+        .lang-switch { display: flex; gap: 5px; margin-left: 15px; }
+        .lang-btn { background: #333; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 12px; font-weight: bold; }
+        .lang-btn.active { background: #ff4400; }
 
         .container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
         h2 { text-align: center; color: #ff4400; text-transform: uppercase; margin-bottom: 40px; }
 
-        /* СІТКА КАРТОК */
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
-        .card { background: #161616; border: 2px solid #222; padding: 25px; border-radius: 20px; transition: 0.4s; }
-        .card:hover { border-color: #ff4400; transform: translateY(-5px); }
+        /* МАГАЗИН (ГРАФІКА) */
+        .donate-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-bottom: 80px; }
+        .card { background: #161616; border: 2px solid #222; padding: 25px; border-radius: 20px; text-align: center; transition: 0.4s; display: flex; flex-direction: column; justify-content: space-between; }
+        .card:hover { border-color: #ff4400; transform: translateY(-8px); }
+        .rank-art { width: 100%; max-width: 230px; border-radius: 15px; margin-bottom: 15px; align-self: center; }
 
-        /* КОЛЬОРИ ПРИВІЛЕГІЙ */
-        .t-imperator { color: #ffd700; } .t-second { color: #32cd32; } 
-        .t-hacker { color: #22c55e; }    .t-darklord { color: #ef4444; }
-        .t-chosen { color: #ffff00; }   .t-dragon { color: #3b82f6; }
-        .t-hero { color: #00d4ff; }     .t-sigma { color: #a1a1aa; }
+        /* ФУНКЦІОНАЛ (СПИСКИ) */
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .f-card { background: #111; border: 1px solid #333; padding: 20px; border-radius: 15px; }
+        .features-list { list-style: none; padding: 0; margin: 10px 0; font-size: 14px; color: #ccc; }
+        .features-list li { padding: 4px 0; border-bottom: 1px solid #222; }
+        .kit-tag { background: #ff4400; color: #fff; padding: 4px 8px; border-radius: 5px; font-weight: bold; font-size: 12px; display: inline-block; margin-top: 10px; }
 
-        /* СПИСКИ ФУНКЦІОНАЛУ */
-        .features-list { list-style: none; padding: 0; margin: 15px 0; font-size: 15px; }
-        .features-list li { padding: 5px 0; border-bottom: 1px solid #222; }
-        .features-list li b { color: #ff8800; }
-        .kit-tag { background: #333; padding: 3px 8px; border-radius: 5px; font-weight: bold; color: #fff; display: inline-block; margin-top: 10px; border: 1px solid #444; }
-
-        .price { font-size: 24px; color: #22c55e; font-weight: bold; display: block; margin: 15px 0; text-align: center; }
-        .buy-btn { background: #ff0055; color: white; text-align: center; padding: 12px; text-decoration: none; border-radius: 10px; font-weight: bold; display: block; transition: 0.3s; }
+        .price { font-size: 26px; color: #22c55e; font-weight: bold; margin: 15px 0; display: block; }
+        .buy-btn { background: #ff0055; color: white; padding: 12px; text-decoration: none; border-radius: 10px; font-weight: bold; display: block; transition: 0.3s; }
         .buy-btn:hover { background: #cc0044; }
 
-        .rules-section { background: #111; padding: 30px; border-radius: 20px; border: 1px solid #333; margin-top: 50px; }
+        .rules-section { background: #111; padding: 30px; border-radius: 20px; border: 1px solid #333; margin-top: 60px; }
     </style>
 </head>
 <body>
@@ -51,103 +51,109 @@
     <h1>LANKCI WORLD</h1>
     <div class="ip-box" onclick="copyIP()">
         <span id="server-ip" style="font-weight: bold; font-size: 22px; color: #fff;">LankciWorld.mcsh.io</span>
-        <span style="display:block; color:#ffcc00; font-size:11px; margin-top:5px; font-weight:bold;">КЛИКНИ ЩОБ СКОПІЮВАТИ</span>
+        <span id="copy-status" style="display:block; color:#ffcc00; font-size:11px; margin-top:5px; font-weight:bold;" data-ua="КЛИКНИ ЩОБ СКОПІЮВАТИ" data-en="CLICK TO COPY">КЛИКНИ ЩОБ СКОПІЮВАТИ</span>
     </div>
 </header>
 
 <nav>
-    <a href="#donate">МАГАЗИН</a>
-    <a href="#features">МОЖЛИВОСТІ ТА КІТИ</a>
-    <a href="#rules">ПРАВИЛА</a>
+    <a href="#donate" class="lang" data-ua="МАГАЗИН" data-en="SHOP">МАГАЗИН</a>
+    <a href="#features" class="lang" data-ua="ФУНКЦІОНАЛ" data-en="FEATURES">ФУНКЦІОНАЛ</a>
+    <a href="#rules" class="lang" data-ua="ПРАВИЛА" data-en="RULES">ПРАВИЛА</a>
+    <div class="lang-switch">
+        <button id="btn-ua" class="lang-btn active" onclick="setLang('ua')">UA</button>
+        <button id="btn-en" class="lang-btn" onclick="setLang('en')">EN</button>
+    </div>
 </nav>
 
 <div class="container">
 
-    <section id="features">
-        <h2>Функціонал та Набори</h2>
-        <div class="grid">
+    <section id="donate">
+        <h2 class="lang" data-ua="Магазин Привілегій" data-en="Privilege Shop">Магазин Привілегій</h2>
+        <div class="donate-grid">
             
             <div class="card">
-                <h3 class="t-imperator">IMPERATOR</h3>
-                <ul class="features-list">
-                    <li>🔹 Команди: <b>/ban, /unban, /op, /gm 1</b></li>
-                    <li>🔹 Можливість редагувати світ</li>
-                    <li>🔹 Повідомлення про вхід на сервер</li>
-                    <li>🔹 Пріоритет при заході</li>
-                </ul>
-                <div class="kit-tag">📦 Доступний: /kit imperator</div>
+                <img src="./img/imperator.png" class="rank-art" alt="Imperator">
+                <h3 style="color:#ffd700;">IMPERATOR</h3>
+                <span class="price">1250 грн</span>
+                <a href="https://t.me/Kostyanchu_original" class="buy-btn lang" data-ua="ПРИДБАТИ" data-en="BUY NOW">ПРИДБАТИ</a>
             </div>
 
             <div class="card">
-                <h3 class="t-second">THE SECOND COMING</h3>
-                <ul class="features-list">
-                    <li>🔹 Команди: <b>/fly, /god, /heal, /feed</b></li>
-                    <li>🔹 Зміна погоди та часу</li>
-                    <li>🔹 Кольоровий чат</li>
-                </ul>
-                <div class="kit-tag">📦 Доступний: /kit second</div>
+                <img src="./img/second_coming.PNG" class="rank-art" alt="Second">
+                <h3 style="color:#32cd32;">THE SECOND COMING</h3>
+                <span class="price">350 грн</span>
+                <a href="https://t.me/Kostyanchu_original" class="buy-btn lang" data-ua="ПРИДБАТИ" data-en="BUY NOW">ПРИДБАТИ</a>
             </div>
 
             <div class="card">
-                <h3 class="t-darklord">THE DARK LORD</h3>
-                <ul class="features-list">
-                    <li>🔹 Команди: <b>/burn, /lightning, /tp</b></li>
-                    <li>🔹 Ефект частинок навколо гравця</li>
-                </ul>
-                <div class="kit-tag">📦 Доступний: /kit dark_lord</div>
+                <img src="./img/h4ck3r.PNG" class="rank-art" alt="Hacker">
+                <h3 style="color:#22c55e;">H4CK3R</h3>
+                <span class="price">650 грн</span>
+                <a href="https://t.me/Kostyanchu_original" class="buy-btn lang" data-ua="ПРИДБАТИ" data-en="BUY NOW">ПРИДБАТИ</a>
             </div>
 
-            <div class="card">
-                <h3 class="t-chosen">THE CHOSEN ONE</h3>
+        </div>
+    </section>
+
+    <section id="features">
+        <h2 class="lang" data-ua="Можливості та Кіти" data-en="Features & Kits">Можливості та Кіти</h2>
+        <div class="features-grid">
+            
+            <div class="f-card">
+                <h3 style="color:#ffd700;">IMPERATOR</h3>
                 <ul class="features-list">
-                    <li>🔹 Команди: <b>/fly, /near, /ext</b></li>
-                    <li>🔹 Унікальний префікс в табі</li>
+                    <li>🔹 <b>/ban, /op, /gm 1</b></li>
+                    <li>🔹 Доступ до всього</li>
                 </ul>
-                <div class="kit-tag">📦 Доступний: /kit chosen</div>
+                <div class="kit-tag">/kit imperator</div>
             </div>
 
-            <div class="card">
-                <h3 class="t-dragon">DRAGON</h3>
+            <div class="f-card">
+                <h3 style="color:#32cd32;">SECOND COMING</h3>
                 <ul class="features-list">
-                    <li>🔹 Команди: <b>/hat, /workbench</b></li>
-                    <li>🔹 Імунітет до лави</li>
+                    <li>🔹 <b>/fly, /god, /heal</b></li>
+                    <li>🔹 Кольоровий нік</li>
                 </ul>
-                <div class="kit-tag">📦 Доступний: /kit dragon</div>
-            </div>
-
-            <div class="card">
-                <h3 class="t-hero">HERO</h3>
-                <ul class="features-list">
-                    <li>🔹 Команди: <b>/kit, /sethome (5 шт)</b></li>
-                    <li>🔹 Доступ до ігрових бонусів</li>
-                </ul>
-                <div class="kit-tag">📦 Доступний: /kit hero</div>
-            </div>
-
-            <div class="card">
-                <h3 class="t-sigma">START / SIGMA</h3>
-                <ul class="features-list">
-                    <li>🔹 Базові команди виживання</li>
-                    <li>🔹 Стартовий набір ресурсів</li>
-                </ul>
-                <div class="kit-tag">📦 Доступний: /kit start</div>
+                <div class="kit-tag">/kit second</div>
             </div>
 
         </div>
     </section>
 
     <section id="rules" class="rules-section">
-        <h2>ПРАВИЛА</h2>
-        <p>1. 🚫 Гра з читами заборонена.</p>
-        <p>2. 🤝 Повага до адміністрації та гравців.</p>
+        <h2 class="lang" data-ua="Правила" data-en="Rules">Правила</h2>
+        <p>1. 🚫 No Cheats / Без читів.</p>
+        <p>2. 🤝 Respect / Повага.</p>
     </section>
 </div>
 
 <script>
+    let currentLang = 'ua';
+
+    function setLang(lang) {
+        currentLang = lang;
+        document.querySelectorAll('.lang').forEach(el => {
+            el.textContent = el.getAttribute('data-' + lang);
+        });
+        
+        // Оновити статус IP
+        const copyStatus = document.getElementById('copy-status');
+        copyStatus.textContent = copyStatus.getAttribute('data-' + lang);
+
+        // Кнопки
+        document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById('btn-' + lang).classList.add('active');
+    }
+
     function copyIP() {
         const ip = "LankciWorld.mcsh.io";
-        navigator.clipboard.writeText(ip);
-        alert("✅ IP LankciWorld скопійовано!");
+        const statusEl = document.getElementById('copy-status');
+        navigator.clipboard.writeText(ip).then(() => {
+            statusEl.textContent = currentLang === 'ua' ? "✅ СКОПІЙОВАНО!" : "✅ COPIED!";
+            setTimeout(() => {
+                statusEl.textContent = statusEl.getAttribute('data-' + currentLang);
+            }, 2000);
+        });
     }
 </script>
 
