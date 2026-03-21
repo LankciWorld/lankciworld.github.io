@@ -31,8 +31,8 @@
         
         /* КАРТИНКИ РАНГІВ */
         .rank-art {
-            width: 80%;          /* Картинка займає 80% ширини картки */
-            max-width: 220px;    /* Але не стає більшою за 220px, щоб не розмило */
+            width: 80%;
+            max-width: 220px;
             height: auto;
             margin-bottom: 15px;
             image-rendering: pixelated; 
@@ -57,16 +57,28 @@
         .buy-btn { background: #ff0055; color: white; padding: 10px 20px; text-decoration: none; border-radius: 8px; font-weight: bold; width: 80%; transition: 0.3s; }
         .buy-btn:hover { background: #cc0044; }
 
-        .ip-box { background: #000; border: 2px dashed #ff0055; padding: 10px 20px; display: inline-block; margin-top: 20px; cursor: pointer; border-radius: 8px; font-weight: bold; font-size: 14px; }
+        /* IP КОРОБКА */
+        .ip-box { 
+            background: rgba(0,0,0,0.5); 
+            border: 2px dashed #ff0055; 
+            padding: 12px 25px; 
+            display: inline-block; 
+            margin-top: 20px; 
+            cursor: pointer; 
+            border-radius: 8px; 
+            transition: 0.3s;
+        }
+        .ip-box:hover { background: rgba(255, 0, 85, 0.1); border-style: solid; }
+        #server-ip { font-weight: bold; font-size: 18px; color: #fff; display: block; }
+        .copy-hint { font-size: 10px; color: #aaa; text-transform: uppercase; margin-top: 4px; display: block; transition: 0.3s; }
 
-        /* АДАПТИВНІСТЬ ДЛЯ ТЕЛЕФОНІВ */
+        /* АДАПТИВНІСТЬ */
         @media (max-width: 600px) {
             header { padding: 40px 10px; }
             nav { padding: 5px; }
             nav a { margin: 0 5px; font-size: 12px; }
             section { padding: 20px 15px; }
-            .donate-grid { grid-template-columns: 1fr; } /* Картки в один стовпчик на смартфонах */
-            .card { padding: 20px; }
+            .donate-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -74,7 +86,10 @@
 
 <header>
     <h1>LANKCI WORLD</h1>
-    <div class="ip-box" onclick="alert('IP: LankciWorld.mcsh.io')">IP: LankciWorld.mcsh.io</div>
+    <div class="ip-box" onclick="copyIP()">
+        <span id="server-ip">LankciWorld.mcsh.io</span>
+        <span id="copy-status" class="copy-hint" data-ua="Кликни, щоб скопіювати" data-en="Click to copy">Кликни, щоб скопіювати</span>
+    </div>
 </header>
 
 <nav>
@@ -136,7 +151,7 @@
             <div class="card darklord">
                 <img src="./img/dark_lord.PNG" class="rank-art" onerror="this.src='https://via.placeholder.com/150?text=PNG+Error'">
                 <h3>The Dark Lord</h3>
-                <p class="lang" data-ua="Дарк Лорд: Літання і фаервол." data-en="Lord of Darkness: Flight and firewall.">Літання і фаервол.</p>
+                <p class="lang" data-ua="Дарк Лорд: Літання і фаервол." data-en="Lord of Darkness: Flight and firewall.">Дарк Лорд: Літання і фаервол.</p>
                 <span class="price">280 грн</span>
                 <a href="https://t.me/your_tg" class="buy-btn lang" data-ua="Придбати" data-en="Buy Now">Придбати</a>
             </div>
@@ -167,13 +182,42 @@
 </div>
 
 <script>
+    let currentLang = 'ua';
+
     function setLang(lang) {
+        currentLang = lang;
         document.querySelectorAll('.lang').forEach(el => {
             el.textContent = el.getAttribute('data-' + lang);
         });
+        
+        // Окремо для статусу копіювання
+        const copyStatus = document.getElementById('copy-status');
+        if (!copyStatus.classList.contains('copied')) {
+            copyStatus.textContent = copyStatus.getAttribute('data-' + lang);
+        }
+
         document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
         if(lang === 'ua') document.getElementById('btn-ua').classList.add('active');
         else document.getElementById('btn-en').classList.add('active');
+    }
+
+    function copyIP() {
+        const ipText = document.getElementById('server-ip').textContent;
+        const statusEl = document.getElementById('copy-status');
+        
+        navigator.clipboard.writeText(ipText).then(() => {
+            const originalText = statusEl.getAttribute('data-' + currentLang);
+            
+            statusEl.textContent = currentLang === 'ua' ? "✅ СКОПІЙОВАНО!" : "✅ COPIED!";
+            statusEl.style.color = "#00ff00";
+            statusEl.classList.add('copied');
+            
+            setTimeout(() => {
+                statusEl.textContent = originalText;
+                statusEl.style.color = "#aaa";
+                statusEl.classList.remove('copied');
+            }, 2000);
+        });
     }
 </script>
 
