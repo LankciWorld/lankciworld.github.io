@@ -3,62 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LankciWorld | Офіційний сайт</title>
+    <title>LankciWorld | Official Site</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background-color: #0d0d0d; color: #f0f0f0; margin: 0; scroll-behavior: smooth; overflow-x: hidden; }
+        body { 
+            zoom: 75%;		
+            font-family: 'Segoe UI', sans-serif; 
+            background-color: #0d0d0d; 
+            color: #f0f0f0; 
+            margin: 0; 
+            display: flex; 
+            flex-direction: column; 
+            min-height: 100vh; 
+        }
         
-        /* ШАПКА */
-        header { background: linear-gradient(135deg, #ff8800, #1a1a1a); padding: 60px 20px; text-align: center; border-bottom: 5px solid #ff4400; }
-        h1 { font-size: clamp(35px, 9vw, 75px); margin: 0; letter-spacing: 5px; color: #fff; text-shadow: 0 0 25px #ffcc00; text-transform: uppercase; }
-        .ip-box { background: rgba(0,0,0,0.8); border: 3px dashed #ffcc00; padding: 15px 30px; display: inline-block; margin-top: 25px; cursor: pointer; border-radius: 12px; transition: 0.3s; }
-        .ip-box:hover { box-shadow: 0 0 25px rgba(255, 204, 0, 0.6); }
-
-        /* НАВІГАЦІЯ ТА МОВА */
-        nav { background: #000; position: sticky; top: 0; display: flex; justify-content: center; align-items: center; padding: 15px; z-index: 1000; border-bottom: 2px solid #ff4400; gap: 20px; flex-wrap: wrap; }
-        nav a { color: #fff; text-decoration: none; font-weight: bold; text-transform: uppercase; font-size: 13px; transition: 0.3s; }
-        nav a:hover { color: #ffcc00; }
+        header { background: linear-gradient(135deg, #ff8800, #1a1a1a); padding: 40px 15px; text-align: center; border-bottom: 5px solid #ff4400; }
+        h1 { font-size: 55px; margin: 0; color: #fff; text-shadow: 0 0 20px #ffcc00; text-transform: uppercase; }
         
-        .lang-switch { display: flex; gap: 5px; margin-left: 15px; }
-        .lang-btn { background: #333; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 12px; font-weight: bold; }
-        .lang-btn.active { background: #ff4400; }
+        nav { background: #000; position: sticky; top: 0; display: flex; justify-content: center; align-items: center; padding: 12px; z-index: 1000; border-bottom: 2px solid #ff4400; gap: 15px; }
+        nav a { color: #fff; text-decoration: none; font-weight: bold; text-transform: uppercase; font-size: 13px; cursor: pointer; padding: 10px 15px; border-radius: 5px; transition: 0.3s; }
+        nav a:hover, nav a.active { background: rgba(255, 68, 0, 0.2); color: #ffcc00; }
 
-        .container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
-        h2 { text-align: center; color: #ff4400; text-transform: uppercase; margin-bottom: 40px; }
+        .lang-switch { display: flex; gap: 5px; margin-left: 10px; }
+        .lang-btn { background: #222; color: white; border: 1px solid #444; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 11px; }
+        .lang-btn.active { background: #ff4400; border-color: #ff4400; }
 
-        /* МАГАЗИН (ГРАФІКА) */
-        .donate-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-bottom: 80px; }
-        .card { background: #161616; border: 2px solid #222; padding: 25px; border-radius: 20px; text-align: center; transition: 0.4s; display: flex; flex-direction: column; justify-content: space-between; }
-        .card:hover { border-color: #ff4400; transform: translateY(-8px); }
-        .rank-art { width: 100%; max-width: 230px; border-radius: 15px; margin-bottom: 15px; align-self: center; }
+        .container { max-width: 1200px; margin: 30px auto; padding: 0 20px; flex: 1; width: 100%; box-sizing: border-box; }
+        .page-section { display: none; animation: fadeIn 0.4s ease-out; }
+        .page-section.active { display: block; }
 
-        /* ФУНКЦІОНАЛ (СПИСКИ) */
-        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-        .f-card { background: #111; border: 1px solid #333; padding: 20px; border-radius: 15px; }
-        .features-list { list-style: none; padding: 0; margin: 10px 0; font-size: 14px; color: #ccc; }
-        .features-list li { padding: 4px 0; border-bottom: 1px solid #222; }
-        .kit-tag { background: #ff4400; color: #fff; padding: 4px 8px; border-radius: 5px; font-weight: bold; font-size: 12px; display: inline-block; margin-top: 10px; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .price { font-size: 26px; color: #22c55e; font-weight: bold; margin: 15px 0; display: block; }
-        .buy-btn { background: #ff0055; color: white; padding: 12px; text-decoration: none; border-radius: 10px; font-weight: bold; display: block; transition: 0.3s; }
-        .buy-btn:hover { background: #cc0044; }
+        /* ГАРАНТІЯ ТОГО, ЩО КАРТКИ БУДУТЬ В РЯД */
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); 
+            gap: 20px; 
+        }
+        
+        .card, .f-card { 
+            background: #161616; 
+            border: 2px solid #222; 
+            padding: 20px; 
+            border-radius: 15px; 
+            transition: 0.3s; 
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .card:hover, .f-card:hover { border-color: #ff4400; transform: translateY(-5px); }
+        
+        .rank-art { width: 100%; max-width: 180px; border-radius: 10px; margin: 0 auto 15px; display: block; }
 
-        .rules-section { background: #111; padding: 30px; border-radius: 20px; border: 1px solid #333; margin-top: 60px; }
+        .f-card h3 { margin: 0 0 10px 0; border-bottom: 1px solid #333; padding-bottom: 10px; text-align: center; font-size: 18px; }
+        
+        .features-list { list-style: none; padding: 0; font-size: 13px; color: #ccc; line-height: 1.5; margin: 0; }
+        .features-list li { margin-bottom: 6px; }
+        .features-list li::before { content: "✔ "; color: #ff8800; font-weight: bold; }
+        
+        .kit-tag { background: #22c55e; color: #000; padding: 6px; border-radius: 5px; font-size: 11px; font-weight: bold; display: block; text-align: center; margin-top: 15px; }
+
+        .price { font-size: 22px; color: #22c55e; font-weight: bold; margin: 10px 0; display: block; text-align: center; }
+        .buy-btn { background: #ff0055; color: white; padding: 10px; text-decoration: none; border-radius: 8px; font-weight: bold; display: block; text-align: center; }
+
+        .rules-box { background: #111; padding: 30px; border-radius: 20px; border-left: 6px solid #ff4400; }
+        footer { text-align: center; padding: 30px; color: #444; font-size: 14px; margin-top: 50px; }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>LANKCI WORLD</h1>
-    <div class="ip-box" onclick="copyIP()">
-        <span id="server-ip" style="font-weight: bold; font-size: 22px; color: #fff;">LankciWorld.mcsh.io</span>
-        <span id="copy-status" style="display:block; color:#ffcc00; font-size:11px; margin-top:5px; font-weight:bold;" data-ua="КЛИКНИ ЩОБ СКОПІЮВАТИ" data-en="CLICK TO COPY">КЛИКНИ ЩОБ СКОПІЮВАТИ</span>
-    </div>
-</header>
+<header><h1>LANKCI WORLD</h1></header>
 
 <nav>
-    <a href="#donate" class="lang" data-ua="МАГАЗИН" data-en="SHOP">МАГАЗИН</a>
-    <a href="#features" class="lang" data-ua="ФУНКЦІОНАЛ" data-en="FEATURES">ФУНКЦІОНАЛ</a>
-    <a href="#rules" class="lang" data-ua="ПРАВИЛА" data-en="RULES">ПРАВИЛА</a>
+    <a onclick="showPage('donate')" id="nav-donate" class="active lang" data-ua="МАГАЗИН" data-en="SHOP">МАГАЗИН</a>
+    <a onclick="showPage('features')" id="nav-features" class="lang" data-ua="ФУНКЦІОНАЛ" data-en="FEATURES">ФУНКЦІОНАЛ</a>
+    <a onclick="showPage('rules')" id="nav-rules" class="lang" data-ua="ПРАВИЛА" data-en="RULES">ПРАВИЛА</a>
     <div class="lang-switch">
         <button id="btn-ua" class="lang-btn active" onclick="setLang('ua')">UA</button>
         <button id="btn-en" class="lang-btn" onclick="setLang('en')">EN</button>
@@ -66,96 +84,80 @@
 </nav>
 
 <div class="container">
-
-    <section id="donate">
-        <h2 class="lang" data-ua="Магазин Привілегій" data-en="Privilege Shop">Магазин Привілегій</h2>
-        <div class="donate-grid">
-            
-            <div class="card">
-                <img src="./img/imperator.png" class="rank-art" alt="Imperator">
-                <h3 style="color:#ffd700;">IMPERATOR</h3>
-                <span class="price">1250 грн</span>
-                <a href="https://t.me/Kostyanchu_original" class="buy-btn lang" data-ua="ПРИДБАТИ" data-en="BUY NOW">ПРИДБАТИ</a>
-            </div>
-
-            <div class="card">
-                <img src="./img/second_coming.PNG" class="rank-art" alt="Second">
-                <h3 style="color:#32cd32;">THE SECOND COMING</h3>
-                <span class="price">350 грн</span>
-                <a href="https://t.me/Kostyanchu_original" class="buy-btn lang" data-ua="ПРИДБАТИ" data-en="BUY NOW">ПРИДБАТИ</a>
-            </div>
-
-            <div class="card">
-                <img src="./img/h4ck3r.PNG" class="rank-art" alt="Hacker">
-                <h3 style="color:#22c55e;">H4CK3R</h3>
-                <span class="price">650 грн</span>
-                <a href="https://t.me/Kostyanchu_original" class="buy-btn lang" data-ua="ПРИДБАТИ" data-en="BUY NOW">ПРИДБАТИ</a>
-            </div>
-
+    <section id="donate" class="page-section active">
+        <div class="grid">
+            <div class="card"><img src="img/imperator.png" class="rank-art"><h3 style="color:#ffd700; text-align:center;">IMPERATOR</h3><span class="price">1250 грн</span><a href="https://t.me/Kostyanchu_original" class="buy-btn lang" data-ua="ПРИДБАТИ" data-en="BUY NOW">ПРИДБАТИ</a></div>
+            <div class="card"><img src="img/second_coming.PNG" class="rank-art"><h3 style="color:#32cd32; text-align:center;">SECOND COMING</h3><span class="price">350 грн</span><a href="https://t.me/Kostyanchu_original" class="buy-btn lang" data-ua="ПРИДБАТИ" data-en="BUY NOW">ПРИДБАТИ</a></div>
+            <div class="card"><img src="img/h4ck3r.PNG" class="rank-art"><h3 style="color:#22c55e; text-align:center;">H4CK3R</h3><span class="price">650 грн</span><a href="https://t.me/Kostyanchu_original" class="buy-btn lang" data-ua="ПРИДБАТИ" data-en="BUY NOW">ПРИДБАТИ</a></div>
+            <div class="card"><img src="img/dark_lord.PNG" class="rank-art"><h3 style="color:#ef4444; text-align:center;">DARK LORD</h3><span class="price">480 грн</span><a href="https://t.me/Kostyanchu_original" class="buy-btn lang" data-ua="ПРИДБАТИ" data-en="BUY NOW">ПРИДБАТИ</a></div>
+            <div class="card"><img src="img/chosen_one.PNG" class="rank-art"><h3 style="color:#ffff00; text-align:center;">CHOSEN ONE</h3><span class="price">290 грн</span><a href="https://t.me/Kostyanchu_original" class="buy-btn lang" data-ua="ПРИДБАТИ" data-en="BUY NOW">ПРИДБАТИ</a></div>
+            <div class="card"><img src="img/dragon.PNG" class="rank-art"><h3 style="color:#3b82f6; text-align:center;">DRAGON</h3><span class="price">180 грн</span><a href="https://t.me/Kostyanchu_original" class="buy-btn lang" data-ua="ПРИДБАТИ" data-en="BUY NOW">ПРИДБАТИ</a></div>
+            <div class="card"><img src="img/hero.png" class="rank-art"><h3 style="color:#00d4ff; text-align:center;">HERO</h3><span class="price">250 грн</span><a href="https://t.me/Kostyanchu_original" class="buy-btn lang" data-ua="ПРИДБАТИ" data-en="BUY NOW">ПРИДБАТИ</a></div>
+            <div class="card"><h3 style="color:#a1a1aa; text-align:center;">SIGMA</h3><span class="price">150 грн</span><a href="https://t.me/Kostyanchu_original" class="buy-btn lang" data-ua="ПРИДБАТИ" data-en="BUY NOW">ПРИДБАТИ</a></div>
         </div>
     </section>
 
-    <section id="features">
-        <h2 class="lang" data-ua="Можливості та Кіти" data-en="Features & Kits">Можливості та Кіти</h2>
-        <div class="features-grid">
-            
-            <div class="f-card">
-                <h3 style="color:#ffd700;">IMPERATOR</h3>
-                <ul class="features-list">
-                    <li>🔹 <b>/ban, /op, /gm 1</b></li>
-                    <li>🔹 Доступ до всього</li>
-                </ul>
-                <div class="kit-tag">/kit imperator</div>
-            </div>
-
-            <div class="f-card">
-                <h3 style="color:#32cd32;">SECOND COMING</h3>
-                <ul class="features-list">
-                    <li>🔹 <b>/fly, /god, /heal</b></li>
-                    <li>🔹 Кольоровий нік</li>
-                </ul>
-                <div class="kit-tag">/kit second</div>
-            </div>
-
+    <section id="features" class="page-section">
+        <div class="grid">
+            <div class="f-card"><h3 style="color:#ffd700;">IMPERATOR</h3>
+                <ul class="features-list lang" data-ua="<li>Інвіз (/v)</li><li>Політ/Безсмертя</li><li>Час/Погода</li><li>Інвентар (/invsee)</li><li>Блискавка (Тролінг)</li>" data-en="<li>Vanish (/v)</li><li>Fly/God mode</li><li>Time/Weather</li><li>Invsee</li><li>Lightning</li>">
+                    <li>Інвіз (/v)</li><li>Політ/Безсмертя</li><li>Час/Погода</li><li>Інвентар (/invsee)</li><li>Блискавка (Тролінг)</li>
+                </ul><div class="kit-tag">📦 /kit imperator</div></div>
+            <div class="f-card"><h3 style="color:#32cd32;">SECOND COMING</h3>
+                <ul class="features-list lang" data-ua="<li>Політ (/fly)</li><li>Кольоровий нік</li><li>Голод (/feed)</li>" data-en="<li>Flight (/fly)</li><li>Colored nick</li><li>Feed cmd</li>">
+                    <li>Політ (/fly)</li><li>Кольоровий нік</li><li>Голод (/feed)</li>
+                </ul><div class="kit-tag">📦 /kit second</div></div>
+            <div class="f-card"><h3 style="color:#22c55e;">H4CK3R</h3>
+                <ul class="features-list lang" data-ua="<li>Телепортація</li><li>X-Ray (Near)</li><li>Віртуальний верстак</li>" data-en="<li>Teleport</li><li>X-Ray vision</li><li>Virtual wb</li>">
+                    <li>Телепортація</li><li>X-Ray (Near)</li><li>Віртуальний верстак</li>
+                </ul><div class="kit-tag">📦 /kit start</div></div>
+            <div class="f-card"><h3 style="color:#ef4444;">DARK LORD</h3>
+                <ul class="features-list lang" data-ua="<li>Ефекти темряви</li><li>Підпалити (/burn)</li>" data-en="<li>Dark effects</li><li>Burn command</li>">
+                    <li>Ефекти темряви</li><li>Підпалити (/burn)</li>
+                </ul><div class="kit-tag">📦 /kit dark_lord</div></div>
+            <div class="f-card"><h3 style="color:#ffff00;">CHOSEN ONE</h3>
+                <ul class="features-list lang" data-ua="<li>Зняття ефектів</li><li>Загасити вогонь</li>" data-en="<li>Clear effects</li><li>Extinguish</li>">
+                    <li>Зняття ефектів</li><li>Загасити вогонь</li>
+                </ul><div class="kit-tag">📦 /kit chosen</div></div>
+            <div class="f-card"><h3 style="color:#3b82f6;">DRAGON</h3>
+                <ul class="features-list lang" data-ua="<li>Імунітет до лави</li><li>Блок на голову</li>" data-en="<li>Lava immunity</li><li>Block on head</li>">
+                    <li>Імунітет до лави</li><li>Блок на голову</li>
+                </ul><div class="kit-tag">📦 /kit dragon</div></div>
+            <div class="f-card"><h3 style="color:#00d4ff;">HERO</h3>
+                <ul class="features-list lang" data-ua="<li>5 точок дому</li><li>Лікування (/heal)</li>" data-en="<li>5 homes</li><li>Heal command</li>">
+                    <li>5 точок дому</li><li>Лікування (/heal)</li>
+                </ul><div class="kit-tag">📦 /kit hero</div></div>
+            <div class="f-card"><h3 style="color:#a1a1aa;">SIGMA</h3>
+                <ul class="features-list lang" data-ua="<li>Префікс [SIGMA]</li><li>Початковий набір</li>" data-en="<li>Prefix [SIGMA]</li><li>Start kit</li>">
+                    <li>Префікс [SIGMA]</li><li>Початковий набір</li>
+                </ul><div class="kit-tag">📦 /kit start</div></div>
         </div>
     </section>
 
-    <section id="rules" class="rules-section">
-        <h2 class="lang" data-ua="Правила" data-en="Rules">Правила</h2>
-        <p>1. 🚫 No Cheats / Без читів.</p>
-        <p>2. 🤝 Respect / Повага.</p>
+    <section id="rules" class="page-section">
+        <div class="rules-box">
+            <h2 class="lang" data-ua="ПРАВИЛА СЕРВЕРА" data-en="SERVER RULES">ПРАВИЛА СЕРВЕРА</h2>
+            <div class="lang" data-ua="<p>1. 🚫 <b>Чити:</b> Бан навсегда.</p><p>2. 🤝 <b>Поведінка:</b> Без токсичності.</p><p>3. 🏗️ <b>Гриферство:</b> Дозволено.</p>" data-en="<p>1. 🚫 <b>Cheats:</b> Perm Ban.</p><p>2. 🤝 <b>Behavior:</b> No toxic.</p><p>3. 🏗️ <b>Grief:</b> Allowed.</p>">
+                <p>1. 🚫 <b>Чити:</b> Бан на 32 дн якщо зізнаєшся то 14 дн.</p><p>2. 🤝 <b>Поведінка:</b> Без токсичності.</p><p>3. 🏗️ <b>Гриферство:</b> Дозволено.</p>
+            </div>
+        </div>
     </section>
 </div>
 
+<footer>LankciWorld 2024-2026</footer>
+
 <script>
-    let currentLang = 'ua';
-
-    function setLang(lang) {
-        currentLang = lang;
-        document.querySelectorAll('.lang').forEach(el => {
-            el.textContent = el.getAttribute('data-' + lang);
-        });
-        
-        // Оновити статус IP
-        const copyStatus = document.getElementById('copy-status');
-        copyStatus.textContent = copyStatus.getAttribute('data-' + lang);
-
-        // Кнопки
-        document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-        document.getElementById('btn-' + lang).classList.add('active');
+    function showPage(p) {
+        document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('nav a').forEach(l => l.classList.remove('active'));
+        document.getElementById(p).classList.add('active');
+        document.getElementById('nav-' + p).classList.add('active');
     }
-
-    function copyIP() {
-        const ip = "LankciWorld.mcsh.io";
-        const statusEl = document.getElementById('copy-status');
-        navigator.clipboard.writeText(ip).then(() => {
-            statusEl.textContent = currentLang === 'ua' ? "✅ СКОПІЙОВАНО!" : "✅ COPIED!";
-            setTimeout(() => {
-                statusEl.textContent = statusEl.getAttribute('data-' + currentLang);
-            }, 2000);
-        });
+    function setLang(l) {
+        document.querySelectorAll('.lang').forEach(e => e.innerHTML = e.getAttribute('data-' + l));
+        document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById('btn-' + l).classList.add('active');
     }
 </script>
-
 </body>
 </html>
