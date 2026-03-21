@@ -3,78 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LankciWorld | Офіційний сайт Майнкрафт</title>
-    <meta name="description" content="LankciWorld — найкращий Майнкрафт сервер з унікальними привілеями Imperator, Hero та Hacker. Заходь та грай!">
-    <meta name="keywords" content="LankciWorld, майнкрафт сервер, донат майнкрафт, купити привілеї, Imperator rank, Hero rank">
-    
+    <title>LankciWorld | Офіційний сайт</title>
     <style>
         /* ОСНОВНІ СТИЛІ */
         body { font-family: 'Segoe UI', sans-serif; background-color: #0d0d0d; color: #f0f0f0; margin: 0; scroll-behavior: smooth; overflow-x: hidden; }
-        header { background: linear-gradient(135deg, #7e22ce, #1a1a1a); padding: 50px 20px; text-align: center; border-bottom: 3px solid #ff0055; }
-        h1 { font-size: clamp(30px, 8vw, 60px); margin: 0; letter-spacing: 3px; color: #fff; text-shadow: 0 0 15px #ff0055; }
         
-        /* НАВІГАЦІЯ */
-        nav { background: #161616; position: sticky; top: 0; display: flex; flex-wrap: wrap; justify-content: center; padding: 10px; z-index: 1000; border-bottom: 1px solid #333; gap: 10px; }
-        nav a { color: #bbb; text-decoration: none; font-weight: bold; text-transform: uppercase; transition: 0.3s; cursor: pointer; font-size: 14px; padding: 5px 10px; }
-        nav a:hover { color: #ff0055; }
-
-        .lang-switch { display: flex; gap: 5px; align-items: center; }
-        .lang-btn { background: #333; color: white; border: none; padding: 5px 8px; border-radius: 5px; cursor: pointer; font-size: 11px; }
-        .lang-btn.active { background: #ff0055; }
-
-        /* КОНТЕЙНЕР */
-        .container { max-width: 1100px; margin: 20px auto; padding: 15px; }
-        section { background: #111; padding: clamp(20px, 5vw, 40px); border-radius: 20px; margin-bottom: 40px; border: 1px solid #222; }
-        h2 { color: #ff0055; text-align: center; font-size: clamp(24px, 6vw, 36px); margin-bottom: 30px; }
-
-        /* СІТКА ДОНАТУ */
-        .donate-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .card { background: #1a1a1a; border: 2px solid #333; padding: 25px; border-radius: 15px; text-align: center; transition: 0.4s; display: flex; flex-direction: column; align-items: center; position: relative; }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
-        
-        /* КАРТИНКИ РАНГІВ */
-        .rank-art {
-            width: 80%;
-            max-width: 220px;
-            height: auto;
-            margin-bottom: 15px;
-            border-radius: 10px;
-            transition: 0.3s;
+        /* НОВА ОРАНЖЕВА ШАПКА */
+        header { 
+            background: linear-gradient(135deg, #ff8800, #1a1a1a); /* ВОГНЯНИЙ ГРАДІЄНТ */
+            padding: 70px 20px; 
+            text-align: center; 
+            border-bottom: 5px solid #ff4400; /* ЧЕРВОНО-ОРАНЖЕВИЙ КРАЙ */
         }
-        .card:hover .rank-art { transform: scale(1.05); filter: brightness(1.1); }
-
-        /* СПЕЦІАЛЬНІ ЕФЕКТИ ДЛЯ НОВИХ РАНГІВ */
-        .imperator { border-color: #ffd700; background: linear-gradient(180deg, #1a1a1a 0%, #2a2400 100%); }
-        .imperator h3 { color: #ffd700; text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
-        .hero { border-color: #00d4ff; }
-        .hero h3 { color: #00d4ff; }
-
-        /* СТАРІ РАНГИ */
-        .sigma { border-color: #808080; }
-        .tsc { border-color: #eab308; }
-        .dragon { border-color: #3b82f6; }
-        .chosen { border-color: #a855f7; }
-        .darklord { border-color: #ef4444; }
-        .hacker { border-color: #22c55e; background: linear-gradient(180deg, #1a1a1a 0%, #052e16 100%); }
-
-        .price { font-size: 24px; color: #22c55e; font-weight: bold; margin: 15px 0; display: block; }
-        .buy-btn { background: #ff0055; color: white; padding: 10px 20px; text-decoration: none; border-radius: 8px; font-weight: bold; width: 80%; transition: 0.3s; }
-        .buy-btn:hover { background: #cc0044; }
-
-        /* IP КОРОБКА */
+        h1 { 
+            font-size: clamp(35px, 9vw, 75px); 
+            margin: 0; 
+            letter-spacing: 5px; 
+            color: #fff; 
+            text-shadow: 0 0 25px #ffcc00; /* ЖОВТЕ СВІТІННЯ НАЗВИ */
+            text-transform: uppercase; 
+        }
+        
+        /* IP КОРОБКА В СТИЛІ */
         .ip-box { 
-            background: rgba(0,0,0,0.5); 
-            border: 2px dashed #ff0055; 
-            padding: 12px 25px; 
+            background: rgba(0,0,0,0.8); 
+            border: 3px dashed #ffcc00; /* ЯСКРАВО-ЖОВТА РАМКА */
+            padding: 15px 30px; 
             display: inline-block; 
-            margin-top: 20px; 
+            margin-top: 25px; 
             cursor: pointer; 
-            border-radius: 8px; 
+            border-radius: 12px; 
             transition: 0.3s;
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.3);
         }
-        .ip-box:hover { background: rgba(255, 0, 85, 0.1); border-style: solid; }
-        #server-ip { font-weight: bold; font-size: 18px; color: #fff; display: block; }
-        .copy-hint { font-size: 10px; color: #aaa; text-transform: uppercase; margin-top: 4px; display: block; }
+        .ip-box:hover { border-style: solid; background: rgba(255, 204, 0, 0.1); box-shadow: 0 0 25px rgba(255, 204, 0, 0.6); }
+        #server-ip { font-weight: bold; font-size: 22px; color: #fff; display: block; letter-spacing: 1px; }
+        .copy-hint { font-size: 11px; color: #ffcc00; text-transform: uppercase; margin-top: 5px; display: block; font-weight: bold; }
+
+        /* НАВІГАЦІЯ */
+        nav { background: #000; position: sticky; top: 0; display: flex; justify-content: center; padding: 15px; z-index: 1000; border-bottom: 2px solid #ff4400; gap: 20px; }
+        nav a { color: #fff; text-decoration: none; font-weight: bold; text-transform: uppercase; font-size: 13px; transition: 0.3s; }
+        nav a:hover { color: #ffcc00; text-shadow: 0 0 10px #ffcc00; }
+
+        /* КОНТЕЙНЕР І СІТКА */
+        .container { max-width: 1300px; margin: 40px auto; padding: 0 20px; }
+        .donate-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 25px; }
+        .card { background: #161616; border: 2px solid #222; padding: 25px; border-radius: 20px; text-align: center; transition: 0.4s; position: relative; display: flex; flex-direction: column; justify-content: space-between; }
+        .card:hover { transform: translateY(-8px); border-color: #ff4400; box-shadow: 0 15px 30px rgba(0,0,0,0.6); }
+
+        .rank-art { width: 100%; max-width: 230px; border-radius: 15px; margin: 0 auto 15px auto; }
+
+        /* КОЛЬОРИ НАЗВ ПРИВІЛЕГІЙ */
+        .card h3 { font-size: 22px; margin: 10px 0; text-transform: uppercase; }
+        .card.imperator h3 { color: #ffd700; text-shadow: 0 0 10px #ffd700; } /* ЗОЛОТИЙ */
+        .card.tsc h3 { color: #32cd32; }       /* ЛАЙМОВИЙ */
+        .card.hacker h3 { color: #22c55e; }    /* ЗЕЛЕНИЙ */
+        .card.darklord h3 { color: #ef4444; }   /* ЧЕРВОНИЙ */
+        .card.chosen h3 { color: #ffff00; }    /* ЖОВТИЙ */
+        .card.dragon h3 { color: #3b82f6; }    /* СИНІЙ */
+        .card.hero h3 { color: #00d4ff; }      /* БЛАКИТНИЙ */
+        .card.sigma h3 { color: #a1a1aa; }     /* СІРИЙ */
+
+        .price { font-size: 26px; color: #22c55e; font-weight: bold; margin: 15px 0; display: block; }
+        .buy-btn { background: #ff0055; color: white; padding: 12px; text-decoration: none; border-radius: 10px; font-weight: bold; display: block; transition: 0.3s; width: 100%; box-sizing: border-box; }
+        .buy-btn:hover { background: #cc0044; transform: scale(1.03); }
+
+        /* ПРАВИЛА */
+        .rules-section { background: #111; padding: 35px; border-radius: 20px; border: 1px solid #333; margin-top: 50px; }
+        .rules-section h2 { color: #ff4400; text-align: center; margin-bottom: 25px; text-transform: uppercase; }
+        .rules-list p { line-height: 1.8; font-size: 16px; margin: 10px 0; }
     </style>
 </head>
 <body>
@@ -83,121 +80,145 @@
     <h1>LANKCI WORLD</h1>
     <div class="ip-box" onclick="copyIP()">
         <span id="server-ip">LankciWorld.mcsh.io</span>
-        <span id="copy-status" class="copy-hint" data-ua="Кликни, щоб скопіювати" data-en="Click to copy">Кликни, щоб скопіювати</span>
+        <span id="copy-status" class="copy-hint" data-ua="КЛИКНИ, ЩОБ СКОПІЮВАТИ" data-en="CLICK TO COPY">КЛИКНИ, ЩОБ СКОПІЮВАТИ</span>
     </div>
 </header>
 
 <nav>
-    <a href="#home" class="lang" data-ua="Головна" data-en="Home">Головна</a>
-    <a href="#donate" class="lang" data-ua="Донат" data-en="Donate">Донат</a>
-    <a href="#rules" class="lang" data-ua="Правила" data-en="Rules">Правила</a>
-    <div class="lang-switch">
-        <button id="btn-ua" class="lang-btn active" onclick="setLang('ua')">UA</button>
-        <button id="btn-en" class="lang-btn" onclick="setLang('en')">EN</button>
-    </div>
+    <a href="#donate">МАГАЗИН</a>
+    <a href="#rules">ПРАВИЛА</a>
 </nav>
 
 <div class="container">
-    <section id="home">
-        <h2 class="lang" data-ua="Вітаємо, Друже!" data-en="Welcome, friend!">Вітаємо, Друже!</h2>
-        <p style="text-align: center; line-height: 1.6;" class="lang" 
-           data-ua="LankciWorld — це новий світ пригод, унікальні привілеї та справжнє виживання." 
-           data-en="LankciWorld — a new world of adventures, unique privileges, and real survival.">
-           LankciWorld — це новий світ пригод, унікальні привілеї та справжнє виживання.
-        </p>
-    </section>
-
     <section id="donate">
-        <h2 class="lang" data-ua="Магазин Привілеїв" data-en="Privilege Shop">Магазин Привілеїв</h2>
+        <h2 style="text-align: center; color: #ff4400; text-transform: uppercase; margin-bottom: 35px;">Магазин Привілегій</h2>
         <div class="donate-grid">
             
             <div class="card imperator">
-                <img src="./img/imperator.png" class="rank-art" onerror="this.src='https://via.placeholder.com/150?text=IMPERATOR'">
-                <h3>IMPERATOR</h3>
-                <p class="lang" data-ua="Найвищий ранг: Влада над світом та ексклюзивні команди!" data-en="Highest rank: World power and exclusive commands!">Найвищий ранг: Влада над світом та ексклюзивні команди!</p>
-                <span class="price">950 грн</span>
-                <a href="https://t.me/Kostyanchu_original" class="buy-btn lang" data-ua="Придбати" data-en="Buy Now">Придбати</a>
+                <img src="./img/imperator.png" class="rank-art" alt="Imperator">
+                <div>
+                    <h3>IMPERATOR</h3>
+                    <p>Повна влада над світом та ексклюзивні команди!</p>
+                </div>
+                <div>
+                    <span class="price">950 грн</span>
+                    <a href="https://t.me/Kostyanchu_original" class="buy-btn">ПРИДБАТИ</a>
+                </div>
             </div>
 
-            <div class="card hero">
-                <img src="./img/hero.png" class="rank-art" onerror="this.src='https://via.placeholder.com/150?text=HERO'">
-                <h3>HERO</h3>
-                <p class="lang" data-ua="Герой сервера: Покращені набори та повага гравців." data-en="Server Hero: Better kits and player respect.">Герой сервера: Покращені набори та повага гравців.</p>
-                <span class="price">150 грн</span>
-                <a href="https://t.me/Kostyanchu_original" class="buy-btn lang" data-ua="Придбати" data-en="Buy Now">Придбати</a>
+            <div class="card tsc">
+                <img src="./img/second_coming.PNG" class="rank-art" alt="Second Coming">
+                <div>
+                    <h3>THE SECOND COMING</h3>
+                    <p>Лаймове сяйво та унікальні здібності творця.</p>
+                </div>
+                <div>
+                    <span class="price">150 грн</span>
+                    <a href="https://t.me/Kostyanchu_original" class="buy-btn">ПРИДБАТИ</a>
+                </div>
             </div>
 
             <div class="card hacker">
-                <img src="./img/h4ck3r.PNG" class="rank-art" onerror="this.src='https://via.placeholder.com/150?text=PNG+Error'">
-                <h3>H4CK3R</h3>
-                <p class="lang" data-ua="Адмінські можливості та злам правил!" data-en="Admin abilities and rule breaking!">Адмінські можливості та злам правил!</p>
-                <span class="price">450 грн</span>
-                <a href="https://t.me/Kostyanchu_original" class="buy-btn lang" data-ua="Придбати" data-en="Buy Now">Придбати</a>
+                <img src="./img/h4ck3r.PNG" class="rank-art" alt="Hacker">
+                <div>
+                    <h3>H4CK3R</h3>
+                    <p>Адмінські можливості та злам правил чату!</p>
+                </div>
+                <div>
+                    <span class="price">450 грн</span>
+                    <a href="https://t.me/Kostyanchu_original" class="buy-btn">ПРИДБАТИ</a>
+                </div>
             </div>
 
             <div class="card darklord">
-                <img src="./img/dark_lord.PNG" class="rank-art" onerror="this.src='https://via.placeholder.com/150?text=PNG+Error'">
-                <h3>The Dark Lord</h3>
-                <p class="lang" data-ua="Дарк Лорд: Літання і фаервол." data-en="Lord of Darkness: Flight and firewall.">Дарк Лорд: Літання і фаервол.</p>
-                <span class="price">280 грн</span>
-                <a href="https://t.me/Kostyanchu_original" class="buy-btn lang" data-ua="Придбати" data-en="Buy Now">Придбати</a>
+                <img src="./img/dark_lord.PNG" class="rank-art" alt="Dark Lord">
+                <div>
+                    <h3>THE DARK LORD</h3>
+                    <p>Темний владика: Політ та фаервол.</p>
+                </div>
+                <div>
+                    <span class="price">280 грн</span>
+                    <a href="https://t.me/Kostyanchu_original" class="buy-btn">ПРИДБАТИ</a>
+                </div>
             </div>
 
             <div class="card chosen">
-                <img src="./img/chosen_one.PNG" class="rank-art" onerror="this.src='https://via.placeholder.com/150?text=PNG+Error'">
-                <h3>The Chosen One</h3>
-                <p class="lang" data-ua="Обраний: Літання і лазери з очей." data-en="Chosen: Flying and lasers from the eyes.">Обраний: Літання і лазери з очей.</p>
-                <span class="price">190 грн</span>
-                <a href="https://t.me/Kostyanchu_original" class="buy-btn lang" data-ua="Придбати" data-en="Buy Now">Придбати</a>
+                <img src="./img/chosen_one.PNG" class="rank-art" alt="Chosen One">
+                <div>
+                    <h3>THE CHOSEN ONE</h3>
+                    <p>Обраний: Унікальні візуальні ефекти та політ.</p>
+                </div>
+                <div>
+                    <span class="price">190 грн</span>
+                    <a href="https://t.me/Kostyanchu_original" class="buy-btn">ПРИДБАТИ</a>
+                </div>
+            </div>
+
+            <div class="card dragon">
+                <img src="./img/dragon.PNG" class="rank-art" alt="Dragon">
+                <div>
+                    <h3>DRAGON</h3>
+                    <p>Вогнестійкість та дихання дракона.</p>
+                </div>
+                <div>
+                    <span class="price">110 грн</span>
+                    <a href="https://t.me/Kostyanchu_original" class="buy-btn">ПРИДБАТИ</a>
+                </div>
+            </div>
+
+            <div class="card hero">
+                <img src="./img/hero.png" class="rank-art" alt="Hero">
+                <div>
+                    <h3>HERO</h3>
+                    <p>Класичний захисник з покращеним кітом.</p>
+                </div>
+                <div>
+                    <span class="price">150 грн</span>
+                    <a href="https://t.me/Kostyanchu_original" class="buy-btn">ПРИДБАТИ</a>
+                </div>
             </div>
 
             <div class="card sigma">
-                <h3>Sigma</h3>
-                <p class="lang" data-ua="Почуй себе сігмою." data-en="Feel like a sigma.">Почуй себе сігмою.</p>
-                <span class="price">100 грн</span>
-                <a href="https://t.me/Kostyanchu_original" class="buy-btn lang" data-ua="Придбати" data-en="Buy Now">Придбати</a>
+                <div>
+                    <h3>SIGMA</h3>
+                    <p>Просто сігма. Унікальний префікс.</p>
+                </div>
+                <div>
+                    <span class="price">100 грн</span>
+                    <a href="https://t.me/Kostyanchu_original" class="buy-btn">ПРИДБАТИ</a>
+                </div>
             </div>
 
         </div>
     </section>
 
-    <section id="rules">
-        <h2 class="lang" data-ua="Правила" data-en="Rules">Правила</h2>
-        <p>1. <span class="lang" data-ua="Ніяких читів — бан на 25 дн." data-en="No cheats — 25 days ban.">Ніяких читів — бан на 25 дн.</span><br> 
-           2. <span class="lang" data-ua="Повага до гравців та адмінів." data-en="Respect for players and admins.">Повага до гравців та адмінів.</span></p>
+    <section id="rules" class="rules-section">
+        <h2>Правила Сервера</h2>
+        <div class="rules-list">
+            <p>1. 🚫 **Чити** — Негайний бан на 25 днів без права оскарження.</p>
+            <p>2. 🤝 **Повега** — Заборонено ображати інших гравців та адміністрацію.</p>
+            <p>3. 🏗️ **Будівництво** — Заборонено псувати чужі будівлі (гриферство) поза зонами ПвП.</p>
+            <p>4. 💎 **Донат** — Є добровільним внеском і поверненню не підлягає.</p>
+        </div>
     </section>
 </div>
 
 <script>
-    let currentLang = 'ua';
-    function setLang(lang) {
-        currentLang = lang;
-        document.querySelectorAll('.lang').forEach(el => {
-            el.textContent = el.getAttribute('data-' + lang);
-        });
-        const statusEl = document.getElementById('copy-status');
-        if (!statusEl.classList.contains('copied')) {
-            statusEl.textContent = statusEl.getAttribute('data-' + lang);
-        }
-        document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-        document.getElementById('btn-' + lang).classList.add('active');
-    }
-
     function copyIP() {
         const ipText = document.getElementById('server-ip').textContent;
         const statusEl = document.getElementById('copy-status');
+        
         navigator.clipboard.writeText(ipText).then(() => {
-            const originalText = statusEl.getAttribute('data-' + currentLang);
-            statusEl.textContent = currentLang === 'ua' ? "✅ СКОПІЙОВАНО!" : "✅ COPIED!";
+            statusEl.textContent = "✅ СКОПІЙОВАНО!";
             statusEl.style.color = "#00ff00";
-            statusEl.classList.add('copied');
+            
             setTimeout(() => {
-                statusEl.textContent = originalText;
-                statusEl.style.color = "#aaa";
-                statusEl.classList.remove('copied');
+                statusEl.textContent = "КЛИКНИ, ЩОБ СКОПІЮВАТИ";
+                statusEl.style.color = "#ffcc00";
             }, 2000);
         });
     }
 </script>
+
 </body>
 </html>
