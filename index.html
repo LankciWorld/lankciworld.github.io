@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LankciWorld | Офіційний сайт</title>
+    <title>LankciWorld | Офіційний сайт Майнкрафт</title>
+    <meta name="description" content="LankciWorld — найкращий Майнкрафт сервер з унікальними привілеями Imperator, Hero та Hacker. Заходь та грай!">
+    <meta name="keywords" content="LankciWorld, майнкрафт сервер, донат майнкрафт, купити привілеї, Imperator rank, Hero rank">
+    
     <style>
         /* ОСНОВНІ СТИЛІ */
         body { font-family: 'Segoe UI', sans-serif; background-color: #0d0d0d; color: #f0f0f0; margin: 0; scroll-behavior: smooth; overflow-x: hidden; }
@@ -26,7 +29,7 @@
 
         /* СІТКА ДОНАТУ */
         .donate-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .card { background: #1a1a1a; border: 2px solid #333; padding: 25px; border-radius: 15px; text-align: center; transition: 0.4s; display: flex; flex-direction: column; align-items: center; }
+        .card { background: #1a1a1a; border: 2px solid #333; padding: 25px; border-radius: 15px; text-align: center; transition: 0.4s; display: flex; flex-direction: column; align-items: center; position: relative; }
         .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
         
         /* КАРТИНКИ РАНГІВ */
@@ -35,23 +38,24 @@
             max-width: 220px;
             height: auto;
             margin-bottom: 15px;
-            image-rendering: pixelated; 
+            border-radius: 10px;
             transition: 0.3s;
         }
-        .card:hover .rank-art { transform: scale(1.1); filter: brightness(1.2); }
+        .card:hover .rank-art { transform: scale(1.05); filter: brightness(1.1); }
 
-        /* ЕФЕКТИ ДЛЯ РАНГІВ */
+        /* СПЕЦІАЛЬНІ ЕФЕКТИ ДЛЯ НОВИХ РАНГІВ */
+        .imperator { border-color: #ffd700; background: linear-gradient(180deg, #1a1a1a 0%, #2a2400 100%); }
+        .imperator h3 { color: #ffd700; text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
+        .hero { border-color: #00d4ff; }
+        .hero h3 { color: #00d4ff; }
+
+        /* СТАРІ РАНГИ */
         .sigma { border-color: #808080; }
         .tsc { border-color: #eab308; }
-        .tsc .rank-art { filter: drop-shadow(0 0 10px rgba(234, 179, 8, 0.5)); }
         .dragon { border-color: #3b82f6; }
-        .dragon .rank-art { filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.5)); }
         .chosen { border-color: #a855f7; }
-        .chosen .rank-art { filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.5)); }
         .darklord { border-color: #ef4444; }
-        .darklord .rank-art { filter: drop-shadow(0 0 10px rgba(239, 68, 68, 0.5)); }
         .hacker { border-color: #22c55e; background: linear-gradient(180deg, #1a1a1a 0%, #052e16 100%); }
-        .hacker .rank-art { filter: drop-shadow(0 0 10px rgba(34, 197, 94, 0.7)); }
 
         .price { font-size: 24px; color: #22c55e; font-weight: bold; margin: 15px 0; display: block; }
         .buy-btn { background: #ff0055; color: white; padding: 10px 20px; text-decoration: none; border-radius: 8px; font-weight: bold; width: 80%; transition: 0.3s; }
@@ -70,16 +74,7 @@
         }
         .ip-box:hover { background: rgba(255, 0, 85, 0.1); border-style: solid; }
         #server-ip { font-weight: bold; font-size: 18px; color: #fff; display: block; }
-        .copy-hint { font-size: 10px; color: #aaa; text-transform: uppercase; margin-top: 4px; display: block; transition: 0.3s; }
-
-        /* АДАПТИВНІСТЬ */
-        @media (max-width: 600px) {
-            header { padding: 40px 10px; }
-            nav { padding: 5px; }
-            nav a { margin: 0 5px; font-size: 12px; }
-            section { padding: 20px 15px; }
-            .donate-grid { grid-template-columns: 1fr; }
-        }
+        .copy-hint { font-size: 10px; color: #aaa; text-transform: uppercase; margin-top: 4px; display: block; }
     </style>
 </head>
 <body>
@@ -95,7 +90,6 @@
 <nav>
     <a href="#home" class="lang" data-ua="Головна" data-en="Home">Головна</a>
     <a href="#donate" class="lang" data-ua="Донат" data-en="Donate">Донат</a>
-    <a href="#updates" class="lang" data-ua="Оновлення" data-en="Updates">Оновлення</a>
     <a href="#rules" class="lang" data-ua="Правила" data-en="Rules">Правила</a>
     <div class="lang-switch">
         <button id="btn-ua" class="lang-btn active" onclick="setLang('ua')">UA</button>
@@ -107,9 +101,9 @@
     <section id="home">
         <h2 class="lang" data-ua="Вітаємо, Друже!" data-en="Welcome, friend!">Вітаємо, Друже!</h2>
         <p style="text-align: center; line-height: 1.6;" class="lang" 
-           data-ua="LankciWorld — це новий сервер, унікальний функціонал та багато іншого." 
-           data-en="LankciWorld — this is a new server with unique functionality and much more.">
-           LankciWorld — це новий сервер, унікальний функціонал та багато іншого.
+           data-ua="LankciWorld — це новий світ пригод, унікальні привілеї та справжнє виживання." 
+           data-en="LankciWorld — a new world of adventures, unique privileges, and real survival.">
+           LankciWorld — це новий світ пригод, унікальні привілеї та справжнє виживання.
         </p>
     </section>
 
@@ -117,42 +111,19 @@
         <h2 class="lang" data-ua="Магазин Привілеїв" data-en="Privilege Shop">Магазин Привілеїв</h2>
         <div class="donate-grid">
             
-            <div class="card sigma">
-                <h3>Sigma</h3>
-                <p class="lang" data-ua="Почуй себе сігмою." data-en="Feel like a sigma.">Почуй себе сігмою.</p>
-                <span class="price">100 грн</span>
+            <div class="card imperator">
+                <img src="./img/imperator.png" class="rank-art" onerror="this.src='https://via.placeholder.com/150?text=IMPERATOR'">
+                <h3>IMPERATOR</h3>
+                <p class="lang" data-ua="Найвищий ранг: Влада над світом та ексклюзивні команди!" data-en="Highest rank: World power and exclusive commands!">Найвищий ранг: Влада над світом та ексклюзивні команди!</p>
+                <span class="price">950 грн</span>
                 <a href="https://t.me/Kostyanchu_original" class="buy-btn lang" data-ua="Придбати" data-en="Buy Now">Придбати</a>
             </div>
 
-            <div class="card tsc">
-                <img src="./img/second_coming.PNG" class="rank-art" onerror="this.src='https://via.placeholder.com/150?text=PNG+Error'">
-                <h3>The Second Coming</h3>
-                <p class="lang" data-ua="Сила Творця: Політ та унікальні частки." data-en="Creator's Power: Flight and unique particles.">Сила Творця: Політ та унікальні частки.</p>
+            <div class="card hero">
+                <img src="./img/hero.png" class="rank-art" onerror="this.src='https://via.placeholder.com/150?text=HERO'">
+                <h3>HERO</h3>
+                <p class="lang" data-ua="Герой сервера: Покращені набори та повага гравців." data-en="Server Hero: Better kits and player respect.">Герой сервера: Покращені набори та повага гравців.</p>
                 <span class="price">150 грн</span>
-                <a href="https://t.me/Kostyanchu_original" class="buy-btn lang" data-ua="Придбати" data-en="Buy Now">Придбати</a>
-            </div>
-
-            <div class="card dragon">
-                <img src="./img/dragon.PNG" class="rank-art" onerror="this.src='https://via.placeholder.com/150?text=PNG+Error'">
-                <h3>Dragon</h3>
-                <p class="lang" data-ua="Дихання дракона: Ефекти вогнестійкості." data-en="Dragon Breath: Fire resistance effects.">Дихання дракона: Ефекти вогнестійкості.</p>
-                <span class="price">110 грн</span>
-                <a href="https://t.me/Kostyanchu_original" class="buy-btn lang" data-ua="Придбати" data-en="Buy Now">Придбати</a>
-            </div>
-
-            <div class="card chosen">
-                <img src="./img/chosen_one.PNG" class="rank-art" onerror="this.src='https://via.placeholder.com/150?text=PNG+Error'">
-                <h3>The Chosen One</h3>
-                <p class="lang" data-ua="Обраний: Літання і лазери з очей." data-en="Chosen: Flying and lasers from the eyes.">Обраний: Літання і лазери з очей.</p>
-                <span class="price">190 грн</span>
-                <a href="https://t.me/Kostyanchu_original" class="buy-btn lang" data-ua="Придбати" data-en="Buy Now">Придбати</a>
-            </div>
-
-            <div class="card darklord">
-                <img src="./img/dark_lord.PNG" class="rank-art" onerror="this.src='https://via.placeholder.com/150?text=PNG+Error'">
-                <h3>The Dark Lord</h3>
-                <p class="lang" data-ua="Дарк Лорд: Літання і фаервол." data-en="Lord of Darkness: Flight and firewall.">Дарк Лорд: Літання і фаервол.</p>
-                <span class="price">280 грн</span>
                 <a href="https://t.me/Kostyanchu_original" class="buy-btn lang" data-ua="Придбати" data-en="Buy Now">Придбати</a>
             </div>
 
@@ -164,14 +135,30 @@
                 <a href="https://t.me/Kostyanchu_original" class="buy-btn lang" data-ua="Придбати" data-en="Buy Now">Придбати</a>
             </div>
 
-        </div>
-    </section>
+            <div class="card darklord">
+                <img src="./img/dark_lord.PNG" class="rank-art" onerror="this.src='https://via.placeholder.com/150?text=PNG+Error'">
+                <h3>The Dark Lord</h3>
+                <p class="lang" data-ua="Дарк Лорд: Літання і фаервол." data-en="Lord of Darkness: Flight and firewall.">Дарк Лорд: Літання і фаервол.</p>
+                <span class="price">280 грн</span>
+                <a href="https://t.me/Kostyanchu_original" class="buy-btn lang" data-ua="Придбати" data-en="Buy Now">Придбати</a>
+            </div>
 
-    <section id="updates">
-        <h2 class="lang" data-ua="Новини сервера" data-en="Server News">Новини сервера</h2>
-        <p><b><span class="lang" data-ua="Оновлення 1.2" data-en="Update 1.2">Оновлення 1.2</span>:</b> 
-           <span class="lang" data-ua="Нове лоббі оновлений спавн" data-en="New lobby and updated spawn">Нове лоббі оновлений спавн</span>. <br> 
-           <span class="lang" data-ua="Наступний крок — новий режим!" data-en="Next step — new mode!">Наступний крок — новий режим!</span></p>
+            <div class="card chosen">
+                <img src="./img/chosen_one.PNG" class="rank-art" onerror="this.src='https://via.placeholder.com/150?text=PNG+Error'">
+                <h3>The Chosen One</h3>
+                <p class="lang" data-ua="Обраний: Літання і лазери з очей." data-en="Chosen: Flying and lasers from the eyes.">Обраний: Літання і лазери з очей.</p>
+                <span class="price">190 грн</span>
+                <a href="https://t.me/Kostyanchu_original" class="buy-btn lang" data-ua="Придбати" data-en="Buy Now">Придбати</a>
+            </div>
+
+            <div class="card sigma">
+                <h3>Sigma</h3>
+                <p class="lang" data-ua="Почуй себе сігмою." data-en="Feel like a sigma.">Почуй себе сігмою.</p>
+                <span class="price">100 грн</span>
+                <a href="https://t.me/Kostyanchu_original" class="buy-btn lang" data-ua="Придбати" data-en="Buy Now">Придбати</a>
+            </div>
+
+        </div>
     </section>
 
     <section id="rules">
@@ -183,35 +170,27 @@
 
 <script>
     let currentLang = 'ua';
-
     function setLang(lang) {
         currentLang = lang;
         document.querySelectorAll('.lang').forEach(el => {
             el.textContent = el.getAttribute('data-' + lang);
         });
-        
-        // Окремо для статусу копіювання
-        const copyStatus = document.getElementById('copy-status');
-        if (!copyStatus.classList.contains('copied')) {
-            copyStatus.textContent = copyStatus.getAttribute('data-' + lang);
+        const statusEl = document.getElementById('copy-status');
+        if (!statusEl.classList.contains('copied')) {
+            statusEl.textContent = statusEl.getAttribute('data-' + lang);
         }
-
         document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-        if(lang === 'ua') document.getElementById('btn-ua').classList.add('active');
-        else document.getElementById('btn-en').classList.add('active');
+        document.getElementById('btn-' + lang).classList.add('active');
     }
 
     function copyIP() {
         const ipText = document.getElementById('server-ip').textContent;
         const statusEl = document.getElementById('copy-status');
-        
         navigator.clipboard.writeText(ipText).then(() => {
             const originalText = statusEl.getAttribute('data-' + currentLang);
-            
             statusEl.textContent = currentLang === 'ua' ? "✅ СКОПІЙОВАНО!" : "✅ COPIED!";
             statusEl.style.color = "#00ff00";
             statusEl.classList.add('copied');
-            
             setTimeout(() => {
                 statusEl.textContent = originalText;
                 statusEl.style.color = "#aaa";
@@ -220,6 +199,5 @@
         });
     }
 </script>
-
 </body>
 </html>
