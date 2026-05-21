@@ -259,7 +259,7 @@ footer span{color:var(--or);}
       <div class="team-avatar">⚔️</div>
       <div class="team-info">
         <div class="team-role">Moderator</div>
-        <div class="team-nick">Griffith</div>
+        <div class="team-nick">Danilo</div>
       </div>
     </div>
 
@@ -267,7 +267,7 @@ footer span{color:var(--or);}
       <div class="team-avatar">⚔️</div>
       <div class="team-info">
         <div class="team-role">Moderator</div>
-        <div class="team-nick">Danilo</div>
+        <div class="team-nick">Griffith</div>
       </div>
     </div>
 
@@ -358,7 +358,6 @@ function setLang(l){
 document.getElementById('lb-ua').addEventListener('click',function(){setLang('ua');});
 document.getElementById('lb-en').addEventListener('click',function(){setLang('en');});
 
-/* Статус — з таймаутом 8 сек щоб не висіло "Перевірка" */
 function setOff(){
   document.getElementById('sdot').className='sd off';
   var st=document.getElementById('stxt');
@@ -368,34 +367,58 @@ function setOff(){
   document.getElementById('plf').style.width='0%';
   document.getElementById('pln').textContent='0/'+MAX;
 }
+
+function setOn(online,max){
+  document.getElementById('sdot').className='sd on';
+  var st=document.getElementById('stxt');
+  st.textContent=lang==='ua'?'Онлайн':'Online';
+  st.style.color='var(--gr)';st._s='on';
+  document.getElementById('sBadge').className='sbdg on';
+  document.getElementById('plf').style.width=Math.min(online/max*100,100)+'%';
+  document.getElementById('pln').textContent=online+'/'+max;
+}
+
 function fetchStatus(){
   var st=document.getElementById('stxt');
   st.textContent=lang==='ua'?'Перевірка...':'Checking...';
   st.style.color='var(--mu)';st._s='chk';
   document.getElementById('sdot').className='sd';
 
-  /* Таймаут 8 секунд */
-  var didRespond=false;
-  var timer=setTimeout(function(){if(!didRespond){didRespond=true;setOff();}},8000);
+  var done=false;
+  var t=setTimeout(function(){if(!done){done=true;setOff();}},8000);
 
-  fetch('https://api.mcsrvstat.us/3/'+IP,{cache:'no-store'})
-    .then(function(r){return r.ok?r.json():Promise.reject('bad');})
-    .then(function(d){
-      if(didRespond)return;
-      didRespond=true;clearTimeout(timer);
-      if(d.online===true){
-        var on=(d.players&&d.players.online)?d.players.online:0;
-        var mx=(d.players&&d.players.max)?d.players.max:MAX;
-        document.getElementById('sdot').className='sd on';
-        st.textContent=lang==='ua'?'Онлайн':'Online';
-        st.style.color='var(--gr)';st._s='on';
-        document.getElementById('sBadge').className='sbdg on';
-        document.getElementById('plf').style.width=Math.min(on/mx*100,100)+'%';
-        document.getElementById('pln').textContent=on+'/'+mx;
-      }else{setOff();}
-    })
-    .catch(function(){if(!didRespond){didRespond=true;clearTimeout(timer);setOff();}});
+  /* Запитуємо обидва API паралельно.
+     Показуємо "Онлайн" тільки якщо МОВ3 каже online:true
+     І додатково перевіряємо що players.online не null.
+     mcapi.us — другий незалежний API без кешу. */
+  var p1=fetch('https://api.mcsrvstat.us/3/'+IP+'?nocache='+Date.now(),{cache:'no-store'})
+    .then(function(r){return r.ok?r.json():null;}).catch(function(){return null;});
+
+  var p2=fetch('https://mcapi.us/query/'+IP,{cache:'no-store'})
+    .then(function(r){return r.ok?r.json():null;}).catch(function(){return null;});
+
+  Promise.all([p1,p2]).then(function(res){
+    if(done)return;
+    done=true;clearTimeout(t);
+    var d1=res[0]; /* mcsrvstat */
+    var d2=res[1]; /* mcapi.us */
+
+    /* Сервер вважається онлайн ТІЛЬКИ якщо mcsrvstat каже online:true
+       І при цьому mcapi.us теж підтверджує (або не відповів зовсім) */
+    var s1online = d1 && d1.online===true;
+    /* mcapi.us: {"online":true} або {"online":false} */
+    var s2online = !d2 || d2.online===true; /* якщо не відповів — не блокуємо */
+
+    if(s1online && s2online){
+      var on=(d1.players&&d1.players.online!=null)?d1.players.online:0;
+      var mx=(d1.players&&d1.players.max)?d1.players.max:MAX;
+      setOn(on,mx);
+    } else {
+      setOff();
+    }
+  });
 }
+
 fetchStatus();
 setInterval(fetchStatus,60000);
 })();
