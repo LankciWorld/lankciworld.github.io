@@ -1,502 +1,404 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <title>LankciWorld</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Exo+2:wght@400;600&display=swap');
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>LankciWorld</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Exo+2:wght@400;600&display=swap');
+:root{--or:#ff6a00;--od:#cc4400;--gr:#22c55e;--rd:#ef4444;--bg:#080808;--s1:#111;--s2:#181818;--br:#2a2a2a;--mu:#666;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Exo 2','Segoe UI',sans-serif;background:var(--bg);color:#e8e8e8;min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden;}
 
-        :root {
-            --orange: #ff6a00;
-            --od: #cc4400;
-            --green: #22c55e;
-            --red: #ef4444;
-            --bg: #080808;
-            --s1: #111;
-            --s2: #181818;
-            --br: #2a2a2a;
-            --text: #e8e8e8;
-            --muted: #666;
-        }
+/* HEADER */
+header{position:relative;padding:36px 16px 28px;text-align:center;background:linear-gradient(180deg,#1f0c00,var(--bg));border-bottom:1px solid #201000;overflow:hidden;}
+header::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% -10%,rgba(255,106,0,.2),transparent 60%);pointer-events:none;}
+.pt{position:absolute;border-radius:50%;background:var(--or);pointer-events:none;}
+@keyframes fup{0%{opacity:0;transform:translateY(0)}20%{opacity:.5}100%{opacity:0;transform:translateY(-100px)}}
+h1{font-family:'Orbitron',monospace;font-size:clamp(22px,8vw,58px);font-weight:900;color:#fff;letter-spacing:clamp(1px,1.5vw,8px);text-shadow:0 0 40px rgba(255,106,0,.5);position:relative;z-index:1;}
+.tgl{margin-top:5px;font-size:clamp(9px,2vw,13px);color:var(--or);letter-spacing:clamp(1px,1vw,5px);text-transform:uppercase;opacity:.7;position:relative;z-index:1;}
 
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* SERVER BLOCK — центрований */
+.sb{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;margin-top:20px;}
+.sbr1{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;}
+.sbr2{display:flex;align-items:center;gap:10px;background:var(--s2);border:1px solid var(--br);border-radius:10px;padding:9px 14px;width:100%;max-width:380px;justify-content:center;}
+#ipBtn{display:flex;align-items:center;gap:7px;background:var(--s2);border:1px solid var(--br);border-radius:10px;padding:9px 14px;cursor:pointer;color:#fff;font-family:'Orbitron',monospace;font-size:clamp(10px,2.5vw,13px);font-weight:700;transition:border-color .2s,background .2s,transform .15s;-webkit-tap-highlight-color:transparent;user-select:none;white-space:nowrap;}
+#ipBtn:active{transform:scale(.96);}
+#ipBtn.copied{border-color:var(--gr);color:var(--gr);}
+.ipic{font-size:14px;opacity:.5;transition:opacity .2s,transform .3s;}
+#ipBtn.copied .ipic{transform:scale(1.3) rotate(10deg);opacity:1;}
+.sbdg{display:flex;align-items:center;gap:7px;background:var(--s2);border:1px solid var(--br);border-radius:10px;padding:9px 13px;font-size:clamp(11px,2.5vw,13px);font-weight:600;white-space:nowrap;transition:border-color .4s;}
+.sbdg.on{border-color:rgba(34,197,94,.35);}
+.sbdg.off{border-color:rgba(239,68,68,.3);}
+.sd{width:8px;height:8px;border-radius:50%;background:var(--mu);flex-shrink:0;transition:background .4s,box-shadow .4s;}
+.sd.on{background:var(--gr);box-shadow:0 0 8px var(--gr);animation:blink 2s infinite;}
+.sd.off{background:var(--rd);box-shadow:0 0 6px var(--rd);}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.pll{font-size:12px;color:var(--mu);white-space:nowrap;}
+.plw{flex:1;background:#1e1e1e;border-radius:4px;height:5px;overflow:hidden;min-width:60px;}
+.plf{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--or),#ffcc00);width:0%;transition:width 1s cubic-bezier(.4,0,.2,1);}
+.pln{font-family:'Orbitron',monospace;font-size:11px;font-weight:700;color:#fff;white-space:nowrap;}
 
-        body {
-            font-family: 'Exo 2', 'Segoe UI', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
-            -webkit-text-size-adjust: 100%;
-        }
+/* NAV */
+nav{background:rgba(6,6,6,.97);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);position:sticky;top:0;z-index:1000;display:flex;align-items:center;justify-content:center;flex-wrap:nowrap;padding:0 10px;height:50px;border-bottom:1px solid #181818;gap:2px;}
+.nvl{display:flex;align-items:center;gap:2px;flex:1;justify-content:center;}
+.nvl button{background:transparent;border:1px solid transparent;color:var(--mu);font-weight:600;text-transform:uppercase;font-size:clamp(10px,2.2vw,12px);letter-spacing:1px;cursor:pointer;padding:7px 10px;border-radius:6px;font-family:'Exo 2','Segoe UI',sans-serif;transition:color .2s,background .2s,border-color .2s;-webkit-tap-highlight-color:transparent;white-space:nowrap;}
+.nvl button:hover,.nvl button.active{color:var(--or);}
+.nvl button.active{border-color:rgba(255,106,0,.25);background:rgba(255,106,0,.06);}
+.lsw{display:flex;gap:3px;flex-shrink:0;margin-left:4px;}
+.lb{background:transparent;color:var(--mu);border:1px solid var(--br);padding:5px 10px;border-radius:5px;cursor:pointer;font-size:10px;font-family:'Exo 2','Segoe UI',sans-serif;font-weight:600;letter-spacing:1px;transition:all .2s;-webkit-tap-highlight-color:transparent;}
+.lb.active{background:var(--or);border-color:var(--or);color:#fff;}
 
-        /* ═══ HEADER ═══ */
-        header {
-            position: relative;
-            padding: 36px 16px 28px;
-            text-align: center;
-            background: linear-gradient(180deg, #1f0c00, var(--bg));
-            border-bottom: 1px solid #201000;
-            overflow: hidden;
-        }
-        header::before {
-            content: '';
-            position: absolute; inset: 0;
-            background: radial-gradient(ellipse at 50% -10%, rgba(255,106,0,.2) 0%, transparent 60%);
-            pointer-events: none;
-        }
-        .pt { position: absolute; border-radius: 50%; background: var(--orange); pointer-events: none; }
+/* PAGES */
+.wrap{max-width:1100px;margin:24px auto;padding:0 12px;flex:1;width:100%;}
+.pg{display:none;}
+.pg.active{display:block;animation:pgin .35s cubic-bezier(.4,0,.2,1) both;}
+.pg.out{display:block;animation:pgout .2s cubic-bezier(.4,0,.2,1) both;}
+@keyframes pgin{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pgout{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-8px)}}
 
-        h1 {
-            font-family: 'Orbitron', monospace;
-            font-size: clamp(22px, 8vw, 58px);
-            font-weight: 900; color: #fff;
-            letter-spacing: clamp(1px, 1.5vw, 8px);
-            text-shadow: 0 0 40px rgba(255,106,0,.5);
-            position: relative; z-index: 1;
-        }
-        .tagline {
-            margin-top: 5px;
-            font-size: clamp(9px, 2vw, 13px);
-            color: var(--orange);
-            letter-spacing: clamp(1px, 1vw, 5px);
-            text-transform: uppercase; opacity: .7;
-            position: relative; z-index: 1;
-        }
+/* GRID */
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
 
-        /* ═══ SERVER BLOCK ═══ */
-        .server-block {
-            position: relative; z-index: 2;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            margin-top: 20px;
-        }
+/* CARD */
+.card{background:var(--s1);border:1px solid var(--br);border-radius:12px;padding:16px 12px 12px;display:flex;flex-direction:column;gap:8px;position:relative;overflow:hidden;transition:border-color .25s,transform .25s,box-shadow .25s;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--rc,var(--or));opacity:.5;transition:opacity .25s;}
+.card:hover{border-color:#383838;transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,0,0,.6);}
+.card:hover::before{opacity:1;}
+.rn{font-family:'Orbitron',monospace;font-size:clamp(10px,2.5vw,14px);font-weight:700;text-align:center;color:var(--rc,var(--or));}
+.pr{font-size:clamp(17px,4vw,22px);font-weight:700;color:#4ade80;text-align:center;}
+.bb{background:var(--or);color:#fff;padding:8px;text-decoration:none;border-radius:7px;font-weight:700;font-size:clamp(10px,2.5vw,12px);letter-spacing:1px;text-transform:uppercase;text-align:center;display:block;transition:background .2s,transform .15s;-webkit-tap-highlight-color:transparent;}
+.bb:active{transform:scale(.97);}
 
-        /* Рядок 1: IP + Статус */
-        .sb-row1 {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            width: 100%;
-            flex-wrap: nowrap;
-        }
+/* F-CARD */
+.fc{background:var(--s1);border:1px solid var(--br);border-radius:12px;padding:16px 12px;position:relative;overflow:hidden;transition:border-color .25s,transform .25s;}
+.fc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--rc,var(--or));}
+.fc:hover{border-color:#383838;transform:translateY(-3px);}
+.fc h3{font-family:'Orbitron',monospace;font-size:clamp(10px,2.2vw,13px);font-weight:700;color:var(--rc,var(--or));margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--br);}
+.fl{list-style:none;font-size:clamp(11px,2.5vw,13px);color:#bbb;line-height:1.8;}
+.fl li::before{content:"▸ ";color:var(--or);}
+.kt{background:rgba(255,106,0,.1);color:var(--or);border:1px solid rgba(255,106,0,.2);padding:4px 8px;border-radius:6px;font-size:clamp(9px,2vw,11px);font-family:'Orbitron',monospace;font-weight:700;display:block;text-align:center;margin-top:10px;letter-spacing:1px;}
 
-        .ip-btn {
-            display: flex; align-items: center; gap: 7px;
-            background: var(--s2); border: 1px solid var(--br);
-            border-radius: 10px; padding: 9px 14px;
-            cursor: pointer; color: #fff;
-            font-family: 'Orbitron', monospace;
-            font-size: clamp(10px, 2.5vw, 13px);
-            font-weight: 700; letter-spacing: .5px;
-            transition: border-color .2s, background .2s, transform .15s;
-            -webkit-tap-highlight-color: transparent;
-            user-select: none; white-space: nowrap;
-            flex-shrink: 1; min-width: 0;
-        }
-        .ip-btn:hover  { border-color: var(--orange); background: rgba(255,106,0,.08); }
-        .ip-btn:active { transform: scale(.96); }
-        .ip-btn.copied { border-color: var(--green); color: var(--green); }
-        .ip-icon { font-size: 14px; opacity: .5; flex-shrink: 0; transition: opacity .2s, transform .3s; }
-        .ip-btn:hover .ip-icon, .ip-btn.copied .ip-icon { opacity: 1; }
-        .ip-btn.copied .ip-icon { transform: scale(1.3) rotate(10deg); }
+/* RULES */
+.rb{background:var(--s1);border:1px solid var(--br);border-radius:16px;padding:20px 16px;}
+.rb h2{font-family:'Orbitron',monospace;font-size:clamp(12px,3vw,16px);color:var(--or);letter-spacing:2px;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--br);}
+.rcat{margin-bottom:20px;}
+.rcat h3{font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--or);margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+.rcat h3::after{content:'';flex:1;height:1px;background:var(--br);}
+.ri{display:flex;gap:10px;padding:9px 11px;border-radius:7px;margin-bottom:4px;background:var(--s2);border:1px solid var(--br);font-size:clamp(11px,2.5vw,13px);}
+.rnm{font-family:'Orbitron',monospace;font-size:10px;color:var(--or);font-weight:700;min-width:26px;padding-top:1px;flex-shrink:0;}
+.rt{color:#ccc;line-height:1.5;}
+.rt b{color:#fff;}
+.pun{display:inline-block;margin-top:3px;background:rgba(255,106,0,.1);border:1px solid rgba(255,106,0,.2);color:var(--or);font-size:10px;padding:1px 6px;border-radius:4px;font-weight:600;}
 
-        .status-badge {
-            display: flex; align-items: center; gap: 7px;
-            background: var(--s2); border: 1px solid var(--br);
-            border-radius: 10px; padding: 9px 13px;
-            font-size: clamp(11px, 2.5vw, 13px); font-weight: 600;
-            white-space: nowrap; flex-shrink: 0;
-            transition: border-color .4s;
-        }
-        .status-badge.is-on  { border-color: rgba(34,197,94,.35); }
-        .status-badge.is-off { border-color: rgba(239,68,68,.3); }
+/* КОМАНДА */
+.team-section{margin-bottom:40px;}
+.team-title{font-family:'Orbitron',monospace;font-size:clamp(13px,3vw,18px);color:var(--or);letter-spacing:3px;text-align:center;margin-bottom:20px;text-transform:uppercase;}
+.team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;}
+.team-card{background:var(--s1);border:1px solid var(--br);border-radius:12px;padding:16px;display:flex;align-items:center;gap:12px;transition:border-color .25s,transform .2s;}
+.team-card:hover{border-color:#383838;transform:translateY(-2px);}
+.team-card.owner{border-color:rgba(255,215,0,.25);}
+.team-card.admin{border-color:rgba(239,68,68,.2);}
+.team-card.moder{border-color:rgba(59,130,246,.2);}
+.team-avatar{width:40px;height:40px;border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:18px;}
+.team-card.owner .team-avatar{background:rgba(255,215,0,.1);}
+.team-card.admin .team-avatar{background:rgba(239,68,68,.1);}
+.team-card.moder .team-avatar{background:rgba(59,130,246,.1);}
+.team-info{}
+.team-role{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;font-weight:700;margin-bottom:2px;}
+.team-card.owner .team-role{color:#ffd700;}
+.team-card.admin .team-role{color:#ef4444;}
+.team-card.moder .team-role{color:#3b82f6;}
+.team-nick{font-family:'Orbitron',monospace;font-size:12px;font-weight:700;color:#fff;}
 
-        .sdot {
-            width: 8px; height: 8px; border-radius: 50%;
-            background: var(--muted); flex-shrink: 0;
-            transition: background .4s, box-shadow .4s;
-        }
-        .sdot.on  { background: var(--green); box-shadow: 0 0 8px var(--green); animation: blink 2s infinite; }
-        .sdot.off { background: var(--red);   box-shadow: 0 0 6px var(--red); }
-        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(70px);background:var(--gr);color:#000;padding:10px 20px;border-radius:10px;font-weight:700;font-size:13px;z-index:9999;pointer-events:none;opacity:0;transition:transform .35s cubic-bezier(.34,1.56,.64,1),opacity .3s;white-space:nowrap;}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
 
-        /* Рядок 2: Гравці */
-        .sb-row2 {
-            display: flex; align-items: center; gap: 10px;
-            background: var(--s2); border: 1px solid var(--br);
-            border-radius: 10px; padding: 9px 14px;
-            width: 100%; max-width: 420px;
-        }
-        .pl-label { font-size: 12px; color: var(--muted); white-space: nowrap; flex-shrink: 0; }
-        .pl-wrap  { flex: 1; background: #1e1e1e; border-radius: 4px; height: 5px; overflow: hidden; min-width: 0; }
-        .pl-fill  { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--orange), #ffcc00); width: 0%; transition: width 1s cubic-bezier(.4,0,.2,1); }
-        .pl-num   { font-family: 'Orbitron', monospace; font-size: 11px; font-weight: 700; color: #fff; white-space: nowrap; flex-shrink: 0; }
+footer{text-align:center;padding:22px;color:#282828;font-size:12px;border-top:1px solid #111;margin-top:32px;}
+footer span{color:var(--or);}
 
-        /* ═══ NAV ═══ */
-        nav {
-            background: rgba(6,6,6,.97);
-            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            position: sticky; top: 0; z-index: 1000;
-            display: flex; align-items: center; justify-content: center;
-            flex-wrap: nowrap;
-            padding: 0 10px;
-            height: 48px;
-            border-bottom: 1px solid #181818;
-            gap: 2px;
-        }
-        .nav-links { display: flex; align-items: center; gap: 2px; flex: 1; justify-content: center; }
-        nav a {
-            color: var(--muted); text-decoration: none; font-weight: 600;
-            text-transform: uppercase; font-size: clamp(9px, 2.2vw, 12px);
-            letter-spacing: 1px; cursor: pointer;
-            padding: 6px 10px; border-radius: 6px;
-            border: 1px solid transparent;
-            transition: color .2s, background .2s, border-color .2s;
-            -webkit-tap-highlight-color: transparent;
-            white-space: nowrap;
-        }
-        nav a:hover  { color: #fff; background: rgba(255,106,0,.08); }
-        nav a.active { color: var(--orange); border-color: rgba(255,106,0,.25); background: rgba(255,106,0,.06); }
-
-        .lang-sw { display: flex; gap: 3px; flex-shrink: 0; margin-left: 4px; }
-        .lbtn {
-            background: transparent; color: var(--muted);
-            border: 1px solid var(--br); padding: 4px 9px;
-            border-radius: 5px; cursor: pointer;
-            font-size: 10px; font-family: 'Exo 2', 'Segoe UI', sans-serif;
-            font-weight: 600; letter-spacing: 1px;
-            transition: all .2s; white-space: nowrap;
-            -webkit-tap-highlight-color: transparent;
-        }
-        .lbtn:hover  { color: #fff; border-color: #444; }
-        .lbtn.active { background: var(--orange); border-color: var(--orange); color: #fff; }
-
-        /* ═══ PAGES ═══ */
-        .container { max-width: 1100px; margin: 24px auto; padding: 0 12px; flex: 1; width: 100%; }
-
-        .page-section { display: none; }
-        .page-section.active { display: block; animation: pgIn .35s cubic-bezier(.4,0,.2,1) both; }
-        .page-section.out    { display: block; animation: pgOut .2s cubic-bezier(.4,0,.2,1) both; }
-        @keyframes pgIn  { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
-        @keyframes pgOut { from { opacity:1; transform:translateY(0); } to { opacity:0; transform:translateY(-8px); } }
-
-        /* ═══ GRID ═══ */
-        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-
-        /* ═══ SHOP CARD ═══ */
-        .card {
-            background: var(--s1); border: 1px solid var(--br);
-            border-radius: 12px; padding: 16px 12px 12px;
-            display: flex; flex-direction: column; gap: 8px;
-            position: relative; overflow: hidden;
-            transition: border-color .25s, transform .25s, box-shadow .25s;
-        }
-        .card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:var(--rank-color,var(--orange)); opacity:.5; transition:opacity .25s; }
-        .card:hover { border-color:#383838; transform:translateY(-3px); box-shadow:0 10px 28px rgba(0,0,0,.6); }
-        .card:hover::before { opacity:1; }
-
-        .rank-name { font-family:'Orbitron',monospace; font-size:clamp(10px,2.5vw,14px); font-weight:700; text-align:center; color:var(--rank-color,var(--orange)); }
-        .price { font-size:clamp(17px,4vw,22px); font-weight:700; color:#4ade80; text-align:center; }
-        .buy-btn {
-            background: var(--orange); color: #fff; padding: 8px;
-            text-decoration: none; border-radius: 7px; font-weight: 700;
-            font-size: clamp(10px,2.5vw,12px); letter-spacing: 1px;
-            text-transform: uppercase; text-align: center; display: block;
-            transition: background .2s, transform .15s;
-            -webkit-tap-highlight-color: transparent;
-        }
-        .buy-btn:hover  { background: var(--od); }
-        .buy-btn:active { transform: scale(.97); }
-
-        /* ═══ FEATURE CARD ═══ */
-        .f-card {
-            background: var(--s1); border: 1px solid var(--br);
-            border-radius: 12px; padding: 16px 12px;
-            position: relative; overflow: hidden;
-            transition: border-color .25s, transform .25s;
-        }
-        .f-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:var(--rank-color,var(--orange)); }
-        .f-card:hover { border-color:#383838; transform:translateY(-3px); }
-        .f-card h3 { font-family:'Orbitron',monospace; font-size:clamp(10px,2.2vw,13px); font-weight:700; color:var(--rank-color,var(--orange)); margin-bottom:10px; padding-bottom:8px; border-bottom:1px solid var(--br); }
-        .flist { list-style:none; font-size:clamp(11px,2.5vw,13px); color:#bbb; line-height:1.8; }
-        .flist li::before { content:"▸ "; color:var(--orange); }
-        .kit-tag { background:rgba(255,106,0,.1); color:var(--orange); border:1px solid rgba(255,106,0,.2); padding:4px 8px; border-radius:6px; font-size:clamp(9px,2vw,11px); font-family:'Orbitron',monospace; font-weight:700; display:block; text-align:center; margin-top:10px; letter-spacing:1px; }
-
-        /* ═══ RULES ═══ */
-        .rules-box { background:var(--s1); border:1px solid var(--br); border-radius:16px; padding:20px 16px; }
-        .rules-box h2 { font-family:'Orbitron',monospace; font-size:clamp(12px,3vw,16px); color:var(--orange); letter-spacing:2px; margin-bottom:20px; padding-bottom:12px; border-bottom:1px solid var(--br); }
-        .rcat { margin-bottom:20px; }
-        .rcat h3 { font-size:11px; text-transform:uppercase; letter-spacing:1.5px; color:var(--orange); margin-bottom:8px; display:flex; align-items:center; gap:8px; }
-        .rcat h3::after { content:''; flex:1; height:1px; background:var(--br); }
-        .ri { display:flex; gap:10px; padding:9px 11px; border-radius:7px; margin-bottom:4px; background:var(--s2); border:1px solid var(--br); font-size:clamp(11px,2.5vw,13px); }
-        .rn { font-family:'Orbitron',monospace; font-size:10px; color:var(--orange); font-weight:700; min-width:26px; padding-top:1px; flex-shrink:0; }
-        .rt { color:#ccc; line-height:1.5; }
-        .rt b { color:#fff; }
-        .pun { display:inline-block; margin-top:3px; background:rgba(255,106,0,.1); border:1px solid rgba(255,106,0,.2); color:var(--orange); font-size:10px; padding:1px 6px; border-radius:4px; font-weight:600; }
-
-        /* ═══ TOAST ═══ */
-        .toast {
-            position: fixed; bottom: 24px; left: 50%;
-            transform: translateX(-50%) translateY(70px);
-            background: var(--green); color: #000;
-            padding: 10px 20px; border-radius: 10px;
-            font-weight: 700; font-size: 13px;
-            z-index: 9999; pointer-events: none;
-            opacity: 0;
-            transition: transform .35s cubic-bezier(.34,1.56,.64,1), opacity .3s;
-            white-space: nowrap;
-        }
-        .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
-
-        footer { text-align:center; padding:22px; color:#282828; font-size:12px; border-top:1px solid #111; margin-top:32px; }
-        footer span { color:var(--orange); }
-
-        /* ═══ DESKTOP OVERRIDES ═══ */
-        @media (min-width: 600px) {
-            header { padding: 44px 20px 36px; }
-            .server-block { flex-direction: row; align-items: center; flex-wrap: wrap; }
-            .sb-row1 { width: auto; flex: 0 0 auto; }
-            .sb-row2 { width: auto; flex: 0 0 auto; min-width: 200px; max-width: none; }
-            .grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
-            nav { height: 52px; gap: 4px; padding: 0 16px; }
-            nav a { padding: 7px 14px; font-size: 12px; letter-spacing: 1.5px; }
-            .container { margin: 32px auto; padding: 0 16px; }
-        }
-    </style>
+@media(min-width:600px){
+  header{padding:44px 20px 36px;}
+  .sbr2{max-width:none;width:auto;min-width:220px;}
+  .grid{grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;}
+  nav{height:52px;gap:4px;padding:0 16px;}
+  .nvl button{padding:7px 14px;font-size:12px;letter-spacing:1.5px;}
+  .wrap{margin:32px auto;padding:0 16px;}
+}
+</style>
 </head>
 <body>
 
 <header>
-    <div id="pts"></div>
-    <h1>LANKCI WORLD</h1>
-    <p class="tagline">Minecraft Anarchy Server</p>
-
-    <div class="server-block">
-        <!-- Рядок 1: IP + Status -->
-        <div class="sb-row1">
-            <button class="ip-btn" id="ipBtn">
-                <span>LankciWorld.mcsh.io</span>
-                <span class="ip-icon">⧉</span>
-            </button>
-            <div class="status-badge" id="sBadge">
-                <div class="sdot" id="sdot"></div>
-                <span id="stext" style="color:var(--muted)" data-ua="Перевірка..." data-en="Checking...">Перевірка...</span>
-            </div>
-        </div>
-        <!-- Рядок 2: Players -->
-        <div class="sb-row2">
-            <span class="pl-label" data-ua="Гравці" data-en="Players">Гравці</span>
-            <div class="pl-wrap"><div class="pl-fill" id="plBar"></div></div>
-            <span class="pl-num" id="plNum">—</span>
-        </div>
-    </div>
+<div id="pts"></div>
+<h1>LANKCI WORLD</h1>
+<p class="tgl">Minecraft Anarchy Server</p>
+<div class="sb">
+  <div class="sbr1">
+    <button id="ipBtn"><span>LankciWorld.mcsh.io</span><span class="ipic">⧉</span></button>
+    <div class="sbdg" id="sBadge"><div class="sd" id="sdot"></div><span id="stxt" style="color:var(--mu)">Перевірка...</span></div>
+  </div>
+  <div class="sbr2">
+    <span class="pll" id="pllbl">Гравці</span>
+    <div class="plw"><div class="plf" id="plf"></div></div>
+    <span class="pln" id="pln">—</span>
+  </div>
+</div>
 </header>
 
 <nav>
-    <div class="nav-links">
-        <a id="nav-donate"   onclick="showPage('donate')"   class="active" data-ua="Магазин"    data-en="Shop">Магазин</a>
-        <a id="nav-features" onclick="showPage('features')"               data-ua="Функціонал" data-en="Features">Функціонал</a>
-        <a id="nav-rules"    onclick="showPage('rules')"                  data-ua="Правила"    data-en="Rules">Правила</a>
-    </div>
-    <div class="lang-sw">
-        <button class="lbtn active" id="btn-ua" onclick="setLang('ua')">UA</button>
-        <button class="lbtn"        id="btn-en" onclick="setLang('en')">EN</button>
-    </div>
+<div class="nvl">
+  <button id="nb-donate"   class="active">Магазин</button>
+  <button id="nb-features">Функціонал</button>
+  <button id="nb-rules">Правила</button>
+  <button id="nb-team">Команда</button>
+</div>
+<div class="lsw">
+  <button class="lb active" id="lb-ua">UA</button>
+  <button class="lb"        id="lb-en">EN</button>
+</div>
 </nav>
 
-<div class="container">
+<div class="wrap">
 
-    <!-- МАГАЗИН -->
-    <section id="donate" class="page-section active">
-        <div class="grid">
-            <div class="card" style="--rank-color:#ffd700"><div class="rank-name">Imperator</div><div class="price">1250 грн</div><a href="https://t.me/Kostyanchu_original" class="buy-btn" data-ua="Придбати" data-en="Buy Now">Придбати</a></div>
-            <div class="card" style="--rank-color:#32cd32"><div class="rank-name">The Second Coming</div><div class="price">489 грн</div><a href="https://t.me/Kostyanchu_original" class="buy-btn" data-ua="Придбати" data-en="Buy Now">Придбати</a></div>
-            <div class="card" style="--rank-color:#22c55e"><div class="rank-name">H4CK3R</div><div class="price">1574 грн</div><a href="https://t.me/Kostyanchu_original" class="buy-btn" data-ua="Придбати" data-en="Buy Now">Придбати</a></div>
-            <div class="card" style="--rank-color:#ef4444"><div class="rank-name">The Dark Lord</div><div class="price">300 грн</div><a href="https://t.me/Kostyanchu_original" class="buy-btn" data-ua="Придбати" data-en="Buy Now">Придбати</a></div>
-            <div class="card" style="--rank-color:#ffff00"><div class="rank-name">The Chosen One</div><div class="price">499 грн</div><a href="https://t.me/Kostyanchu_original" class="buy-btn" data-ua="Придбати" data-en="Buy Now">Придбати</a></div>
-            <div class="card" style="--rank-color:#3b82f6"><div class="rank-name">Dragon</div><div class="price">357 грн</div><a href="https://t.me/Kostyanchu_original" class="buy-btn" data-ua="Придбати" data-en="Buy Now">Придбати</a></div>
-            <div class="card" style="--rank-color:#00d4ff"><div class="rank-name">Hero</div><div class="price">179 грн</div><a href="https://t.me/Kostyanchu_original" class="buy-btn" data-ua="Придбати" data-en="Buy Now">Придбати</a></div>
-            <div class="card" style="--rank-color:#333"><div class="rank-name" style="color:#444" data-ua="Скоро..." data-en="Coming soon...">Скоро...</div><div class="price" style="color:#333">???</div><a href="#" class="buy-btn" style="background:#1c1c1c;cursor:default;color:#444" data-ua="Скоро" data-en="Soon">Скоро</a></div>
-        </div>
-    </section>
+<!-- МАГАЗИН -->
+<section id="pg-donate" class="pg active">
+<div class="grid">
+<div class="card" style="--rc:#ffd700"><div class="rn">Imperator</div><div class="pr">1250 грн</div><a href="https://t.me/Kostyanchu_original" class="bb" data-ua="ПРИДБАТИ" data-en="BUY NOW">ПРИДБАТИ</a></div>
+<div class="card" style="--rc:#32cd32"><div class="rn">The Second Coming</div><div class="pr">489 грн</div><a href="https://t.me/Kostyanchu_original" class="bb" data-ua="ПРИДБАТИ" data-en="BUY NOW">ПРИДБАТИ</a></div>
+<div class="card" style="--rc:#22c55e"><div class="rn">H4CK3R</div><div class="pr">1574 грн</div><a href="https://t.me/Kostyanchu_original" class="bb" data-ua="ПРИДБАТИ" data-en="BUY NOW">ПРИДБАТИ</a></div>
+<div class="card" style="--rc:#ef4444"><div class="rn">The Dark Lord</div><div class="pr">300 грн</div><a href="https://t.me/Kostyanchu_original" class="bb" data-ua="ПРИДБАТИ" data-en="BUY NOW">ПРИДБАТИ</a></div>
+<div class="card" style="--rc:#ffff00"><div class="rn">The Chosen One</div><div class="pr">499 грн</div><a href="https://t.me/Kostyanchu_original" class="bb" data-ua="ПРИДБАТИ" data-en="BUY NOW">ПРИДБАТИ</a></div>
+<div class="card" style="--rc:#3b82f6"><div class="rn">Dragon</div><div class="pr">357 грн</div><a href="https://t.me/Kostyanchu_original" class="bb" data-ua="ПРИДБАТИ" data-en="BUY NOW">ПРИДБАТИ</a></div>
+<div class="card" style="--rc:#00d4ff"><div class="rn">Hero</div><div class="pr">179 грн</div><a href="https://t.me/Kostyanchu_original" class="bb" data-ua="ПРИДБАТИ" data-en="BUY NOW">ПРИДБАТИ</a></div>
+<div class="card" style="--rc:#333"><div class="rn" style="color:#444">Скоро...</div><div class="pr" style="color:#333">???</div><a href="#" class="bb" style="background:#1c1c1c;color:#444;cursor:default">СКОРО</a></div>
+</div>
+</section>
 
-    <!-- ФУНКЦІОНАЛ -->
-    <section id="features" class="page-section">
-        <div class="grid">
-            <div class="f-card" style="--rank-color:#ffd700"><h3>Imperator</h3><ul class="flist"><li data-ua="Політ /fly" data-en="Flight /fly">Політ /fly</li><li data-ua="Час та погода" data-en="Time & Weather">Час та погода</li><li data-ua="8 точок дому" data-en="8 homes">8 точок дому</li><li data-ua="Блискавка" data-en="Lightning">Блискавка</li></ul><div class="kit-tag">/kit imperator</div></div>
-            <div class="f-card" style="--rank-color:#32cd32"><h3>The Second Coming</h3><ul class="flist"><li data-ua="Політ /fly" data-en="Flight /fly">Політ /fly</li><li data-ua="5 точок дому" data-en="5 homes">5 точок дому</li><li data-ua="Ситість /feed" data-en="Feed /feed">Ситість /feed</li></ul><div class="kit-tag">/kit second</div></div>
-            <div class="f-card" style="--rank-color:#22c55e"><h3>H4CK3R</h3><ul class="flist"><li data-ua="10 точок дому" data-en="10 homes">10 точок дому</li><li data-ua="Політ /fly" data-en="Flight /fly">Політ /fly</li><li data-ua="Верстак /workbench" data-en="Workbench">Верстак /workbench</li></ul><div class="kit-tag">/kit h4ck3r</div></div>
-            <div class="f-card" style="--rank-color:#ef4444"><h3>The Dark Lord</h3><ul class="flist"><li data-ua="Ефекти темряви" data-en="Dark effects">Ефекти темряви</li><li data-ua="Підпалити /burn" data-en="Burn /burn">Підпалити /burn</li></ul><div class="kit-tag">/kit dark_lord</div></div>
-            <div class="f-card" style="--rank-color:#ffff00"><h3>The Chosen One</h3><ul class="flist"><li data-ua="Політ /fly" data-en="Flight /fly">Політ /fly</li><li data-ua="Зняття ефектів" data-en="Clear effects">Зняття ефектів</li><li data-ua="Загасити вогонь" data-en="Extinguish fire">Загасити вогонь</li></ul><div class="kit-tag">/kit chosen</div></div>
-            <div class="f-card" style="--rank-color:#3b82f6"><h3>Dragon</h3><ul class="flist"><li data-ua="Політ /fly" data-en="Flight /fly">Політ /fly</li><li data-ua="Імунітет до лави" data-en="Lava immunity">Імунітет до лави</li><li data-ua="Блок на голову" data-en="Block on head">Блок на голову</li></ul><div class="kit-tag">/kit dragon</div></div>
-            <div class="f-card" style="--rank-color:#00d4ff"><h3>Hero</h3><ul class="flist"><li data-ua="2 точки дому" data-en="2 homes">2 точки дому</li><li data-ua="Лікування /heal" data-en="Heal /heal">Лікування /heal</li></ul><div class="kit-tag">/kit hero</div></div>
-            <div class="f-card" style="--rank-color:#333"><h3 style="color:#444" data-ua="Скоро" data-en="Coming Soon">Скоро</h3><ul class="flist"><li>???</li></ul><div class="kit-tag" style="color:#333;border-color:#1e1e1e">???</div></div>
-        </div>
-    </section>
+<!-- ФУНКЦІОНАЛ -->
+<section id="pg-features" class="pg">
+<div class="grid">
+<div class="fc" style="--rc:#ffd700"><h3>Imperator</h3><ul class="fl"><li>Політ /fly</li><li>Час та погода</li><li>8 точок дому</li><li>Блискавка</li></ul><div class="kt">/kit imperator</div></div>
+<div class="fc" style="--rc:#32cd32"><h3>The Second Coming</h3><ul class="fl"><li>Політ /fly</li><li>5 точок дому</li><li>Ситість /feed</li></ul><div class="kt">/kit second</div></div>
+<div class="fc" style="--rc:#22c55e"><h3>H4CK3R</h3><ul class="fl"><li>10 точок дому</li><li>Політ /fly</li><li>Верстак /workbench</li></ul><div class="kt">/kit h4ck3r</div></div>
+<div class="fc" style="--rc:#ef4444"><h3>The Dark Lord</h3><ul class="fl"><li>Ефекти темряви</li><li>Підпалити /burn</li></ul><div class="kt">/kit dark_lord</div></div>
+<div class="fc" style="--rc:#ffff00"><h3>The Chosen One</h3><ul class="fl"><li>Політ /fly</li><li>Зняття ефектів</li><li>Загасити вогонь</li></ul><div class="kt">/kit chosen</div></div>
+<div class="fc" style="--rc:#3b82f6"><h3>Dragon</h3><ul class="fl"><li>Політ /fly</li><li>Імунітет до лави</li><li>Блок на голову</li></ul><div class="kt">/kit dragon</div></div>
+<div class="fc" style="--rc:#00d4ff"><h3>Hero</h3><ul class="fl"><li>2 точки дому</li><li>Лікування /heal</li></ul><div class="kt">/kit hero</div></div>
+<div class="fc" style="--rc:#333"><h3 style="color:#444">Скоро</h3><ul class="fl"><li>???</li></ul><div class="kt" style="color:#333;border-color:#1e1e1e">???</div></div>
+</div>
+</section>
 
-    <!-- ПРАВИЛА -->
-    <section id="rules" class="page-section">
-        <div class="rules-box">
-            <h2 data-ua="ПРАВИЛА СЕРВЕРА" data-en="SERVER RULES">ПРАВИЛА СЕРВЕРА</h2>
-            <div class="rcat">
-                <h3 data-ua="1. Поведінка в чаті" data-en="1. Chat Behaviour">1. Поведінка в чаті</h3>
-                <div class="ri"><span class="rn">1.1</span><div class="rt"><b data-ua="Образа батьків гравців" data-en="Insulting players' parents">Образа батьків гравців</b><br><span class="pun" data-ua="Мут 3 дні" data-en="Mute 3 days">Мут 3 дні</span></div></div>
-                <div class="ri"><span class="rn">1.2</span><div class="rt"><b data-ua="Образа сервера" data-en="Insulting the server">Образа сервера</b><br><span class="pun" data-ua="Мут 5 хвилин" data-en="Mute 5 min">Мут 5 хвилин</span></div></div>
-                <div class="ri"><span class="rn">1.3</span><div class="rt"><b data-ua="Образа адмінів / модераторів" data-en="Insulting admins / mods">Образа адмінів / модераторів</b><br><span class="pun" data-ua="Мут 30 хвилин" data-en="Mute 30 min">Мут 30 хвилин</span></div></div>
-                <div class="ri"><span class="rn">1.4</span><div class="rt"><b data-ua="Спам у чаті" data-en="Chat spam">Спам у чаті</b><br><span class="pun" data-ua="Мут 15 хвилин" data-en="Mute 15 min">Мут 15 хвилин</span></div></div>
-                <div class="ri"><span class="rn">1.5</span><div class="rt"><b data-ua="Реклама інших серверів" data-en="Advertising other servers">Реклама інших серверів</b><br><span class="pun" data-ua="Бан 7 днів" data-en="Ban 7 days">Бан 7 днів</span></div></div>
-                <div class="ri"><span class="rn">1.6</span><div class="rt"><b data-ua="Образа гравців" data-en="Insulting players">Образа гравців</b><br><span class="pun" data-ua="Мут 1 година" data-en="Mute 1 hour">Мут 1 година</span></div></div>
-            </div>
-            <div class="rcat">
-                <h3 data-ua="2. Читерство" data-en="2. Cheating">2. Читерство</h3>
-                <div class="ri"><span class="rn">2.1</span><div class="rt"><b data-ua="Використання читів" data-en="Using cheats">Використання читів</b><br><span class="pun" data-ua="Бан 32 дні" data-en="Ban 32 days">Бан 32 дні</span></div></div>
-                <div class="ri"><span class="rn">2.2</span><div class="rt"><b data-ua="Зізнання до покарання" data-en="Confession before ban">Зізнання до покарання</b><br><span class="pun" data-ua="Бан 14 днів" data-en="Ban 14 days">Бан 14 днів</span></div></div>
-                <div class="ri"><span class="rn">2.3</span><div class="rt"><b data-ua="Використання багів" data-en="Bug abuse">Використання багів</b><br><span class="pun" data-ua="Бан 14 днів" data-en="Ban 14 days">Бан 14 днів</span></div></div>
-            </div>
-            <div class="rcat">
-                <h3 data-ua="3. Гра" data-en="3. Gameplay">3. Гра</h3>
-                <div class="ri"><span class="rn">3.1</span><div class="rt"><b data-ua="Гриферство" data-en="Griefing">Гриферство</b><br><span class="pun" data-ua="Дозволено ✓" data-en="Allowed ✓">Дозволено ✓</span></div></div>
-                <div class="ri"><span class="rn">3.2</span><div class="rt"><b>PvP</b><br><span class="pun" data-ua="Дозволено ✓" data-en="Allowed ✓">Дозволено ✓</span></div></div>
-                <div class="ri"><span class="rn">3.3</span><div class="rt"><b data-ua="Видавати себе за адміна" data-en="Impersonating staff">Видавати себе за адміна</b><br><span class="pun" data-ua="Бан 7 днів" data-en="Ban 7 days">Бан 7 днів</span></div></div>
-            </div>
-        </div>
-    </section>
+<!-- ПРАВИЛА -->
+<section id="pg-rules" class="pg">
+<div class="rb">
+<h2>ПРАВИЛА СЕРВЕРА</h2>
+<div class="rcat">
+<h3>1. Поведінка в чаті</h3>
+<div class="ri"><span class="rnm">1.1</span><div class="rt"><b>Образа батьків гравців</b><br><span class="pun">Мут 3 дні</span></div></div>
+<div class="ri"><span class="rnm">1.2</span><div class="rt"><b>Образа сервера</b><br><span class="pun">Мут 5 хвилин</span></div></div>
+<div class="ri"><span class="rnm">1.3</span><div class="rt"><b>Образа адмінів / модераторів</b><br><span class="pun">Мут 30 хвилин</span></div></div>
+<div class="ri"><span class="rnm">1.4</span><div class="rt"><b>Спам у чаті</b><br><span class="pun">Мут 15 хвилин</span></div></div>
+<div class="ri"><span class="rnm">1.5</span><div class="rt"><b>Реклама інших серверів</b><br><span class="pun">Бан 7 днів</span></div></div>
+<div class="ri"><span class="rnm">1.6</span><div class="rt"><b>Образа гравців</b><br><span class="pun">Мут 1 година</span></div></div>
+</div>
+<div class="rcat">
+<h3>2. Читерство</h3>
+<div class="ri"><span class="rnm">2.1</span><div class="rt"><b>Використання читів</b><br><span class="pun">Бан 32 дні</span></div></div>
+<div class="ri"><span class="rnm">2.2</span><div class="rt"><b>Зізнання до покарання</b><br><span class="pun">Бан 14 днів</span></div></div>
+<div class="ri"><span class="rnm">2.3</span><div class="rt"><b>Використання багів</b><br><span class="pun">Бан 14 днів</span></div></div>
+</div>
+<div class="rcat">
+<h3>3. Гра</h3>
+<div class="ri"><span class="rnm">3.1</span><div class="rt"><b>Гриферство</b><br><span class="pun">Дозволено ✓</span></div></div>
+<div class="ri"><span class="rnm">3.2</span><div class="rt"><b>PvP</b><br><span class="pun">Дозволено ✓</span></div></div>
+<div class="ri"><span class="rnm">3.3</span><div class="rt"><b>Видавати себе за адміна</b><br><span class="pun">Бан 7 днів</span></div></div>
+</div>
+</div>
+</section>
+
+<!-- КОМАНДА -->
+<!-- ═══════════════════════════════════════════════
+     ЩОБ ЗМІНИТИ НІКНЕЙМИ — просто відредагуй текст
+     всередині тегів <span class="team-nick">...</span>
+     ═══════════════════════════════════════════════ -->
+<section id="pg-team" class="pg">
+<div class="team-section">
+  <div class="team-title">⚡ Команда сервера</div>
+  <div class="team-grid">
+
+    <!-- ВЛАСНИК -->
+    <div class="team-card owner">
+      <div class="team-avatar">👑</div>
+      <div class="team-info">
+        <div class="team-role">Owner</div>
+        <div class="team-nick">kostyanchu_org</div>
+      </div>
+    </div>
+
+    <!-- АДМІНИ — додай або видали блоки нижче -->
+    <div class="team-card admin">
+      <div class="team-avatar">🛡️</div>
+      <div class="team-info">
+        <div class="team-role">Admin</div>
+        <div class="team-nick">AdminNick1</div>
+      </div>
+    </div>
+
+    <div class="team-card admin">
+      <div class="team-avatar">🛡️</div>
+      <div class="team-info">
+        <div class="team-role">Admin</div>
+        <div class="team-nick">AdminNick2</div>
+      </div>
+    </div>
+
+    <!-- МОДЕРАТОРИ -->
+    <div class="team-card moder">
+      <div class="team-avatar">⚔️</div>
+      <div class="team-info">
+        <div class="team-role">Moderator</div>
+        <div class="team-nick">ModerNick1</div>
+      </div>
+    </div>
+
+    <div class="team-card moder">
+      <div class="team-avatar">⚔️</div>
+      <div class="team-info">
+        <div class="team-role">Moderator</div>
+        <div class="team-nick">ModerNick2</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</section>
+
 </div>
 
-<footer>LankciWorld <span>2024–2026</span> · <span id="fr" data-ua="Всі права захищені" data-en="All rights reserved">Всі права захищені</span></footer>
+<footer>LankciWorld <span>2024–2026</span> · <span id="ftr">Всі права захищені</span></footer>
 <div class="toast" id="toast">✓ IP скопійовано!</div>
 
 <script>
+(function(){
 'use strict';
-var IP = 'LankciWorld.mcsh.io';
-var MAX = 24;
-var lang = 'ua';
-var curPage = 'donate';
-var toastT = null;
+var IP='LankciWorld.mcsh.io';
+var MAX=24;
+var lang='ua';
+var cur='donate';
+var toastT=null;
 
 /* Частинки */
-(function(){
-    var w = document.getElementById('pts');
-    w.style.cssText = 'position:absolute;inset:0;pointer-events:none;overflow:hidden;';
-    var s = document.createElement('style');
-    s.textContent = '@keyframes fup{0%{opacity:0;transform:translateY(0)}20%{opacity:.5}100%{opacity:0;transform:translateY(-100px)}}';
-    document.head.appendChild(s);
-    for(var i=0;i<14;i++){
-        var p=document.createElement('div');
-        var sz=1+Math.random()*2;
-        p.className='pt';
-        p.style.cssText='width:'+sz+'px;height:'+sz+'px;left:'+Math.random()*100+'%;bottom:'+Math.random()*15+'px;opacity:0;animation:fup '+(3+Math.random()*4)+'s '+(Math.random()*6)+'s infinite;';
-        w.appendChild(p);
-    }
-})();
+var pw=document.getElementById('pts');
+pw.style.cssText='position:absolute;inset:0;pointer-events:none;overflow:hidden;';
+for(var i=0;i<14;i++){
+  var p=document.createElement('div');
+  var sz=1+Math.random()*2;
+  p.className='pt';
+  p.style.cssText='width:'+sz+'px;height:'+sz+'px;left:'+(Math.random()*100)+'%;bottom:'+(Math.random()*15)+'px;opacity:0;animation:fup '+(3+Math.random()*4)+'s '+(Math.random()*6)+'s infinite;';
+  pw.appendChild(p);
+}
 
 /* Навігація */
-function showPage(p){
-    if(p===curPage) return;
-    var prev=document.getElementById(curPage);
-    var next=document.getElementById(p);
-    prev.classList.add('out');
-    prev.addEventListener('animationend',function h(){
-        prev.classList.remove('active','out');
-        prev.removeEventListener('animationend',h);
-    });
-    setTimeout(function(){ next.classList.add('active'); },180);
-    document.querySelectorAll('nav a').forEach(function(a){ a.classList.remove('active'); });
-    document.getElementById('nav-'+p).classList.add('active');
-    curPage=p;
+function showPage(name){
+  if(name===cur)return;
+  var prev=document.getElementById('pg-'+cur);
+  var next=document.getElementById('pg-'+name);
+  prev.classList.add('out');
+  prev.addEventListener('animationend',function h(){prev.classList.remove('active','out');prev.removeEventListener('animationend',h);});
+  setTimeout(function(){next.classList.add('active');},180);
+  document.querySelectorAll('.nvl button').forEach(function(b){b.classList.remove('active');});
+  document.getElementById('nb-'+name).classList.add('active');
+  cur=name;
 }
+document.getElementById('nb-donate').addEventListener('click',function(){showPage('donate');});
+document.getElementById('nb-features').addEventListener('click',function(){showPage('features');});
+document.getElementById('nb-rules').addEventListener('click',function(){showPage('rules');});
+document.getElementById('nb-team').addEventListener('click',function(){showPage('team');});
 
-/* IP копіювання — два методи */
-document.getElementById('ipBtn').addEventListener('click',function(){
-    if(navigator.clipboard && navigator.clipboard.writeText){
-        navigator.clipboard.writeText(IP).then(copied).catch(fallback);
-    } else { fallback(); }
-});
+/* IP */
 function fallback(){
-    var t=document.createElement('textarea');
-    t.value=IP; t.style.cssText='position:fixed;opacity:0;';
-    document.body.appendChild(t); t.focus(); t.select();
-    try{ document.execCommand('copy'); copied(); }catch(e){}
-    document.body.removeChild(t);
+  var t=document.createElement('textarea');
+  t.value=IP;t.style.cssText='position:fixed;opacity:0;top:0;left:0;width:1px;height:1px;';
+  document.body.appendChild(t);t.focus();t.select();
+  try{document.execCommand('copy');showCopied();}catch(e){}
+  document.body.removeChild(t);
 }
-function copied(){
-    document.getElementById('ipBtn').classList.add('copied');
-    var toast=document.getElementById('toast');
-    toast.classList.add('show');
-    if(toastT) clearTimeout(toastT);
-    toastT=setTimeout(function(){
-        document.getElementById('ipBtn').classList.remove('copied');
-        toast.classList.remove('show');
-        toastT=null;
-    },2200);
+function showCopied(){
+  document.getElementById('ipBtn').classList.add('copied');
+  var toast=document.getElementById('toast');
+  toast.classList.add('show');
+  if(toastT)clearTimeout(toastT);
+  toastT=setTimeout(function(){document.getElementById('ipBtn').classList.remove('copied');toast.classList.remove('show');toastT=null;},2200);
 }
+document.getElementById('ipBtn').addEventListener('click',function(){
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(IP).then(showCopied).catch(fallback);}
+  else{fallback();}
+});
 
 /* Мова */
 function setLang(l){
-    lang=l;
-    document.querySelectorAll('[data-ua]').forEach(function(el){
-        var v=el.getAttribute('data-'+l);
-        if(v) el.textContent=v;
-    });
-    document.querySelectorAll('.lbtn').forEach(function(b){ b.classList.remove('active'); });
-    document.getElementById('btn-'+l).classList.add('active');
-    document.getElementById('toast').textContent = l==='ua' ? '✓ IP скопійовано!' : '✓ IP Copied!';
-    /* Оновити статус текст якщо онлайн/офлайн */
-    var st=document.getElementById('stext');
-    if(st.dataset.state==='on')  st.textContent = l==='ua'?'Онлайн':'Online';
-    if(st.dataset.state==='off') st.textContent = l==='ua'?'Офлайн':'Offline';
-    if(st.dataset.state==='chk') st.textContent = l==='ua'?'Перевірка...':'Checking...';
+  lang=l;
+  document.querySelectorAll('[data-ua]').forEach(function(el){var v=el.getAttribute('data-'+l);if(v)el.textContent=v;});
+  document.querySelectorAll('.lb').forEach(function(b){b.classList.remove('active');});
+  document.getElementById('lb-'+l).classList.add('active');
+  document.getElementById('toast').textContent=l==='ua'?'✓ IP скопійовано!':'✓ IP Copied!';
+  document.getElementById('ftr').textContent=l==='ua'?'Всі права захищені':'All rights reserved';
+  document.getElementById('nb-donate').textContent=l==='ua'?'Магазин':'Shop';
+  document.getElementById('nb-features').textContent=l==='ua'?'Функціонал':'Features';
+  document.getElementById('nb-rules').textContent=l==='ua'?'Правила':'Rules';
+  document.getElementById('nb-team').textContent=l==='ua'?'Команда':'Team';
+  document.getElementById('pllbl').textContent=l==='ua'?'Гравці':'Players';
+  var st=document.getElementById('stxt');
+  if(st._s==='on') st.textContent=l==='ua'?'Онлайн':'Online';
+  else if(st._s==='off') st.textContent=l==='ua'?'Офлайн':'Offline';
+  else st.textContent=l==='ua'?'Перевірка...':'Checking...';
 }
+document.getElementById('lb-ua').addEventListener('click',function(){setLang('ua');});
+document.getElementById('lb-en').addEventListener('click',function(){setLang('en');});
 
-/* Статус — використовуємо v3 API щоб уникнути кешу */
+/* Статус — з таймаутом 8 сек щоб не висіло "Перевірка" */
 function setOff(){
-    var dot=document.getElementById('sdot');
-    var st=document.getElementById('stext');
-    var b=document.getElementById('sBadge');
-    dot.className='sdot off';
-    st.textContent=lang==='ua'?'Офлайн':'Offline';
-    st.style.color='var(--red)';
-    st.dataset.state='off';
-    b.className='status-badge is-off';
-    document.getElementById('plBar').style.width='0%';
-    document.getElementById('plNum').textContent='0/'+MAX;
+  document.getElementById('sdot').className='sd off';
+  var st=document.getElementById('stxt');
+  st.textContent=lang==='ua'?'Офлайн':'Offline';
+  st.style.color='var(--rd)';st._s='off';
+  document.getElementById('sBadge').className='sbdg off';
+  document.getElementById('plf').style.width='0%';
+  document.getElementById('pln').textContent='0/'+MAX;
 }
+function fetchStatus(){
+  var st=document.getElementById('stxt');
+  st.textContent=lang==='ua'?'Перевірка...':'Checking...';
+  st.style.color='var(--mu)';st._s='chk';
+  document.getElementById('sdot').className='sd';
 
-async function fetchStatus(){
-    var dot=document.getElementById('sdot');
-    var st=document.getElementById('stext');
-    st.textContent=lang==='ua'?'Перевірка...':'Checking...';
-    st.style.color='var(--muted)';
-    st.dataset.state='chk';
-    dot.className='sdot';
-    try{
-        /* v3 API — більш надійний */
-        var r=await fetch('https://api.mcsrvstat.us/3/'+IP,{cache:'no-store'});
-        if(!r.ok){ setOff(); return; }
-        var d=await r.json();
-        if(d.online===true){
-            var on=(d.players&&d.players.online)?d.players.online:0;
-            var mx=(d.players&&d.players.max)?d.players.max:MAX;
-            dot.className='sdot on';
-            st.textContent=lang==='ua'?'Онлайн':'Online';
-            st.style.color='var(--green)';
-            st.dataset.state='on';
-            document.getElementById('sBadge').className='status-badge is-on';
-            document.getElementById('plBar').style.width=Math.min(on/mx*100,100)+'%';
-            document.getElementById('plNum').textContent=on+'/'+mx;
-        } else { setOff(); }
-    }catch(e){ setOff(); }
+  /* Таймаут 8 секунд */
+  var didRespond=false;
+  var timer=setTimeout(function(){if(!didRespond){didRespond=true;setOff();}},8000);
+
+  fetch('https://api.mcsrvstat.us/3/'+IP,{cache:'no-store'})
+    .then(function(r){return r.ok?r.json():Promise.reject('bad');})
+    .then(function(d){
+      if(didRespond)return;
+      didRespond=true;clearTimeout(timer);
+      if(d.online===true){
+        var on=(d.players&&d.players.online)?d.players.online:0;
+        var mx=(d.players&&d.players.max)?d.players.max:MAX;
+        document.getElementById('sdot').className='sd on';
+        st.textContent=lang==='ua'?'Онлайн':'Online';
+        st.style.color='var(--gr)';st._s='on';
+        document.getElementById('sBadge').className='sbdg on';
+        document.getElementById('plf').style.width=Math.min(on/mx*100,100)+'%';
+        document.getElementById('pln').textContent=on+'/'+mx;
+      }else{setOff();}
+    })
+    .catch(function(){if(!didRespond){didRespond=true;clearTimeout(timer);setOff();}});
 }
-
 fetchStatus();
 setInterval(fetchStatus,60000);
+})();
 </script>
 </body>
 </html>
