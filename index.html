@@ -4,9 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>LankciWorld</title>
+<link rel="icon" type="image/png" href="logo.png">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Exo+2:wght@400;600&display=swap');
-:root{--or:#ff6a00;--od:#cc4400;--gr:#22c55e;--rd:#ef4444;--bg:#080808;--s1:#111;--s2:#181818;--br:#2a2a2a;--mu:#666;}
+:root{--or:#ff6a00;--od:#cc4400;--gr:#22c55e;--rd:#ef4444;--bl:#3b82f6;--bg:#080808;--s1:#111;--s2:#181818;--br:#2a2a2a;--mu:#666;}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Exo 2','Segoe UI',sans-serif;background:var(--bg);color:#e8e8e8;min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden;}
 
@@ -18,7 +19,7 @@ header::before{content:'';position:absolute;inset:0;background:radial-gradient(e
 h1{font-family:'Orbitron',monospace;font-size:clamp(22px,8vw,58px);font-weight:900;color:#fff;letter-spacing:clamp(1px,1.5vw,8px);text-shadow:0 0 40px rgba(255,106,0,.5);position:relative;z-index:1;}
 .tgl{margin-top:5px;font-size:clamp(9px,2vw,13px);color:var(--or);letter-spacing:clamp(1px,1vw,5px);text-transform:uppercase;opacity:.7;position:relative;z-index:1;}
 
-/* SERVER BLOCK — центрований */
+/* SERVER BLOCK */
 .sb{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;margin-top:20px;}
 .sbr1{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;}
 .sbr2{display:flex;align-items:center;gap:10px;background:var(--s2);border:1px solid var(--br);border-radius:10px;padding:9px 14px;width:100%;max-width:380px;justify-content:center;}
@@ -42,7 +43,7 @@ h1{font-family:'Orbitron',monospace;font-size:clamp(22px,8vw,58px);font-weight:9
 /* NAV */
 nav{background:rgba(6,6,6,.97);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);position:sticky;top:0;z-index:1000;display:flex;align-items:center;justify-content:center;flex-wrap:nowrap;padding:0 10px;height:50px;border-bottom:1px solid #181818;gap:2px;}
 .nvl{display:flex;align-items:center;gap:2px;flex:1;justify-content:center;}
-.nvl button{background:transparent;border:1px solid transparent;color:var(--mu);font-weight:600;text-transform:uppercase;font-size:clamp(10px,2.2vw,12px);letter-spacing:1px;cursor:pointer;padding:7px 10px;border-radius:6px;font-family:'Exo 2','Segoe UI',sans-serif;transition:color .2s,background .2s,border-color .2s;-webkit-tap-highlight-color:transparent;white-space:nowrap;}
+.nvl button{background:transparent;border:1px solid transparent;color:var(--mu);font-weight:600;text-transform:uppercase;font-size:clamp(9px,2.1vw,12px);letter-spacing:1px;cursor:pointer;padding:7px 9px;border-radius:6px;font-family:'Exo 2','Segoe UI',sans-serif;transition:color .2s,background .2s,border-color .2s;-webkit-tap-highlight-color:transparent;white-space:nowrap;}
 .nvl button:hover,.nvl button.active{color:var(--or);}
 .nvl button.active{border-color:rgba(255,106,0,.25);background:rgba(255,106,0,.06);}
 .lsw{display:flex;gap:3px;flex-shrink:0;margin-left:4px;}
@@ -91,7 +92,44 @@ nav{background:rgba(6,6,6,.97);backdrop-filter:blur(12px);-webkit-backdrop-filte
 .rt b{color:#fff;}
 .pun{display:inline-block;margin-top:3px;background:rgba(255,106,0,.1);border:1px solid rgba(255,106,0,.2);color:var(--or);font-size:10px;padding:1px 6px;border-radius:4px;font-weight:600;}
 
-/* КОМАНДА */
+/* ══════════════ UPDATES / TIMELINE (замінює Команду) ══════════════ */
+.upd-head{text-align:center;margin-bottom:8px;}
+.upd-eyebrow{font-family:'Orbitron',monospace;font-size:10px;letter-spacing:4px;color:var(--or);text-transform:uppercase;opacity:.8;}
+.upd-title{font-family:'Orbitron',monospace;font-size:clamp(18px,4.5vw,28px);font-weight:900;color:#fff;margin-top:6px;letter-spacing:1px;}
+.upd-sub{font-size:12px;color:var(--mu);margin-top:6px;}
+
+/* консольна шапка логу */
+.log-console{background:var(--s1);border:1px solid var(--br);border-radius:10px;padding:10px 14px;margin:18px 0 30px;font-family:'Orbitron',monospace;font-size:11px;color:#4ade80;display:flex;align-items:center;gap:10px;overflow:hidden;position:relative;}
+.log-console::before{content:'●  ●  ●';letter-spacing:3px;color:#333;font-size:9px;flex-shrink:0;}
+.log-console span{opacity:.85;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.log-console .curs{display:inline-block;width:7px;height:12px;background:#4ade80;animation:blink 1s steps(1) infinite;margin-left:2px;vertical-align:middle;}
+
+.tl{position:relative;padding-left:26px;}
+.tl-line{position:absolute;left:9px;top:4px;bottom:4px;width:2px;background:#1c1c1c;border-radius:2px;}
+.tl-fill{position:absolute;left:9px;top:4px;width:2px;height:0%;background:linear-gradient(180deg,var(--or),#ffcc00);border-radius:2px;box-shadow:0 0 10px rgba(255,106,0,.6);transition:height .15s linear;}
+
+.tl-era{display:flex;align-items:center;gap:10px;margin:30px 0 14px;font-family:'Orbitron',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--mu);}
+.tl-era:first-child{margin-top:6px;}
+.tl-era::before{content:'';flex-shrink:0;width:10px;height:10px;border-radius:50%;background:var(--s2);border:2px solid var(--mu);margin-left:-31px;}
+.tl-era::after{content:'';flex:1;height:1px;background:var(--br);}
+.tl-era.e-hiatus{color:var(--rd);}
+.tl-era.e-hiatus::before{border-color:var(--rd);}
+.tl-era.e-revival{color:var(--gr);}
+.tl-era.e-revival::before{border-color:var(--gr);}
+
+.tl-node{position:relative;margin-bottom:14px;opacity:0;transform:translateX(-16px);transition:opacity .5s cubic-bezier(.4,0,.2,1),transform .5s cubic-bezier(.4,0,.2,1);}
+.tl-node.in{opacity:1;transform:translateX(0);}
+.tl-dot{position:absolute;left:-31px;top:14px;width:10px;height:10px;border-radius:50%;background:var(--s2);border:2px solid var(--dc,var(--or));z-index:2;transition:box-shadow .4s,background .4s;}
+.tl-node.in .tl-dot{background:var(--dc,var(--or));box-shadow:0 0 10px var(--dc,var(--or));}
+.tl-card{background:var(--s1);border:1px solid var(--br);border-left:2px solid var(--dc,var(--or));border-radius:10px;padding:12px 14px;display:flex;gap:12px;align-items:flex-start;transition:border-color .25s,transform .25s,box-shadow .25s;}
+.tl-card:hover{border-color:#3a3a3a;border-left-color:var(--dc,var(--or));transform:translateX(4px);box-shadow:0 8px 22px rgba(0,0,0,.5);}
+.tl-ic{flex-shrink:0;width:34px;height:34px;border-radius:8px;background:color-mix(in srgb, var(--dc,var(--or)) 15%, transparent);display:flex;align-items:center;justify-content:center;font-size:16px;}
+.tl-body{flex:1;min-width:0;}
+.tl-date{font-family:'Orbitron',monospace;font-size:10px;font-weight:700;color:var(--dc,var(--or));letter-spacing:1px;text-transform:uppercase;}
+.tl-ttl{font-size:clamp(12px,2.6vw,14px);font-weight:700;color:#fff;margin-top:3px;}
+.tl-desc{font-size:clamp(11px,2.4vw,12.5px);color:#999;margin-top:4px;line-height:1.5;}
+
+/* КОМАНДА (лишено на випадок повернення) */
 .team-section{margin-bottom:40px;}
 .team-title{font-family:'Orbitron',monospace;font-size:clamp(13px,3vw,18px);color:var(--or);letter-spacing:3px;text-align:center;margin-bottom:20px;text-transform:uppercase;}
 .team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;}
@@ -104,7 +142,6 @@ nav{background:rgba(6,6,6,.97);backdrop-filter:blur(12px);-webkit-backdrop-filte
 .team-card.owner .team-avatar{background:rgba(255,215,0,.1);}
 .team-card.admin .team-avatar{background:rgba(239,68,68,.1);}
 .team-card.moder .team-avatar{background:rgba(59,130,246,.1);}
-.team-info{}
 .team-role{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;font-weight:700;margin-bottom:2px;}
 .team-card.owner .team-role{color:#ffd700;}
 .team-card.admin .team-role{color:#ef4444;}
@@ -118,6 +155,11 @@ nav{background:rgba(6,6,6,.97);backdrop-filter:blur(12px);-webkit-backdrop-filte
 footer{text-align:center;padding:22px;color:#282828;font-size:12px;border-top:1px solid #111;margin-top:32px;}
 footer span{color:var(--or);}
 
+@media(prefers-reduced-motion:reduce){
+  .tl-node{opacity:1;transform:none;transition:none;}
+  .tl-fill{transition:none;}
+}
+
 @media(min-width:600px){
   header{padding:44px 20px 36px;}
   .sbr2{max-width:none;width:auto;min-width:220px;}
@@ -125,6 +167,11 @@ footer span{color:var(--or);}
   nav{height:52px;gap:4px;padding:0 16px;}
   .nvl button{padding:7px 14px;font-size:12px;letter-spacing:1.5px;}
   .wrap{margin:32px auto;padding:0 16px;}
+  .tl{padding-left:36px;max-width:760px;margin-left:auto;margin-right:auto;}
+  .tl-line{left:13px;}
+  .tl-fill{left:13px;}
+  .tl-era::before{margin-left:-41px;}
+  .tl-dot{left:-41px;}
 }
 </style>
 </head>
@@ -152,7 +199,7 @@ footer span{color:var(--or);}
   <button id="nb-donate"   class="active">Магазин</button>
   <button id="nb-features">Функціонал</button>
   <button id="nb-rules">Правила</button>
-  <button id="nb-team">Команда</button>
+  <button id="nb-updates">Оновлення</button>
 </div>
 <div class="lsw">
   <button class="lb active" id="lb-ua">UA</button>
@@ -218,61 +265,245 @@ footer span{color:var(--or);}
 </div>
 </section>
 
-<!-- КОМАНДА -->
-<!-- ═══════════════════════════════════════════════
-     ЩОБ ЗМІНИТИ НІКНЕЙМИ — просто відредагуй текст
-     всередині тегів <span class="team-nick">...</span>
-     ═══════════════════════════════════════════════ -->
-<section id="pg-team" class="pg">
-<div class="team-section">
-  <div class="team-title">⚡ Команда сервера</div>
-  <div class="team-grid">
+<!-- ОНОВЛЕННЯ / ІСТОРІЯ СЕРВЕРА -->
+<section id="pg-updates" class="pg">
+  <div class="upd-head">
+    <div class="upd-eyebrow" data-ua="ЖУРНАЛ СЕРВЕРА" data-en="SERVER LOG">ЖУРНАЛ СЕРВЕРА</div>
+    <div class="upd-title" data-ua="Історія LankciWorld" data-en="LankciWorld History">Історія LankciWorld</div>
+    <div class="upd-sub" data-ua="Від першого запуску до сьогодні — усе, що відбувалось на сервері" data-en="From launch day to today — everything that happened on the server">Від першого запуску до сьогодні — усе, що відбувалось на сервері</div>
+  </div>
 
-    <!-- ВЛАСНИК -->
-    <div class="team-card owner">
-      <div class="team-avatar">👑</div>
-      <div class="team-info">
-        <div class="team-role">Owner</div>
-        <div class="team-nick">kostyanchu_org</div>
+  <div class="log-console"><span id="logLine">> server.log — завантаження історії...<span class="curs"></span></span></div>
+
+  <div class="tl" id="tl">
+    <div class="tl-line"></div>
+    <div class="tl-fill" id="tlFill"></div>
+
+    <div class="tl-era" data-ua="2024 · Сезон 1" data-en="2024 · Season 1">2024 · Сезон 1</div>
+
+    <div class="tl-node" style="--dc:var(--gr)">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-ic">🚀</div>
+        <div class="tl-body">
+          <div class="tl-date">09.07.2024</div>
+          <div class="tl-ttl" data-ua="Заснування сервера" data-en="Server founded">Заснування сервера</div>
+          <div class="tl-desc" data-ua="LankciWorld офіційно запущено — початок історії." data-en="LankciWorld officially launched — the story begins.">LankciWorld офіційно запущено — початок історії.</div>
+        </div>
       </div>
     </div>
 
-    <!-- АДМІНИ — додай або видали блоки нижче -->
-    <div class="team-card admin">
-      <div class="team-avatar">🛡️</div>
-      <div class="team-info">
-        <div class="team-role">Admin</div>
-        <div class="team-nick">AdminNick1</div>
+    <div class="tl-node">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-ic">🔌</div>
+        <div class="tl-body">
+          <div class="tl-date">11.07.2024</div>
+          <div class="tl-ttl" data-ua="Плагіни та лобі" data-en="Plugins & lobby">Плагіни та лобі</div>
+          <div class="tl-desc" data-ua="Встановлено перші плагіни, збудовано лобі сервера." data-en="First plugins installed, server lobby built.">Встановлено перші плагіни, збудовано лобі сервера.</div>
+        </div>
       </div>
     </div>
 
-    <div class="team-card admin">
-      <div class="team-avatar">🛡️</div>
-      <div class="team-info">
-        <div class="team-role">Admin</div>
-        <div class="team-nick">AdminNick2</div>
+    <div class="tl-node">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-ic">⚙️</div>
+        <div class="tl-body">
+          <div class="tl-date">13.07.2024</div>
+          <div class="tl-ttl" data-ua="Налаштування плагінів" data-en="Plugin tuning">Налаштування плагінів</div>
+          <div class="tl-desc" data-ua="Донастройка та відлагодження встановлених плагінів." data-en="Fine-tuning and debugging installed plugins.">Донастройка та відлагодження встановлених плагінів.</div>
+        </div>
       </div>
     </div>
 
-    <!-- МОДЕРАТОРИ -->
-    <div class="team-card moder">
-      <div class="team-avatar">⚔️</div>
-      <div class="team-info">
-        <div class="team-role">Moderator</div>
-        <div class="team-nick">ModerNick1</div>
+    <div class="tl-node">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-ic">🏃</div>
+        <div class="tl-body">
+          <div class="tl-date">15.07.2024</div>
+          <div class="tl-ttl" data-ua="Паркур-зона" data-en="Parkour zone">Паркур-зона</div>
+          <div class="tl-desc" data-ua="Збудовано паркур для гравців." data-en="Built a parkour course for players.">Збудовано паркур для гравців.</div>
+        </div>
       </div>
     </div>
 
-    <div class="team-card moder">
-      <div class="team-avatar">⚔️</div>
-      <div class="team-info">
-        <div class="team-role">Moderator</div>
-        <div class="team-nick">ModerNick2</div>
+    <div class="tl-node">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-ic">🧩</div>
+        <div class="tl-body">
+          <div class="tl-date">10.09.2024</div>
+          <div class="tl-ttl" data-ua="Нові плагіни" data-en="New plugins">Нові плагіни</div>
+          <div class="tl-desc" data-ua="Додано новий набір плагінів для покращення геймплею." data-en="Added a new set of plugins to improve gameplay.">Додано новий набір плагінів для покращення геймплею.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-node" style="--dc:var(--bl)">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-ic">📱</div>
+        <div class="tl-body">
+          <div class="tl-date">24.09.2024</div>
+          <div class="tl-ttl" data-ua="Підтримка Bedrock" data-en="Bedrock support">Підтримка Bedrock</div>
+          <div class="tl-desc" data-ua="Тепер можна грати з телефону через Bedrock Edition." data-en="Now playable from phones via Bedrock Edition.">Тепер можна грати з телефону через Bedrock Edition.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-node" style="--dc:var(--rd)">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-ic">💤</div>
+        <div class="tl-body">
+          <div class="tl-date">30.09.2024</div>
+          <div class="tl-ttl" data-ua="Проєкт заморожено" data-en="Project shelved">Проєкт заморожено</div>
+          <div class="tl-desc" data-ua="Роботу над сервером тимчасово припинено." data-en="Work on the server was temporarily halted.">Роботу над сервером тимчасово припинено.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-era e-hiatus" data-ua="9 місяців тиші" data-en="9 months of silence">9 місяців тиші</div>
+
+    <div class="tl-era e-revival" data-ua="2025 · Відродження" data-en="2025 · Revival">2025 · Відродження</div>
+
+    <div class="tl-node" style="--dc:var(--gr)">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-ic">🔥</div>
+        <div class="tl-body">
+          <div class="tl-date">07.07.2025</div>
+          <div class="tl-ttl" data-ua="Проєкт воскрешено" data-en="Project resurrected">Проєкт воскрешено</div>
+          <div class="tl-desc" data-ua="Через рік мовчання сервер повертається до життя." data-en="After a year of silence, the server comes back to life.">Через рік мовчання сервер повертається до життя.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-node">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-ic">🌱</div>
+        <div class="tl-body">
+          <div class="tl-date">08.07.2025</div>
+          <div class="tl-ttl" data-ua="Новий режим виживання" data-en="New survival mode">Новий режим виживання</div>
+          <div class="tl-desc" data-ua="Запущено оновлений режим виживання." data-en="Launched a refreshed survival mode.">Запущено оновлений режим виживання.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-node" style="--dc:#ffd700">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-ic">🎂</div>
+        <div class="tl-body">
+          <div class="tl-date">09.07.2025</div>
+          <div class="tl-ttl" data-ua="1 рік серверу" data-en="1 year anniversary">1 рік серверу</div>
+          <div class="tl-desc" data-ua="Річниця LankciWorld + повне очищення пам'яті сервера." data-en="LankciWorld's anniversary + full server memory cleanup.">Річниця LankciWorld + повне очищення пам'яті сервера.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-node">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-ic">🔒</div>
+        <div class="tl-body">
+          <div class="tl-date">10–19.07.2025</div>
+          <div class="tl-ttl" data-ua="Система приватів" data-en="Private plots system">Система приватів</div>
+          <div class="tl-desc" data-ua="Впроваджено привати для захисту територій гравців." data-en="Introduced private plots to protect players' territory.">Впроваджено привати для захисту територій гравців.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-node">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-ic">🎨</div>
+        <div class="tl-body">
+          <div class="tl-date">14.09.2025</div>
+          <div class="tl-ttl" data-ua="Ребрендинг і новий хостінг" data-en="Rebrand & new hosting">Ребрендинг і новий хостінг</div>
+          <div class="tl-desc" data-ua="Нова аватарка сервера, перехід на новий хостінг." data-en="New server avatar, migrated to new hosting.">Нова аватарка сервера, перехід на новий хостінг.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-node">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-ic">🛠️</div>
+        <div class="tl-body">
+          <div class="tl-date" data-ua="Жовтень – листопад 2025" data-en="October – November 2025">Жовтень – листопад 2025</div>
+          <div class="tl-ttl" data-ua="Ремонт построек" data-en="Build repairs">Ремонт построек</div>
+          <div class="tl-desc" data-ua="Виправлено пошкоджені будівлі на карті." data-en="Repaired damaged builds across the map.">Виправлено пошкоджені будівлі на карті.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-era" data-ua="2026 · Стабілізація" data-en="2026 · Stabilization">2026 · Стабілізація</div>
+
+    <div class="tl-node" style="--dc:var(--bl)">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-ic">🌐</div>
+        <div class="tl-body">
+          <div class="tl-date">03.03.2026</div>
+          <div class="tl-ttl" data-ua="Хостінг 2.0" data-en="Hosting 2.0">Хостінг 2.0</div>
+          <div class="tl-desc" data-ua="Черговий перехід на новий, потужніший хостінг." data-en="Another migration to a new, more powerful host.">Черговий перехід на новий, потужніший хостінг.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-node">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-ic">🐛</div>
+        <div class="tl-body">
+          <div class="tl-date">10–20.03.2026</div>
+          <div class="tl-ttl" data-ua="Масове виправлення помилок" data-en="Mass bug fixing">Масове виправлення помилок</div>
+          <div class="tl-desc" data-ua="Виправлено серію технічних помилок і багів." data-en="Fixed a series of technical issues and bugs.">Виправлено серію технічних помилок і багів.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-node" style="--dc:var(--gr)">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-ic">✅</div>
+        <div class="tl-body">
+          <div class="tl-date">10.04.2026</div>
+          <div class="tl-ttl" data-ua="Офіційний реліз" data-en="Official release">Офіційний реліз</div>
+          <div class="tl-desc" data-ua="Сервер офіційно виходить з бети в реліз." data-en="Server officially leaves beta and enters full release.">Сервер офіційно виходить з бети в реліз.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-node" style="--dc:var(--rd)">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-ic">⏸️</div>
+        <div class="tl-body">
+          <div class="tl-date">20.05.2026</div>
+          <div class="tl-ttl" data-ua="Технічна пауза" data-en="Technical pause">Технічна пауза</div>
+          <div class="tl-desc" data-ua="Сервер закрито на технічне обслуговування — 2 місяці." data-en="Server closed for maintenance — 2 months.">Сервер закрито на технічне обслуговування — 2 місяці.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-node" style="--dc:var(--or)">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-ic">🔧</div>
+        <div class="tl-body">
+          <div class="tl-date" data-ua="Серпень 2026" data-en="August 2026">Серпень 2026</div>
+          <div class="tl-ttl" data-ua="Активна робота над відновленням" data-en="Active work on the comeback">Активна робота над відновленням</div>
+          <div class="tl-desc" data-ua="Команда працює над поверненням сервера до життя." data-en="The team is working to bring the server back online.">Команда працює над поверненням сервера до життя.</div>
+        </div>
       </div>
     </div>
 
   </div>
-</div>
 </section>
 
 </div>
@@ -301,13 +532,14 @@ for(var i=0;i<14;i++){
 }
 
 /* Навігація */
+var pages=['donate','features','rules','updates'];
 function showPage(name){
   if(name===cur)return;
   var prev=document.getElementById('pg-'+cur);
   var next=document.getElementById('pg-'+name);
   prev.classList.add('out');
   prev.addEventListener('animationend',function h(){prev.classList.remove('active','out');prev.removeEventListener('animationend',h);});
-  setTimeout(function(){next.classList.add('active');},180);
+  setTimeout(function(){next.classList.add('active');if(name==='updates'){initTimelineOnce();updateTlFill();revealNodes();}},180);
   document.querySelectorAll('.nvl button').forEach(function(b){b.classList.remove('active');});
   document.getElementById('nb-'+name).classList.add('active');
   cur=name;
@@ -315,7 +547,7 @@ function showPage(name){
 document.getElementById('nb-donate').addEventListener('click',function(){showPage('donate');});
 document.getElementById('nb-features').addEventListener('click',function(){showPage('features');});
 document.getElementById('nb-rules').addEventListener('click',function(){showPage('rules');});
-document.getElementById('nb-team').addEventListener('click',function(){showPage('team');});
+document.getElementById('nb-updates').addEventListener('click',function(){showPage('updates');});
 
 /* IP */
 function fallback(){
@@ -348,12 +580,13 @@ function setLang(l){
   document.getElementById('nb-donate').textContent=l==='ua'?'Магазин':'Shop';
   document.getElementById('nb-features').textContent=l==='ua'?'Функціонал':'Features';
   document.getElementById('nb-rules').textContent=l==='ua'?'Правила':'Rules';
-  document.getElementById('nb-team').textContent=l==='ua'?'Команда':'Team';
+  document.getElementById('nb-updates').textContent=l==='ua'?'Оновлення':'Updates';
   document.getElementById('pllbl').textContent=l==='ua'?'Гравці':'Players';
   var st=document.getElementById('stxt');
   if(st._s==='on') st.textContent=l==='ua'?'Онлайн':'Online';
   else if(st._s==='off') st.textContent=l==='ua'?'Офлайн':'Offline';
   else st.textContent=l==='ua'?'Перевірка...':'Checking...';
+  typeLog();
 }
 document.getElementById('lb-ua').addEventListener('click',function(){setLang('ua');});
 document.getElementById('lb-en').addEventListener('click',function(){setLang('en');});
@@ -387,7 +620,6 @@ function fetchStatus(){
   var done=false;
   var t=setTimeout(function(){if(!done){done=true;setOff();}},8000);
 
-  /* Два API паралельно — обидва мають сказати online:true */
   var p1=fetch("https://api.mcsrvstat.us/3/"+IP+"?_="+Date.now(),{cache:"no-store"})
     .then(function(r){return r.ok?r.json():null;}).catch(function(){return null;});
 
@@ -399,7 +631,6 @@ function fetchStatus(){
     done=true;clearTimeout(t);
     var d1=res[0];
     var d2=res[1];
-    /* mcstatus.io повертає {online:true/false} */
     var s1=d1&&d1.online===true;
     var s2=d2&&d2.online===true;
     if(s1&&s2){
@@ -414,6 +645,71 @@ function fetchStatus(){
 
 fetchStatus();
 setInterval(fetchStatus,60000);
+
+/* ═══ Термінал-рядок над журналом оновлень ═══ */
+var logMsgs={ua:'> server.log — 09.07.2024 → сьогодні · 18 записів завантажено',en:'> server.log — 09.07.2024 → today · 18 entries loaded'};
+var logEl=document.getElementById('logLine');
+var logTimer=null;
+function typeLog(){
+  if(logTimer)clearInterval(logTimer);
+  var full=logMsgs[lang];
+  var i=0;
+  logEl.innerHTML='<span class="curs"></span>';
+  logTimer=setInterval(function(){
+    i++;
+    logEl.innerHTML=full.slice(0,i)+'<span class="curs"></span>';
+    if(i>=full.length)clearInterval(logTimer);
+  },18);
+}
+
+/* ═══ Таймлайн: заповнення лінії + реве́л карток ═══ */
+var tlInit=false;
+var tlEl=document.getElementById('tl');
+var tlFillEl=document.getElementById('tlFill');
+var nodes=[];
+function initTimelineOnce(){
+  if(tlInit)return;
+  tlInit=true;
+  nodes=Array.prototype.slice.call(document.querySelectorAll('.tl-node'));
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){
+          en.target.classList.add('in');
+          io.unobserve(en.target);
+        }
+      });
+    },{threshold:.25,rootMargin:'0px 0px -8% 0px'});
+    nodes.forEach(function(n){io.observe(n);});
+  }else{
+    nodes.forEach(function(n){n.classList.add('in');});
+  }
+  window.addEventListener('scroll',throttledUpdate,{passive:true});
+  window.addEventListener('resize',throttledUpdate);
+  typeLog();
+}
+function revealNodes(){
+  /* На випадок якщо секція вже видима одразу (малий екран) */
+  nodes.forEach(function(n){
+    var r=n.getBoundingClientRect();
+    if(r.top<window.innerHeight*.9)n.classList.add('in');
+  });
+}
+var rAF=null;
+function throttledUpdate(){
+  if(rAF)return;
+  rAF=requestAnimationFrame(function(){updateTlFill();rAF=null;});
+}
+function updateTlFill(){
+  if(cur!=='updates')return;
+  var r=tlEl.getBoundingClientRect();
+  var vh=window.innerHeight;
+  var total=r.height;
+  if(total<=0)return;
+  var visibleTop=Math.min(Math.max(vh*0.5-r.top,0),total);
+  var pct=(visibleTop/total)*100;
+  tlFillEl.style.height=pct+'%';
+}
 })();
 </script>
 </body>
