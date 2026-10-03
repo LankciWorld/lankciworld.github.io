@@ -204,6 +204,8 @@ footer span{color:var(--or);}
 <div class="lsw">
   <button class="lb active" id="lb-ua">UA</button>
   <button class="lb"        id="lb-en">EN</button>
+  <button class="lb"        id="lb-pl">PL</button>
+  <button class="lb"        id="lb-it">IT</button>
 </div>
 </nav>
 
@@ -520,6 +522,131 @@ var lang='ua';
 var cur='donate';
 var toastT=null;
 
+/* ═══ PL / IT переклади ═══ */
+var UI={
+  pl:{toast:'✓ IP skopiowano!',ftr:'Wszelkie prawa zastrzeżone',donate:'Sklep',features:'Funkcje',rules:'Zasady',updates:'Aktualizacje',pllbl:'Gracze',chk:'Sprawdzanie...'},
+  it:{toast:'✓ IP copiato!',ftr:'Tutti i diritti riservati',donate:'Negozio',features:'Funzionalità',rules:'Regole',updates:'Aggiornamenti',pllbl:'Giocatori',chk:'Controllo...'}
+};
+/* ключ = оригінальний український текст → [польська, італійська] */
+var TR={
+'ПРИДБАТИ':['KUP TERAZ','ACQUISTA'],
+'СКОРО':['WKRÓTCE','PRESTO'],'Скоро...':['Wkrótce...','Presto...'],'Скоро':['Wkrótce','Presto'],
+'ЖУРНАЛ СЕРВЕРА':['DZIENNIK SERWERA','REGISTRO DEL SERVER'],
+'Історія LankciWorld':['Historia LankciWorld','Storia di LankciWorld'],
+'Від першого запуску до сьогодні — усе, що відбувалось на сервері':['Od pierwszego uruchomienia do dziś — wszystko, co działo się na serwerze','Dal lancio a oggi: tutto ciò che è successo sul server'],
+'2024 · Сезон 1':['2024 · Sezon 1','2024 · Stagione 1'],
+'9 місяців тиші':['9 miesięcy ciszy','9 mesi di silenzio'],
+'2025 · Відродження':['2025 · Odrodzenie','2025 · Rinascita'],
+'2026 · Стабілізація':['2026 · Stabilizacja','2026 · Stabilizzazione'],
+'Заснування сервера':['Założenie serwera','Fondazione del server'],
+'LankciWorld офіційно запущено — початок історії.':['LankciWorld został oficjalnie uruchomiony — początek historii.','LankciWorld è stato lanciato ufficialmente: inizia la storia.'],
+'Плагіни та лобі':['Pluginy i lobby','Plugin e lobby'],
+'Встановлено перші плагіни, збудовано лобі сервера.':['Zainstalowano pierwsze pluginy i zbudowano lobby serwera.','Installati i primi plugin e costruita la lobby del server.'],
+'Налаштування плагінів':['Konfiguracja pluginów','Configurazione dei plugin'],
+'Донастройка та відлагодження встановлених плагінів.':['Dostrajanie i debugowanie zainstalowanych pluginów.','Rifinitura e debug dei plugin installati.'],
+'Паркур-зона':['Strefa parkouru','Zona parkour'],
+'Збудовано паркур для гравців.':['Zbudowano parkour dla graczy.','Costruito un percorso parkour per i giocatori.'],
+'Нові плагіни':['Nowe pluginy','Nuovi plugin'],
+'Додано новий набір плагінів для покращення геймплею.':['Dodano nowy zestaw pluginów poprawiających rozgrywkę.','Aggiunto un nuovo set di plugin per migliorare il gameplay.'],
+'Підтримка Bedrock':['Obsługa Bedrock','Supporto Bedrock'],
+'Тепер можна грати з телефону через Bedrock Edition.':['Teraz można grać z telefonu przez Bedrock Edition.','Ora si può giocare da telefono tramite Bedrock Edition.'],
+'Проєкт заморожено':['Projekt zawieszony','Progetto sospeso'],
+'Роботу над сервером тимчасово припинено.':['Prace nad serwerem zostały tymczasowo wstrzymane.','I lavori sul server sono stati temporaneamente sospesi.'],
+'Проєкт воскрешено':['Projekt wskrzeszony','Progetto risorto'],
+'Через рік мовчання сервер повертається до життя.':['Po roku milczenia serwer wraca do życia.','Dopo un anno di silenzio il server torna in vita.'],
+'Новий режим виживання':['Nowy tryb przetrwania','Nuova modalità sopravvivenza'],
+'Запущено оновлений режим виживання.':['Uruchomiono odświeżony tryb przetrwania.','Lanciata una modalità sopravvivenza rinnovata.'],
+'1 рік серверу':['1. rocznica serwera','1 anno del server'],
+"Річниця LankciWorld + повне очищення пам'яті сервера.":['Rocznica LankciWorld + pełne wyczyszczenie pamięci serwera.','Anniversario di LankciWorld + pulizia completa della memoria del server.'],
+'Система приватів':['System prywatnych działek','Sistema dei claim privati'],
+'Впроваджено привати для захисту територій гравців.':['Wprowadzono prywatne działki chroniące tereny graczy.','Introdotti i claim privati per proteggere i territori dei giocatori.'],
+'Ребрендинг і новий хостінг':['Rebranding i nowy hosting','Rebranding e nuovo hosting'],
+'Нова аватарка сервера, перехід на новий хостінг.':['Nowy awatar serwera i przejście na nowy hosting.','Nuovo avatar del server e passaggio a un nuovo hosting.'],
+'Жовтень – листопад 2025':['Październik – listopad 2025','Ottobre – novembre 2025'],
+'Ремонт построек':['Naprawa budowli','Riparazione delle costruzioni'],
+'Виправлено пошкоджені будівлі на карті.':['Naprawiono uszkodzone budynki na mapie.','Riparati gli edifici danneggiati sulla mappa.'],
+'Хостінг 2.0':['Hosting 2.0','Hosting 2.0'],
+'Черговий перехід на новий, потужніший хостінг.':['Kolejna migracja na nowy, wydajniejszy hosting.','Un altro passaggio a un nuovo hosting più potente.'],
+'Масове виправлення помилок':['Masowe naprawianie błędów','Correzione massiva dei bug'],
+'Виправлено серію технічних помилок і багів.':['Naprawiono serię błędów technicznych i bugów.','Corretta una serie di problemi tecnici e bug.'],
+'Офіційний реліз':['Oficjalne wydanie','Rilascio ufficiale'],
+'Сервер офіційно виходить з бети в реліз.':['Serwer oficjalnie wychodzi z bety i trafia do pełnego wydania.','Il server esce ufficialmente dalla beta ed entra nella versione finale.'],
+'Технічна пауза':['Przerwa techniczna','Pausa tecnica'],
+'Сервер закрито на технічне обслуговування — 2 місяці.':['Serwer zamknięty na konserwację — 2 miesiące.','Server chiuso per manutenzione — 2 mesi.'],
+'Серпень 2026':['Sierpień 2026','Agosto 2026'],
+'Активна робота над відновленням':['Aktywne prace nad powrotem','Lavori attivi per il ritorno'],
+'Команда працює над поверненням сервера до життя.':['Zespół pracuje nad przywróceniem serwera do życia.','Il team lavora per riportare il server in vita.'],
+'ПРАВИЛА СЕРВЕРА':['ZASADY SERWERA','REGOLE DEL SERVER'],
+'1. Поведінка в чаті':['1. Zachowanie na czacie','1. Comportamento in chat'],
+'2. Читерство':['2. Cheaty','2. Uso di cheat'],
+'3. Гра':['3. Rozgrywka','3. Gioco'],
+'Образа батьків гравців':['Obrażanie rodziców graczy','Insulti ai genitori dei giocatori'],
+'Образа сервера':['Obrażanie serwera','Insulti al server'],
+'Образа адмінів / модераторів':['Obrażanie adminów / moderatorów','Insulti ad admin / moderatori'],
+'Спам у чаті':['Spam na czacie','Spam in chat'],
+'Реклама інших серверів':['Reklama innych serwerów','Pubblicità di altri server'],
+'Образа гравців':['Obrażanie graczy','Insulti ai giocatori'],
+'Використання читів':['Używanie cheatów','Uso di cheat'],
+'Зізнання до покарання':['Przyznanie się przed ukaraniem','Confessione prima della punizione'],
+'Використання багів':['Wykorzystywanie bugów','Sfruttamento dei bug'],
+'Гриферство':['Griefing','Griefing'],
+'Видавати себе за адміна':['Podszywanie się pod admina','Spacciarsi per un admin'],
+'Мут 3 дні':['Mute na 3 dni','Mute di 3 giorni'],
+'Мут 5 хвилин':['Mute na 5 minut','Mute di 5 minuti'],
+'Мут 15 хвилин':['Mute na 15 minut','Mute di 15 minuti'],
+'Мут 30 хвилин':['Mute na 30 minut','Mute di 30 minuti'],
+'Мут 1 година':['Mute na 1 godzinę','Mute di 1 ora'],
+'Бан 7 днів':['Ban na 7 dni','Ban di 7 giorni'],
+'Бан 14 днів':['Ban na 14 dni','Ban di 14 giorni'],
+'Бан 32 дні':['Ban na 32 dni','Ban di 32 giorni'],
+'Дозволено ✓':['Dozwolone ✓','Consentito ✓'],
+'Політ /fly':['Latanie /fly','Volo /fly'],
+'Час та погода':['Czas i pogoda','Tempo e meteo'],
+'8 точок дому':['8 punktów domu','8 punti casa'],
+'5 точок дому':['5 punktów domu','5 punti casa'],
+'10 точок дому':['10 punktów domu','10 punti casa'],
+'2 точки дому':['2 punkty domu','2 punti casa'],
+'Блискавка':['Piorun','Fulmine'],
+'Ситість /feed':['Najedzenie /feed','Sazietà /feed'],
+'Верстак /workbench':['Stół rzemieślniczy /workbench','Banco da lavoro /workbench'],
+'Ефекти темряви':['Efekty ciemności','Effetti oscuri'],
+'Підпалити /burn':['Podpalanie /burn','Dare fuoco /burn'],
+'Зняття ефектів':['Usuwanie efektów','Rimozione degli effetti'],
+'Загасити вогонь':['Gaszenie ognia','Spegnere il fuoco'],
+'Імунітет до лави':['Odporność na lawę','Immunità alla lava'],
+'Блок на голову':['Blok na głowę','Blocco sulla testa'],
+'Лікування /heal':['Leczenie /heal','Cura /heal']
+};
+var EX_SEL='.rb h2,.rcat h3,.rt b,.pun,.fl li,.rn,.fc h3,.bb';
+function applyExtra(l){
+  var i=l==='pl'?0:(l==='it'?1:-1);
+  if(i>=0){
+    document.querySelectorAll('[data-ua]').forEach(function(el){
+      var k=el.getAttribute('data-ua');
+      el.textContent=(TR[k]&&TR[k][i])||k;
+    });
+  }
+  document.querySelectorAll(EX_SEL).forEach(function(el){
+    if(el.hasAttribute('data-ua'))return;
+    if(el._u===undefined)el._u=el.textContent;
+    el.textContent=(i>=0&&TR[el._u]&&TR[el._u][i])||el._u;
+  });
+  var U=UI[l];
+  if(U){
+    document.getElementById('toast').textContent=U.toast;
+    document.getElementById('ftr').textContent=U.ftr;
+    document.getElementById('nb-donate').textContent=U.donate;
+    document.getElementById('nb-features').textContent=U.features;
+    document.getElementById('nb-rules').textContent=U.rules;
+    document.getElementById('nb-updates').textContent=U.updates;
+    document.getElementById('pllbl').textContent=U.pllbl;
+    var st=document.getElementById('stxt');
+    if(st._s==='on')st.textContent='Online';
+    else if(st._s==='off')st.textContent='Offline';
+    else st.textContent=U.chk;
+  }
+}
+
 /* Частинки */
 var pw=document.getElementById('pts');
 pw.style.cssText='position:absolute;inset:0;pointer-events:none;overflow:hidden;';
@@ -586,10 +713,13 @@ function setLang(l){
   if(st._s==='on') st.textContent=l==='ua'?'Онлайн':'Online';
   else if(st._s==='off') st.textContent=l==='ua'?'Офлайн':'Offline';
   else st.textContent=l==='ua'?'Перевірка...':'Checking...';
+  applyExtra(l);
   typeLog();
 }
 document.getElementById('lb-ua').addEventListener('click',function(){setLang('ua');});
 document.getElementById('lb-en').addEventListener('click',function(){setLang('en');});
+document.getElementById('lb-pl').addEventListener('click',function(){setLang('pl');});
+document.getElementById('lb-it').addEventListener('click',function(){setLang('it');});
 
 function setOff(){
   document.getElementById('sdot').className='sd off';
@@ -613,7 +743,7 @@ function setOn(online,max){
 
 function fetchStatus(){
   var st=document.getElementById('stxt');
-  st.textContent=lang==='ua'?'Перевірка...':'Checking...';
+  st.textContent=(UI[lang]&&UI[lang].chk)||(lang==='ua'?'Перевірка...':'Checking...');
   st.style.color='var(--mu)';st._s='chk';
   document.getElementById('sdot').className='sd';
 
@@ -647,7 +777,7 @@ fetchStatus();
 setInterval(fetchStatus,60000);
 
 /* ═══ Термінал-рядок над журналом оновлень ═══ */
-var logMsgs={ua:'> server.log — 09.07.2024 → сьогодні · 18 записів завантажено',en:'> server.log — 09.07.2024 → today · 18 entries loaded'};
+var logMsgs={ua:'> server.log — 09.07.2024 → сьогодні · 18 записів завантажено',en:'> server.log — 09.07.2024 → today · 18 entries loaded',pl:'> server.log — 09.07.2024 → dziś · wczytano 18 wpisów',it:'> server.log — 09.07.2024 → oggi · 18 voci caricate'};
 var logEl=document.getElementById('logLine');
 var logTimer=null;
 function typeLog(){
