@@ -785,6 +785,111 @@ function localReply(q){
   }
   return {t:g==='ua'?'Не маю достатньо інформації з цього питання. Я можу розповісти про: IP і як зайти, як почати грати, статус сервера, привілеї та ціни, команди, правила. Для іншого напиши в Telegram чи Discord:':'I do not have enough information on that. I can tell you about: the IP and how to join, how to start, server status, ranks and prices, commands, rules. For anything else write on Telegram or Discord:',links:true};
 }
+/* ═══ LankciAI NLU ═══
+   ВСТАВИТИ у другий <script> (LankciAI) одразу ПІСЛЯ функції localReply(q){...} і ПЕРЕД function ask(){...}.
+   Нічого не видаляє: старий localReply (_lr) лишається запасним варіантом. */
+var NLU=(function(){
+var MC={а:'a',б:'b',в:'v',г:'g',ґ:'g',д:'d',е:'e',є:'e',ж:'j',з:'z',и:'i',і:'i',ї:'i',й:'i',к:'k',л:'l',м:'m',н:'n',о:'o',п:'p',р:'r',с:'s',т:'t',у:'u',ф:'f',х:'h',ц:'c',ч:'c',ш:'s',щ:'s',ы:'i',э:'e',ю:'u',я:'a',ь:'',ъ:'',ё:'e','ł':'l'};
+var DG={sch:'s',sh:'s',zh:'j',kh:'h',ch:'c',yu:'u',ya:'a',ye:'e',yi:'i',yo:'o',ju:'u',ja:'a'};
+/* Нормалізація: UA/RU/translit/PL/IT/FR → єдиний латинський "скелет"; прибирає акценти, пунктуацію, повтори літер */
+function skel(s){
+  s=String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  s=s.replace(/sch|sh|zh|kh|ch|yu|ya|ye|yi|yo|ju|ja/g,function(m){return DG[m];});
+  s=s.replace(/[а-яіїєґыэёъьł]/g,function(c){return MC[c];}).replace(/y/g,'i').replace(/w/g,'v').replace(/q/g,'k');
+  return s.replace(/[^a-z0-9]+/g,' ').replace(/([a-z])\1+/g,'$1').replace(/\s+/g,' ').trim();
+}
+function lev(a,b){
+  if(Math.abs(a.length-b.length)>1)return 2;
+  var p=[],c,i,j;for(j=0;j<=b.length;j++)p[j]=j;
+  for(i=1;i<=a.length;i++){c=[i];for(j=1;j<=b.length;j++)c[j]=Math.min(p[j]+1,c[j-1]+1,p[j-1]+(a[i-1]===b[j-1]?0:1));p=c;}
+  return p[b.length];
+}
+/* Словник: інтент → слова (токен) та фрази (містять пробіл). Порядок = пріоритет при рівності балів. */
+var V={
+cant:"не заходить|не заходит|не можу зайти|не могу зайти|не пускає|не пускает|чому не пускає|чого не пускає|почему не заходит|почему не пускает|шо робити якщо не заходить|не вдається зайти|не получается зайти|не підключається|не подключается|cant join|can't connect|cannot join|not connecting|connection failed|timed out|failed to connect|nie moge wejsc|nie moge dolaczyc|nie moge sie polaczyc|non riesco a entrare|non riesco a connettermi|non riesco a collegarmi|je n arrive pas a rejoindre|je n arrive pas a me connecter|impossible de se connecter|лаг|лаги|lag|laggi|лагає|лагает|вилітає|вылетает|кікнуло|кикнуло|kicked|kick|помилка|ошибка|error|blad|errore|erreur",
+refund:"повернення коштів|повернути гроші|повернути донат|вернуть деньги|вернуть донат|возврат|повернення|refund|money back|chargeback|zwrot|zwrot pieniedzy|rimborso|remboursement",
+appeal:"розбан|разбан|unban|апеляція|апелляция|оскарження|оскаржити|обжаловать|appeal|мене забанили|меня забанили|забанили|забанен|я в бані|зняти бан|снять бан|скарга|жалоба|complaint|zbanowali|odwolanie|apelacja|ricorso|appello|bannato|banni|contester",
+opening:"коли відкриття|коли відкриється|коли відкриєте|коли старт|коли запуск|когда открытие|когда откроется|когда запуск|когда старт|дата відкриття|дата открытия|when open|when does|when will|when is the launch|release date|opening date|kiedy otwarcie|kiedy start|kiedy otworzycie|quando apre|quando apertura|quando aprite|quand ouvre|quand ouverture|quand ouvrez",
+status:"онлайн|онлайн|online|offline|офлайн|oflain|статус|status|скільки гравців|сколько игроков|how many players|гравців|gracze|ilu graczy|giocatori|joueurs|сервер працює|сервер работает|сервак працює|сервер живий|server working|server down|server is down|server not working|server offline|serwer dziala|il server funziona|le serveur fonctionne|serveur en ligne|server online",
+bedrock:"bedrock|бедрок|бедрік|телефон|мобільна|мобильная|mobile|мобайл|pe|пе|mcpe|android|андроїд|айфон|iphone|xbox|ps4|ps5|switch|консоль|console|telefon|komorka|cellulare|telephone|portable|з телефону|с телефона",
+version:"версія|версия|version|ver|1.21|яка версія|шо за версія|какая версия|java|джава|ява|java edition|клієнт|клиент|client|wersja|jaka wersja|versione|quale versione|che versione|quelle version",
+ip:"ip|іп|айпі|айпи|айп|адреса|адрес|адресу|address|де сервер|де майн|де зайти|де ip|де айпі|який айпі|який ip|какой айпи|какой ip|server ip|ip сервера|айпі сервера|що вводити|що писати в сервер|що вписати|что вписать|куди заходити|куда заходить|where to join|how to connect|як зайти|як зайти на сервер|як мені зайти|а як зайти|как зайти|как зайти на сервер|як підключитись|як підключитися|як підключитися до сервера|как подключиться|шо треба щоб зайти|що треба щоб зайти|how to join|how do i join|how can i join|jak wejsc|jak dolaczyc|jak sie polaczyc|adres serwera|come entrare|come collegarsi|come connettersi|indirizzo|indirizzo ip|comment rejoindre|comment se connecter|comment entrer|adresse|adresse du serveur|зайти|зайду|заходити|підключитися|підключитись|подключиться|connect|join",
+start:"як грати|как играть|з чого почати|с чего начать|how to play|гайд|guide|новачок|новичок|для новачків|как начать|як почати|як розпочати|як починати|how to start|getting started|tutorial|jak grac|jak zaczac|come giocare|come iniziare|comment jouer|comment commencer|що робити на сервері|чим займатись",
+oneblock:"oneblock|one block|ванблок|ван блок|ваниблок|один блок|ванблок|oneblok",
+duels:"дуелі|дуели|дуель|дуельки|дуэль|дуэли|duel|duels|ставки|pojedynki|pojedynek|duello|duelli|duels",
+smp:"smp|смп|survival multiplayer",
+hardcore:"хардкор|харкор|hardcore|hardkor|хардкорний|хардкорный",
+survival:"виживання|выживание|survival|сурвайвал|сурвівал|сурв|przetrwanie|sopravvivenza|survie",
+anarchy:"анарх|анархія|анархия|анка|anarchy|anarchia|anarchie|є анархія|есть анархия",
+modes:"режим|режими|режимы|режимка|режимки|режимів|які режими|какие режимы|какие есть режимы|що є на сервері|что есть на сервере|game modes|gamemodes|modes|what modes|what modes are available|tryby|tryby gry|jakie tryby|modalita|quali modalita|modes de jeu|quels modes|mode de jeu|ігрові режими",
+home:"sethome|set home|home|homes|дім|дом|точка дому|точки дому|точок дому|tpa|телепорт|teleport|spawn|спавн|домашня точка",
+cmds:"команда|команди|команд|команды|commands|command|komendy|komenda|comandi|comando|commandes|commande|kit|кіт|кит|набір|набор|fly|політ|heal|feed|burn|workbench|верстак",
+donate:"донат|donat|donate|donation|донатка|донатку|донатки|донатний бот|дон|привілей|привилег|привілея|привілейка|привілеї|privileg|rank|ranks|ранг|ранги|ціна|цены|цена|ціни|price|prices|cost|скільки коштує|сколько стоит|скільки це коштує|як купити|как купить|де купити|где купить|купити|купить|купівля|покупка|buy|purchase|магазин|shop|store|sklep|cena|ile kosztuje|jak kupic|negozio|prezzo|quanto costa|come comprare|acquista|boutique|prix|combien|comment acheter|оплата|оплатити|pay|payment|imperator|hacker|dragon|chosen|грн|uah|гривня|гривні",
+rules:"правила|правило|rules|rule|zasady|regole|regles|ban|бан|мут|mute|чит|читы|чити|cheats|cheat|реклама|гриферство|griefing|pvp|пвп|покарання|наказание|punishment|kara|punizione|sanction|що заборонено|что запрещено|forbidden|allowed|можна|дозволено|за що банять|за что банят",
+staff:"адмін|админ|адмінка|админка|модер|модерка|модератор|moderator|admin|staff|хелпер|helper|адміністрація|администрация|administracja|amministratore|administrateur|moderateur|як стати адміном|как стать админом",
+reg:"реєстрація|регистрация|register|/reg|login|логін|логин|пароль|парол|password|authme|rejestracja|registrazione|inscription",
+plugins:"плагін|плагіни|плагины|plugin|plugins|античит|anticheat|на чому працює|wtyczki",
+links:"telegram|телеграм|телеграмм|телега|тг|tg|discord|діскорд|дискорд|дс|ds|дис|канал|channel|соцмережі|соцсети|social|contacts|контакти|контакты|kontakt|contatti|contact|support|підтримка|поддержка|техпідтримка|wsparcie|supporto|assistance|звязок|связь|написати|де спитати|where to ask|news|новини|новости|оновлення|обновления|updates|aktualnosci|novita|actualites|сайт|site|website",
+about:"що за сервер|про сервер|який сервер|что за сервер|about the server|tell me about|розкажи про сервер|розкажи про|o serwerze|sul server|a propos du serveur|що це|шо це за|что это за",
+help:"що вмієш|що ти вмієш|що можеш|help|допомога|допоможи|помоги|помощь|pomoc|pomocy|aiuto|aide|вмієш|what can you do",
+thanks:"дякую|дяка|спасибі|спасибо|thanks|thank you|thx|merci|grazie|dziekuje|dzieki",
+bye:"бувай|па па|пока|до побачення|до свидания|bye|goodbye|see you|dowidzenia|arrivederci|au revoir",
+hi:"привіт|привет|здоров|добрий день|добрий вечір|hello|hi|hey|hola|ciao|salut|bonjour|czesc|witaj|buongiorno|слава україні"
+};
+/* Компіляція: той самий skel() застосовується і до словника, і до запиту → помилки/трансліт/RU/UA збігаються */
+var C=[];
+Object.keys(V).forEach(function(k){
+  var w={},ph={};
+  V[k].split('|').forEach(function(x){var s=skel(x);if(!s)return;if(s.indexOf(' ')>0)ph[s]=1;else w[s]=1;});
+  C.push({k:k,w:Object.keys(w),p:Object.keys(ph)});
+});
+var NEG=/(^| )(ne|ni|nie|non|pas|not|cant|cannot|can t)( |$)/,JW=/(zahod|zaiti|zaidu|join|podkl|pidkl|polacz|dolacz|wejsc|entrar|connett|rejoind|connect)/;
+function wm(t,w){ /* токен збігається зі словом: точно / префікс (≥5 літер) / 1 помилка (≥5 літер) */
+  if(t===w)return true;
+  if(w.length<5)return false;
+  return t.indexOf(w)===0||lev(t,w)<=1;
+}
+function detect(q){
+  var s=skel(q),toks=s.split(' '),best=null,bs=0;
+  C.forEach(function(c){
+    var sc=0,i,j;
+    for(i=0;i<c.p.length;i++)if((' '+s+' ').indexOf(' '+c.p[i])>=0)sc+=3;
+    for(i=0;i<c.w.length;i++)for(j=0;j<toks.length;j++)if(wm(toks[j],c.w[i])){sc+=2;break;}
+    if(c.k==='cant'&&NEG.test(s)&&JW.test(s))sc+=4;
+    if(sc>bs){bs=sc;best=c.k;}
+  });
+  return bs>=2?best:null;
+}
+return {skel:skel,detect:detect};
+})();
+
+/* Запити для існуючої бази KB (щоб не дублювати й не змінювати старі відповіді) */
+var NLU_Q={ip:'ip',cant:'не можу зайти',opening:'коли відкриється',status:'сервер онлайн',bedrock:'bedrock',version:'версія',start:'як почати',oneblock:'oneblock',duels:'дуелі',smp:'smp',hardcore:'хардкор',survival:'виживання',anarchy:'анархія',modes:'режими',home:'sethome',cmds:'команди',donate:'донат',rules:'правила',staff:'адмін',reg:'реєстрація',plugins:'плагіни',links:'telegram',about:'про сервер',help:'що вмієш',thanks:'дякую',bye:'бувай',hi:'привіт',appeal:'апеляція'};
+/* Переклади для PL/IT/FR (лише перевірені факти з сайту) */
+var NLU_R={
+ip:{pl:'IP serwera: LankciWorld.mcsh.io (kliknij IP w nagłówku, aby skopiować). Serwer działa na Minecraft Java Edition 1.21.1–26.3; Bedrock nie jest obsługiwany.',it:'IP del server: LankciWorld.mcsh.io (clicca sull’IP nell’intestazione per copiarlo). Il server è per Minecraft Java Edition 1.21.1–26.3; Bedrock non è supportato.',fr:'IP du serveur : LankciWorld.mcsh.io (cliquez sur l’IP en haut pour la copier). Serveur pour Minecraft Java Edition 1.21.1–26.3 ; Bedrock n’est pas pris en charge.'},
+version:{pl:'Obsługiwane są wersje Minecraft Java Edition od 1.21.1 do 26.3. Bedrock nie jest obsługiwany.',it:'Sono supportate le versioni Minecraft Java Edition da 1.21.1 a 26.3. Bedrock non è supportato.',fr:'Les versions Minecraft Java Edition 1.21.1 à 26.3 sont prises en charge. Bedrock n’est pas pris en charge.'},
+bedrock:{pl:'Bedrock Edition nie jest obsługiwany na LankciWorld, więc nie wejdziesz z telefonu przez Bedrock.',it:'Bedrock Edition non è supportato su LankciWorld, quindi non puoi entrare dal telefono con Bedrock.',fr:'Bedrock Edition n’est pas pris en charge sur LankciWorld, vous ne pouvez donc pas vous connecter depuis un téléphone via Bedrock.'},
+refund:{ua:'Бан за порушення правил не дає права на повернення коштів за донат (правило 4.4). Донат здійснюється лише через офіційного Telegram-бота. З іншими питаннями:',en:'A ban for breaking the rules gives no right to a donation refund (rule 4.4). Donations are made only via the official Telegram bot. For other questions:',pl:'Ban za naruszenie zasad nie uprawnia do zwrotu pieniędzy za donat (zasada 4.4). Donaty tylko przez oficjalnego bota Telegram. Inne pytania:',it:'Un ban per violazione delle regole non dà diritto al rimborso della donazione (regola 4.4). Le donazioni solo tramite il bot Telegram ufficiale. Altre domande:',fr:'Un ban pour infraction ne donne pas droit au remboursement du don (règle 4.4). Les dons uniquement via le bot Telegram officiel. Autres questions :'},
+links:{ua:'Наші сторінки:',en:'Our pages:',pl:'Nasze strony:',it:'Le nostre pagine:',fr:'Nos pages :'},
+unk:{pl:'Nie mam wystarczających informacji. Mogę opowiedzieć o: IP i jak wejść, jak zacząć, status serwera, rangi i ceny, komendy, zasady. W innych sprawach napisz na Telegram lub Discord:',it:'Non ho abbastanza informazioni. Posso parlarti di: IP e come entrare, come iniziare, stato del server, rank e prezzi, comandi, regole. Per altro scrivi su Telegram o Discord:',fr:'Je n’ai pas assez d’informations. Je peux parler de : l’IP et comment rejoindre, comment commencer, l’état du serveur, les rangs et prix, les commandes, les règles. Pour le reste, écrivez sur Telegram ou Discord :'}
+};
+var _lr=localReply;
+localReply=function(q){
+  var t=q.toLowerCase().replace(/ё/g,'е'),i;
+  for(i=0;i<5;i++)if(KB[i].k.test(t))return _lr(q); /* кризові/емоційні/образи — лишаються за старою логікою */
+  var it=NLU.detect(q),r;
+  if(it){
+    var R=NLU_R[it];
+    if(R&&R[lang])return {t:R[lang],links:it==='refund'||it==='links'};
+    if(it==='refund')return {t:NLU_R.refund.en,links:true};
+    if(NLU_Q[it]){r=_lr(NLU_Q[it]);if(r&&r.t)return r;}
+  }
+  r=_lr(q);
+  if(NLU_R.unk[lang]&&/^I do not have enough/.test(r.t))r.t=NLU_R.unk[lang];
+  return r;
+};
+
 function ask(){
   var q=inp.value.trim();
   if(!q||busy)return;
