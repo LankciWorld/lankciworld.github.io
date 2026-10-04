@@ -92,43 +92,6 @@ nav{background:rgba(6,6,6,.97);backdrop-filter:blur(12px);-webkit-backdrop-filte
 .rt b{color:#fff;}
 .pun{display:inline-block;margin-top:3px;background:rgba(255,106,0,.1);border:1px solid rgba(255,106,0,.2);color:var(--or);font-size:10px;padding:1px 6px;border-radius:4px;font-weight:600;}
 
-/* ══════════════ UPDATES / TIMELINE (замінює Команду) ══════════════ */
-.upd-head{text-align:center;margin-bottom:8px;}
-.upd-eyebrow{font-family:'Orbitron',monospace;font-size:10px;letter-spacing:4px;color:var(--or);text-transform:uppercase;opacity:.8;}
-.upd-title{font-family:'Orbitron',monospace;font-size:clamp(18px,4.5vw,28px);font-weight:900;color:#fff;margin-top:6px;letter-spacing:1px;}
-.upd-sub{font-size:12px;color:var(--mu);margin-top:6px;}
-
-/* консольна шапка логу */
-.log-console{background:var(--s1);border:1px solid var(--br);border-radius:10px;padding:10px 14px;margin:18px 0 30px;font-family:'Orbitron',monospace;font-size:11px;color:#4ade80;display:flex;align-items:center;gap:10px;overflow:hidden;position:relative;}
-.log-console::before{content:'●  ●  ●';letter-spacing:3px;color:#333;font-size:9px;flex-shrink:0;}
-.log-console span{opacity:.85;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.log-console .curs{display:inline-block;width:7px;height:12px;background:#4ade80;animation:blink 1s steps(1) infinite;margin-left:2px;vertical-align:middle;}
-
-.tl{position:relative;padding-left:26px;}
-.tl-line{position:absolute;left:9px;top:4px;bottom:4px;width:2px;background:#1c1c1c;border-radius:2px;}
-.tl-fill{position:absolute;left:9px;top:4px;width:2px;height:0%;background:linear-gradient(180deg,var(--or),#ffcc00);border-radius:2px;box-shadow:0 0 10px rgba(255,106,0,.6);transition:height .15s linear;}
-
-.tl-era{display:flex;align-items:center;gap:10px;margin:30px 0 14px;font-family:'Orbitron',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--mu);}
-.tl-era:first-child{margin-top:6px;}
-.tl-era::before{content:'';flex-shrink:0;width:10px;height:10px;border-radius:50%;background:var(--s2);border:2px solid var(--mu);margin-left:-31px;}
-.tl-era::after{content:'';flex:1;height:1px;background:var(--br);}
-.tl-era.e-hiatus{color:var(--rd);}
-.tl-era.e-hiatus::before{border-color:var(--rd);}
-.tl-era.e-revival{color:var(--gr);}
-.tl-era.e-revival::before{border-color:var(--gr);}
-
-.tl-node{position:relative;margin-bottom:14px;opacity:0;transform:translateX(-16px);transition:opacity .5s cubic-bezier(.4,0,.2,1),transform .5s cubic-bezier(.4,0,.2,1);}
-.tl-node.in{opacity:1;transform:translateX(0);}
-.tl-dot{position:absolute;left:-31px;top:14px;width:10px;height:10px;border-radius:50%;background:var(--s2);border:2px solid var(--dc,var(--or));z-index:2;transition:box-shadow .4s,background .4s;}
-.tl-node.in .tl-dot{background:var(--dc,var(--or));box-shadow:0 0 10px var(--dc,var(--or));}
-.tl-card{background:var(--s1);border:1px solid var(--br);border-left:2px solid var(--dc,var(--or));border-radius:10px;padding:12px 14px;display:flex;gap:12px;align-items:flex-start;transition:border-color .25s,transform .25s,box-shadow .25s;}
-.tl-card:hover{border-color:#3a3a3a;border-left-color:var(--dc,var(--or));transform:translateX(4px);box-shadow:0 8px 22px rgba(0,0,0,.5);}
-.tl-ic{flex-shrink:0;width:34px;height:34px;border-radius:8px;background:color-mix(in srgb, var(--dc,var(--or)) 15%, transparent);display:flex;align-items:center;justify-content:center;font-size:16px;}
-.tl-body{flex:1;min-width:0;}
-.tl-date{font-family:'Orbitron',monospace;font-size:10px;font-weight:700;color:var(--dc,var(--or));letter-spacing:1px;text-transform:uppercase;}
-.tl-ttl{font-size:clamp(12px,2.6vw,14px);font-weight:700;color:#fff;margin-top:3px;}
-.tl-desc{font-size:clamp(11px,2.4vw,12.5px);color:#999;margin-top:4px;line-height:1.5;}
-
 /* КОМАНДА (лишено на випадок повернення) */
 .team-section{margin-bottom:40px;}
 .team-title{font-family:'Orbitron',monospace;font-size:clamp(13px,3vw,18px);color:var(--or);letter-spacing:3px;text-align:center;margin-bottom:20px;text-transform:uppercase;}
@@ -155,9 +118,17 @@ nav{background:rgba(6,6,6,.97);backdrop-filter:blur(12px);-webkit-backdrop-filte
 footer{text-align:center;padding:22px;color:#282828;font-size:12px;border-top:1px solid #111;margin-top:32px;}
 footer span{color:var(--or);}
 
+@keyframes itemin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.pg.active:not(.out) .grid>*,.pg.active:not(.out) .rcat{animation:itemin .4s cubic-bezier(.4,0,.2,1) backwards;}
+.pg.active:not(.out) .grid>*:nth-child(2){animation-delay:.04s}
+.pg.active:not(.out) .grid>*:nth-child(3){animation-delay:.08s}
+.pg.active:not(.out) .grid>*:nth-child(4){animation-delay:.12s}
+.pg.active:not(.out) .grid>*:nth-child(5){animation-delay:.16s}
+.pg.active:not(.out) .grid>*:nth-child(6){animation-delay:.2s}
+.pg.active:not(.out) .grid>*:nth-child(7){animation-delay:.24s}
+.pg.active:not(.out) .grid>*:nth-child(8){animation-delay:.28s}
 @media(prefers-reduced-motion:reduce){
-  .tl-node{opacity:1;transform:none;transition:none;}
-  .tl-fill{transition:none;}
+  .pg.active:not(.out) .grid>*,.pg.active:not(.out) .rcat{animation:none;}
 }
 
 @media(min-width:600px){
@@ -167,11 +138,51 @@ footer span{color:var(--or);}
   nav{height:52px;gap:4px;padding:0 16px;}
   .nvl button{padding:7px 14px;font-size:12px;letter-spacing:1.5px;}
   .wrap{margin:32px auto;padding:0 16px;}
-  .tl{padding-left:36px;max-width:760px;margin-left:auto;margin-right:auto;}
-  .tl-line{left:13px;}
-  .tl-fill{left:13px;}
-  .tl-era::before{margin-left:-41px;}
-  .tl-dot{left:-41px;}
+}
+
+/* SOCIAL ICONS */
+.soc{display:flex;gap:3px;flex-shrink:0;margin-left:4px;}
+.sl{width:26px;height:26px;display:flex;align-items:center;justify-content:center;color:var(--mu);border:1px solid var(--br);border-radius:5px;text-decoration:none;transition:color .2s,border-color .2s,background .2s,transform .2s;-webkit-tap-highlight-color:transparent;}
+.sl:hover,.sl:focus-visible{transform:translateY(-2px);color:var(--c);border-color:var(--c);background:rgba(255,255,255,.04);}
+.sl-tg{--c:#29a9eb;}
+.sl-dc{--c:#7289ff;}
+@media(max-width:700px){
+  nav{flex-wrap:wrap;height:auto;padding:6px 8px;row-gap:4px;}
+  .nvl{order:2;flex-basis:100%;}
+  .lsw{order:1;margin-left:0;}
+  .soc{order:1;margin-left:0;}
+}
+
+/* LANKCI AI */
+.ai-btn{position:fixed;right:16px;bottom:16px;z-index:1100;width:46px;height:46px;border:0;border-radius:12px;background:var(--or);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 6px 18px rgba(255,106,0,.35);transition:transform .2s,background .2s;-webkit-tap-highlight-color:transparent;}
+.ai-btn:hover{transform:scale(1.07);background:var(--od);}
+.ai-btn:active{transform:scale(.95);}
+.ai-btn::after{content:'';position:absolute;inset:0;border-radius:12px;border:2px solid var(--or);opacity:0;pointer-events:none;animation:aiping 3s ease-out infinite;}
+.ai-btn.is-open::after{animation:none;}
+@keyframes aiping{0%{transform:scale(1);opacity:.55}70%,100%{transform:scale(1.45);opacity:0}}
+.ai-panel{position:fixed;right:16px;bottom:72px;z-index:1200;width:min(340px,calc(100vw - 32px));height:min(460px,calc(100vh - 96px));height:min(460px,calc(100dvh - 96px));display:flex;flex-direction:column;background:var(--s1);border:1px solid var(--br);border-radius:14px;box-shadow:0 14px 40px rgba(0,0,0,.65);overflow:hidden;transform-origin:bottom right;visibility:hidden;opacity:0;transform:translateY(12px) scale(.96);transition:opacity .22s ease,transform .22s ease,visibility 0s linear .22s;}
+.ai-panel.open{visibility:visible;opacity:1;transform:none;transition:opacity .22s ease,transform .22s ease,visibility 0s;}
+.ai-hd{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-bottom:1px solid var(--br);background:var(--s2);}
+.ai-ttl{font-family:'Orbitron',monospace;font-size:12px;font-weight:700;color:var(--or);letter-spacing:1px;}
+.ai-x{background:transparent;border:0;color:var(--mu);font-size:22px;line-height:1;cursor:pointer;padding:0 4px;transition:color .2s;}
+.ai-x:hover{color:#fff;}
+.ai-msgs{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:12px;display:flex;flex-direction:column;gap:8px;}
+.ai-m{max-width:88%;padding:8px 11px;border-radius:10px;font-size:13px;line-height:1.5;overflow-wrap:anywhere;animation:aimsg .25s ease both;}
+.ai-m.bot{align-self:flex-start;background:var(--s2);border:1px solid var(--br);color:#ddd;}
+.ai-m.me{align-self:flex-end;background:var(--or);color:#fff;}
+.ai-m a{display:inline-block;margin:6px 8px 0 0;color:var(--or);font-weight:600;text-decoration:none;}
+.ai-m a:hover{text-decoration:underline;}
+@keyframes aimsg{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.ai-in{display:flex;gap:8px;padding:10px;border-top:1px solid var(--br);background:var(--s2);}
+.ai-in input{flex:1;min-width:0;background:var(--bg);border:1px solid var(--br);border-radius:8px;color:#e8e8e8;padding:9px 10px;font-size:16px;font-family:'Exo 2','Segoe UI',sans-serif;outline:none;transition:border-color .2s;}
+.ai-in input:focus{border-color:var(--or);}
+.ai-in button{flex-shrink:0;width:38px;border:0;border-radius:8px;background:var(--or);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s,opacity .2s;}
+.ai-in button:hover{background:var(--od);}
+.ai-in button:disabled,.ai-in input:disabled{opacity:.5;cursor:default;}
+@media(prefers-reduced-motion:reduce){
+  .ai-btn::after{animation:none;}
+  .ai-panel,.ai-panel.open{transition:none;}
+  .ai-m{animation:none;}
 }
 </style>
 </head>
@@ -199,13 +210,17 @@ footer span{color:var(--or);}
   <button id="nb-donate"   class="active">Магазин</button>
   <button id="nb-features">Функціонал</button>
   <button id="nb-rules">Правила</button>
-  <button id="nb-updates">Оновлення</button>
 </div>
 <div class="lsw">
   <button class="lb active" id="lb-ua">UA</button>
   <button class="lb"        id="lb-en">EN</button>
   <button class="lb"        id="lb-pl">PL</button>
   <button class="lb"        id="lb-it">IT</button>
+  <button class="lb"        id="lb-fr">FR</button>
+</div>
+<div class="soc">
+  <a class="sl sl-tg" href="https://t.me/LankciWorld" target="_blank" rel="noopener noreferrer" aria-label="Telegram" title="Telegram"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></a>
+  <a class="sl sl-dc" href="https://discord.gg/RKWzGv7M" target="_blank" rel="noopener noreferrer" aria-label="Discord" title="Discord"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg></a>
 </div>
 </nav>
 
@@ -214,13 +229,13 @@ footer span{color:var(--or);}
 <!-- МАГАЗИН -->
 <section id="pg-donate" class="pg active">
 <div class="grid">
-<div class="card" style="--rc:#ffd700"><div class="rn">Imperator</div><div class="pr">1250 грн</div><a href="https://t.me/Kostyanchu_original" class="bb" data-ua="ПРИДБАТИ" data-en="BUY NOW">ПРИДБАТИ</a></div>
-<div class="card" style="--rc:#32cd32"><div class="rn">Second</div><div class="pr">489 грн</div><a href="https://t.me/Kostyanchu_original" class="bb" data-ua="ПРИДБАТИ" data-en="BUY NOW">ПРИДБАТИ</a></div>
-<div class="card" style="--rc:#22c55e"><div class="rn">Hacker</div><div class="pr">1574 грн</div><a href="https://t.me/Kostyanchu_original" class="bb" data-ua="ПРИДБАТИ" data-en="BUY NOW">ПРИДБАТИ</a></div>
-<div class="card" style="--rc:#ef4444"><div class="rn">Dark</div><div class="pr">300 грн</div><a href="https://t.me/Kostyanchu_original" class="bb" data-ua="ПРИДБАТИ" data-en="BUY NOW">ПРИДБАТИ</a></div>
-<div class="card" style="--rc:#ffff00"><div class="rn">Chosen</div><div class="pr">499 грн</div><a href="https://t.me/Kostyanchu_original" class="bb" data-ua="ПРИДБАТИ" data-en="BUY NOW">ПРИДБАТИ</a></div>
-<div class="card" style="--rc:#3b82f6"><div class="rn">Dragon</div><div class="pr">357 грн</div><a href="https://t.me/Kostyanchu_original" class="bb" data-ua="ПРИДБАТИ" data-en="BUY NOW">ПРИДБАТИ</a></div>
-<div class="card" style="--rc:#00d4ff"><div class="rn">Hero</div><div class="pr">179 грн</div><a href="https://t.me/Kostyanchu_original" class="bb" data-ua="ПРИДБАТИ" data-en="BUY NOW">ПРИДБАТИ</a></div>
+<div class="card" style="--rc:#ffd700"><div class="rn">Imperator</div><div class="pr">1250 грн</div><a href="https://t.me/LankciDonatbot" class="bb" data-ua="ПРИДБАТИ" data-en="BUY NOW">ПРИДБАТИ</a></div>
+<div class="card" style="--rc:#32cd32"><div class="rn">Second</div><div class="pr">489 грн</div><a href="https://t.me/LankciDonatbot" class="bb" data-ua="ПРИДБАТИ" data-en="BUY NOW">ПРИДБАТИ</a></div>
+<div class="card" style="--rc:#22c55e"><div class="rn">Hacker</div><div class="pr">1574 грн</div><a href="https://t.me/LankciDonatbot" class="bb" data-ua="ПРИДБАТИ" data-en="BUY NOW">ПРИДБАТИ</a></div>
+<div class="card" style="--rc:#ef4444"><div class="rn">Dark</div><div class="pr">300 грн</div><a href="https://t.me/LankciDonatbot" class="bb" data-ua="ПРИДБАТИ" data-en="BUY NOW">ПРИДБАТИ</a></div>
+<div class="card" style="--rc:#ffff00"><div class="rn">Chosen</div><div class="pr">499 грн</div><a href="https://t.me/LankciDonatbot" class="bb" data-ua="ПРИДБАТИ" data-en="BUY NOW">ПРИДБАТИ</a></div>
+<div class="card" style="--rc:#3b82f6"><div class="rn">Dragon</div><div class="pr">357 грн</div><a href="https://t.me/LankciDonatbot" class="bb" data-ua="ПРИДБАТИ" data-en="BUY NOW">ПРИДБАТИ</a></div>
+<div class="card" style="--rc:#00d4ff"><div class="rn">Hero</div><div class="pr">179 грн</div><a href="https://t.me/LankciDonatbot" class="bb" data-ua="ПРИДБАТИ" data-en="BUY NOW">ПРИДБАТИ</a></div>
 <div class="card" style="--rc:#333"><div class="rn" style="color:#444">Скоро...</div><div class="pr" style="color:#333">???</div><a href="#" class="bb" style="background:#1c1c1c;color:#444;cursor:default">СКОРО</a></div>
 </div>
 </section>
@@ -251,273 +266,65 @@ footer span{color:var(--or);}
 <div class="ri"><span class="rnm">1.4</span><div class="rt"><b>Спам у чаті</b><br><span class="pun">Мут 15 хвилин</span></div></div>
 <div class="ri"><span class="rnm">1.5</span><div class="rt"><b>Реклама інших серверів</b><br><span class="pun">Бан 7 днів</span></div></div>
 <div class="ri"><span class="rnm">1.6</span><div class="rt"><b>Образа гравців</b><br><span class="pun">Мут 1 година</span></div></div>
+<div class="ri"><span class="rnm">1.7</span><div class="rt"><b>Розпалювання ненависті та дискримінація</b><br><span class="pun">Мут 7 днів</span></div></div>
+<div class="ri"><span class="rnm">1.8</span><div class="rt"><b>Флуд капсом та зловживання символами</b><br><span class="pun">Мут 10 хвилин</span></div></div>
+<div class="ri"><span class="rnm">1.9</span><div class="rt"><b>Розголошення особистих даних гравців</b><br><span class="pun">Бан 14 днів</span></div></div>
 </div>
 <div class="rcat">
 <h3>2. Читерство</h3>
 <div class="ri"><span class="rnm">2.1</span><div class="rt"><b>Використання читів</b><br><span class="pun">Бан 32 дні</span></div></div>
 <div class="ri"><span class="rnm">2.2</span><div class="rt"><b>Зізнання до покарання</b><br><span class="pun">Бан 14 днів</span></div></div>
 <div class="ri"><span class="rnm">2.3</span><div class="rt"><b>Використання багів</b><br><span class="pun">Бан 14 днів</span></div></div>
+<div class="ri"><span class="rnm">2.4</span><div class="rt"><b>Заборонені модифікації (X-Ray, автоклікер, Freecam)</b><br><span class="pun">Бан 32 дні</span></div></div>
+<div class="ri"><span class="rnm">2.5</span><div class="rt"><b>Дюп предметів та навмисне навантаження сервера</b><br><span class="pun">Бан 32 дні</span></div></div>
 </div>
 <div class="rcat">
 <h3>3. Гра</h3>
 <div class="ri"><span class="rnm">3.1</span><div class="rt"><b>Гриферство</b><br><span class="pun">Дозволено ✓</span></div></div>
 <div class="ri"><span class="rnm">3.2</span><div class="rt"><b>PvP</b><br><span class="pun">Дозволено ✓</span></div></div>
 <div class="ri"><span class="rnm">3.3</span><div class="rt"><b>Видавати себе за адміна</b><br><span class="pun">Бан 7 днів</span></div></div>
+<div class="ri"><span class="rnm">3.4</span><div class="rt"><b>Обхід покарання (альтернативні акаунти)</b><br><span class="pun">Покарання подвоюється</span></div></div>
+<div class="ri"><span class="rnm">3.5</span><div class="rt"><b>Гриферство та крадіжки на спавні й у лобі</b><br><span class="pun">Бан 7 днів</span></div></div>
+<div class="ri"><span class="rnm">3.6</span><div class="rt"><b>Обхід приватів і захисту територій через баги</b><br><span class="pun">Бан 14 днів</span></div></div>
+</div>
+<div class="rcat">
+<h3>4. Торгівля та донат</h3>
+<div class="ri"><span class="rnm">4.1</span><div class="rt"><b>Шахрайство при обміні між гравцями</b><br><span class="pun">Бан 14 днів</span></div></div>
+<div class="ri"><span class="rnm">4.2</span><div class="rt"><b>Продаж предметів чи акаунтів за реальні гроші поза магазином</b><br><span class="pun">Бан 14 днів</span></div></div>
+<div class="ri"><span class="rnm">4.3</span><div class="rt"><b>Донат здійснюється лише через офіційного Telegram-бота</b><br><span class="pun">Інакше — без гарантій</span></div></div>
+<div class="ri"><span class="rnm">4.4</span><div class="rt"><b>Бан за порушення правил не дає права на повернення коштів за донат</b><br><span class="pun">Без компенсації</span></div></div>
+</div>
+<div class="rcat">
+<h3>5. Відповідальність за порушення</h3>
+<div class="ri"><span class="rnm">5.1</span><div class="rt"><b>Незнання правил не звільняє від відповідальності</b><br><span class="pun">Покарання діє</span></div></div>
+<div class="ri"><span class="rnm">5.2</span><div class="rt"><b>Повторне порушення</b><br><span class="pun">Покарання збільшується</span></div></div>
+<div class="ri"><span class="rnm">5.3</span><div class="rt"><b>Оскарження покарання — через адміністрацію сервера</b></div></div>
+<div class="ri"><span class="rnm">5.4</span><div class="rt"><b>Порушення, не зазначені в правилах, розглядає адміністрація</b></div></div>
+</div>
+<div class="rcat">
+<h3>6. Правила для адміністратора</h3>
+<div class="ri"><span class="rnm">6.1</span><div class="rt"><b>Не зловживати повноваженнями</b></div></div>
+<div class="ri"><span class="rnm">6.2</span><div class="rt"><b>Не видавати покарання без причини</b></div></div>
+<div class="ri"><span class="rnm">6.3</span><div class="rt"><b>Не використовувати права для особистої вигоди</b></div></div>
+<div class="ri"><span class="rnm">6.4</span><div class="rt"><b>Не розголошувати службову інформацію</b></div></div>
+<div class="ri"><span class="rnm">6.5</span><div class="rt"><b>Не втручатися в гру без необхідності</b></div></div>
+<div class="ri"><span class="rnm">6.6</span><div class="rt"><b>Не карати гравців через особисті конфлікти</b></div></div>
+<div class="ri"><span class="rnm">6.7</span><div class="rt"><b>Дотримуватися правил сервера нарівні з усіма</b></div></div>
+<div class="ri"><span class="rnm">6.8</span><div class="rt"><b>Відповідально ставитися до скарг</b></div></div>
+<div class="ri"><span class="rnm">6.9</span><div class="rt"><b>Правильно використовувати команди</b></div></div>
+</div>
+<div class="rcat">
+<h3>7. Правила для модератора</h3>
+<div class="ri"><span class="rnm">7.1</span><div class="rt"><b>Видавати покарання лише в межах своїх повноважень</b></div></div>
+<div class="ri"><span class="rnm">7.2</span><div class="rt"><b>Не видавати покарання без причини</b></div></div>
+<div class="ri"><span class="rnm">7.3</span><div class="rt"><b>Не використовувати права для особистої вигоди</b></div></div>
+<div class="ri"><span class="rnm">7.4</span><div class="rt"><b>Не розголошувати службову інформацію</b></div></div>
+<div class="ri"><span class="rnm">7.5</span><div class="rt"><b>Передавати серйозні порушення адміністратору</b></div></div>
+<div class="ri"><span class="rnm">7.6</span><div class="rt"><b>Відповідально ставитися до скарг</b></div></div>
+<div class="ri"><span class="rnm">7.7</span><div class="rt"><b>Бути ввічливим і неупередженим із гравцями</b></div></div>
+<div class="ri"><span class="rnm">7.8</span><div class="rt"><b>Правильно використовувати команди</b></div></div>
 </div>
 </div>
-</section>
-
-<!-- ОНОВЛЕННЯ / ІСТОРІЯ СЕРВЕРА -->
-<section id="pg-updates" class="pg">
-  <div class="upd-head">
-    <div class="upd-eyebrow" data-ua="ЖУРНАЛ СЕРВЕРА" data-en="SERVER LOG">ЖУРНАЛ СЕРВЕРА</div>
-    <div class="upd-title" data-ua="Історія LankciWorld" data-en="LankciWorld History">Історія LankciWorld</div>
-    <div class="upd-sub" data-ua="Від першого запуску до сьогодні — усе, що відбувалось на сервері" data-en="From launch day to today — everything that happened on the server">Від першого запуску до сьогодні — усе, що відбувалось на сервері</div>
-  </div>
-
-  <div class="log-console"><span id="logLine">> server.log — завантаження історії...<span class="curs"></span></span></div>
-
-  <div class="tl" id="tl">
-    <div class="tl-line"></div>
-    <div class="tl-fill" id="tlFill"></div>
-
-    <div class="tl-era" data-ua="2024 · Сезон 1" data-en="2024 · Season 1">2024 · Сезон 1</div>
-
-    <div class="tl-node" style="--dc:var(--gr)">
-      <div class="tl-dot"></div>
-      <div class="tl-card">
-        <div class="tl-ic">🚀</div>
-        <div class="tl-body">
-          <div class="tl-date">09.07.2024</div>
-          <div class="tl-ttl" data-ua="Заснування сервера" data-en="Server founded">Заснування сервера</div>
-          <div class="tl-desc" data-ua="LankciWorld офіційно запущено — початок історії." data-en="LankciWorld officially launched — the story begins.">LankciWorld офіційно запущено — початок історії.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="tl-node">
-      <div class="tl-dot"></div>
-      <div class="tl-card">
-        <div class="tl-ic">🔌</div>
-        <div class="tl-body">
-          <div class="tl-date">11.07.2024</div>
-          <div class="tl-ttl" data-ua="Плагіни та лобі" data-en="Plugins & lobby">Плагіни та лобі</div>
-          <div class="tl-desc" data-ua="Встановлено перші плагіни, збудовано лобі сервера." data-en="First plugins installed, server lobby built.">Встановлено перші плагіни, збудовано лобі сервера.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="tl-node">
-      <div class="tl-dot"></div>
-      <div class="tl-card">
-        <div class="tl-ic">⚙️</div>
-        <div class="tl-body">
-          <div class="tl-date">13.07.2024</div>
-          <div class="tl-ttl" data-ua="Налаштування плагінів" data-en="Plugin tuning">Налаштування плагінів</div>
-          <div class="tl-desc" data-ua="Донастройка та відлагодження встановлених плагінів." data-en="Fine-tuning and debugging installed plugins.">Донастройка та відлагодження встановлених плагінів.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="tl-node">
-      <div class="tl-dot"></div>
-      <div class="tl-card">
-        <div class="tl-ic">🏃</div>
-        <div class="tl-body">
-          <div class="tl-date">15.07.2024</div>
-          <div class="tl-ttl" data-ua="Паркур-зона" data-en="Parkour zone">Паркур-зона</div>
-          <div class="tl-desc" data-ua="Збудовано паркур для гравців." data-en="Built a parkour course for players.">Збудовано паркур для гравців.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="tl-node">
-      <div class="tl-dot"></div>
-      <div class="tl-card">
-        <div class="tl-ic">🧩</div>
-        <div class="tl-body">
-          <div class="tl-date">10.09.2024</div>
-          <div class="tl-ttl" data-ua="Нові плагіни" data-en="New plugins">Нові плагіни</div>
-          <div class="tl-desc" data-ua="Додано новий набір плагінів для покращення геймплею." data-en="Added a new set of plugins to improve gameplay.">Додано новий набір плагінів для покращення геймплею.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="tl-node" style="--dc:var(--bl)">
-      <div class="tl-dot"></div>
-      <div class="tl-card">
-        <div class="tl-ic">📱</div>
-        <div class="tl-body">
-          <div class="tl-date">24.09.2024</div>
-          <div class="tl-ttl" data-ua="Підтримка Bedrock" data-en="Bedrock support">Підтримка Bedrock</div>
-          <div class="tl-desc" data-ua="Тепер можна грати з телефону через Bedrock Edition." data-en="Now playable from phones via Bedrock Edition.">Тепер можна грати з телефону через Bedrock Edition.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="tl-node" style="--dc:var(--rd)">
-      <div class="tl-dot"></div>
-      <div class="tl-card">
-        <div class="tl-ic">💤</div>
-        <div class="tl-body">
-          <div class="tl-date">30.09.2024</div>
-          <div class="tl-ttl" data-ua="Проєкт заморожено" data-en="Project shelved">Проєкт заморожено</div>
-          <div class="tl-desc" data-ua="Роботу над сервером тимчасово припинено." data-en="Work on the server was temporarily halted.">Роботу над сервером тимчасово припинено.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="tl-era e-hiatus" data-ua="9 місяців тиші" data-en="9 months of silence">9 місяців тиші</div>
-
-    <div class="tl-era e-revival" data-ua="2025 · Відродження" data-en="2025 · Revival">2025 · Відродження</div>
-
-    <div class="tl-node" style="--dc:var(--gr)">
-      <div class="tl-dot"></div>
-      <div class="tl-card">
-        <div class="tl-ic">🔥</div>
-        <div class="tl-body">
-          <div class="tl-date">07.07.2025</div>
-          <div class="tl-ttl" data-ua="Проєкт воскрешено" data-en="Project resurrected">Проєкт воскрешено</div>
-          <div class="tl-desc" data-ua="Через рік мовчання сервер повертається до життя." data-en="After a year of silence, the server comes back to life.">Через рік мовчання сервер повертається до життя.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="tl-node">
-      <div class="tl-dot"></div>
-      <div class="tl-card">
-        <div class="tl-ic">🌱</div>
-        <div class="tl-body">
-          <div class="tl-date">08.07.2025</div>
-          <div class="tl-ttl" data-ua="Новий режим виживання" data-en="New survival mode">Новий режим виживання</div>
-          <div class="tl-desc" data-ua="Запущено оновлений режим виживання." data-en="Launched a refreshed survival mode.">Запущено оновлений режим виживання.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="tl-node" style="--dc:#ffd700">
-      <div class="tl-dot"></div>
-      <div class="tl-card">
-        <div class="tl-ic">🎂</div>
-        <div class="tl-body">
-          <div class="tl-date">09.07.2025</div>
-          <div class="tl-ttl" data-ua="1 рік серверу" data-en="1 year anniversary">1 рік серверу</div>
-          <div class="tl-desc" data-ua="Річниця LankciWorld + повне очищення пам'яті сервера." data-en="LankciWorld's anniversary + full server memory cleanup.">Річниця LankciWorld + повне очищення пам'яті сервера.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="tl-node">
-      <div class="tl-dot"></div>
-      <div class="tl-card">
-        <div class="tl-ic">🔒</div>
-        <div class="tl-body">
-          <div class="tl-date">10–19.07.2025</div>
-          <div class="tl-ttl" data-ua="Система приватів" data-en="Private plots system">Система приватів</div>
-          <div class="tl-desc" data-ua="Впроваджено привати для захисту територій гравців." data-en="Introduced private plots to protect players' territory.">Впроваджено привати для захисту територій гравців.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="tl-node">
-      <div class="tl-dot"></div>
-      <div class="tl-card">
-        <div class="tl-ic">🎨</div>
-        <div class="tl-body">
-          <div class="tl-date">14.09.2025</div>
-          <div class="tl-ttl" data-ua="Ребрендинг і новий хостінг" data-en="Rebrand & new hosting">Ребрендинг і новий хостінг</div>
-          <div class="tl-desc" data-ua="Нова аватарка сервера, перехід на новий хостінг." data-en="New server avatar, migrated to new hosting.">Нова аватарка сервера, перехід на новий хостінг.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="tl-node">
-      <div class="tl-dot"></div>
-      <div class="tl-card">
-        <div class="tl-ic">🛠️</div>
-        <div class="tl-body">
-          <div class="tl-date" data-ua="Жовтень – листопад 2025" data-en="October – November 2025">Жовтень – листопад 2025</div>
-          <div class="tl-ttl" data-ua="Ремонт построек" data-en="Build repairs">Ремонт построек</div>
-          <div class="tl-desc" data-ua="Виправлено пошкоджені будівлі на карті." data-en="Repaired damaged builds across the map.">Виправлено пошкоджені будівлі на карті.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="tl-era" data-ua="2026 · Стабілізація" data-en="2026 · Stabilization">2026 · Стабілізація</div>
-
-    <div class="tl-node" style="--dc:var(--bl)">
-      <div class="tl-dot"></div>
-      <div class="tl-card">
-        <div class="tl-ic">🌐</div>
-        <div class="tl-body">
-          <div class="tl-date">03.03.2026</div>
-          <div class="tl-ttl" data-ua="Хостінг 2.0" data-en="Hosting 2.0">Хостінг 2.0</div>
-          <div class="tl-desc" data-ua="Черговий перехід на новий, потужніший хостінг." data-en="Another migration to a new, more powerful host.">Черговий перехід на новий, потужніший хостінг.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="tl-node">
-      <div class="tl-dot"></div>
-      <div class="tl-card">
-        <div class="tl-ic">🐛</div>
-        <div class="tl-body">
-          <div class="tl-date">10–20.03.2026</div>
-          <div class="tl-ttl" data-ua="Масове виправлення помилок" data-en="Mass bug fixing">Масове виправлення помилок</div>
-          <div class="tl-desc" data-ua="Виправлено серію технічних помилок і багів." data-en="Fixed a series of technical issues and bugs.">Виправлено серію технічних помилок і багів.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="tl-node" style="--dc:var(--gr)">
-      <div class="tl-dot"></div>
-      <div class="tl-card">
-        <div class="tl-ic">✅</div>
-        <div class="tl-body">
-          <div class="tl-date">10.04.2026</div>
-          <div class="tl-ttl" data-ua="Офіційний реліз" data-en="Official release">Офіційний реліз</div>
-          <div class="tl-desc" data-ua="Сервер офіційно виходить з бети в реліз." data-en="Server officially leaves beta and enters full release.">Сервер офіційно виходить з бети в реліз.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="tl-node" style="--dc:var(--rd)">
-      <div class="tl-dot"></div>
-      <div class="tl-card">
-        <div class="tl-ic">⏸️</div>
-        <div class="tl-body">
-          <div class="tl-date">20.05.2026</div>
-          <div class="tl-ttl" data-ua="Технічна пауза" data-en="Technical pause">Технічна пауза</div>
-          <div class="tl-desc" data-ua="Сервер закрито на технічне обслуговування — 2 місяці." data-en="Server closed for maintenance — 2 months.">Сервер закрито на технічне обслуговування — 2 місяці.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="tl-node" style="--dc:var(--or)">
-      <div class="tl-dot"></div>
-      <div class="tl-card">
-        <div class="tl-ic">🔧</div>
-        <div class="tl-body">
-          <div class="tl-date" data-ua="Серпень 2026" data-en="August 2026">Серпень 2026</div>
-          <div class="tl-ttl" data-ua="Активна робота над відновленням" data-en="Active work on the comeback">Активна робота над відновленням</div>
-          <div class="tl-desc" data-ua="Команда працює над поверненням сервера до життя." data-en="The team is working to bring the server back online.">Команда працює над поверненням сервера до життя.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="tl-node" style="--dc:var(--or)">
-      <div class="tl-dot"></div>
-      <div class="tl-card">
-        <div class="tl-ic">🔧</div>
-        <div class="tl-body">
-          <div class="tl-date" data-ua="Серпень 2026" data-en="September 2026">Вересень 2026</div>
-          <div class="tl-ttl" data-ua="Додано СМП хардкор і дуелі" data-en="Added SMP hardcore and duels">Активна робота над відновленням</div>
-          <div class="tl-desc" data-ua="Команда працює над поверненням сервера до життя." data-en="The team is working to bring the server back online.">Команда працює над поверненням сервера до життя.</div>
-        </div>
-      </div>
-    </div>
-
-  </div>
 </section>
 
 </div>
@@ -534,104 +341,101 @@ var lang='ua';
 var cur='donate';
 var toastT=null;
 
-/* ═══ PL / IT переклади ═══ */
+/* ═══ PL / IT / FR переклади ═══ */
 var UI={
-  pl:{toast:'✓ IP skopiowano!',ftr:'Wszelkie prawa zastrzeżone',donate:'Sklep',features:'Funkcje',rules:'Zasady',updates:'Aktualizacje',pllbl:'Gracze',chk:'Sprawdzanie...'},
-  it:{toast:'✓ IP copiato!',ftr:'Tutti i diritti riservati',donate:'Negozio',features:'Funzionalità',rules:'Regole',updates:'Aggiornamenti',pllbl:'Giocatori',chk:'Controllo...'}
+  pl:{toast:'✓ IP skopiowano!',ftr:'Wszelkie prawa zastrzeżone',donate:'Sklep',features:'Funkcje',rules:'Zasady',pllbl:'Gracze',chk:'Sprawdzanie...'},
+  it:{toast:'✓ IP copiato!',ftr:'Tutti i diritti riservati',donate:'Negozio',features:'Funzionalità',rules:'Regole',pllbl:'Giocatori',chk:'Controllo...'},
+  fr:{toast:'✓ IP copiée !',ftr:'Tous droits réservés',donate:'Boutique',features:'Fonctionnalités',rules:'Règles',pllbl:'Joueurs',chk:'Vérification...',on:'En ligne',off:'Hors ligne'}
 };
-/* ключ = оригінальний український текст → [польська, італійська] */
+/* ключ = оригінальний український текст → [польська, італійська, французька] */
 var TR={
-'ПРИДБАТИ':['KUP TERAZ','ACQUISTA'],
-'СКОРО':['WKRÓTCE','PRESTO'],'Скоро...':['Wkrótce...','Presto...'],'Скоро':['Wkrótce','Presto'],
-'ЖУРНАЛ СЕРВЕРА':['DZIENNIK SERWERA','REGISTRO DEL SERVER'],
-'Історія LankciWorld':['Historia LankciWorld','Storia di LankciWorld'],
-'Від першого запуску до сьогодні — усе, що відбувалось на сервері':['Od pierwszego uruchomienia do dziś — wszystko, co działo się na serwerze','Dal lancio a oggi: tutto ciò che è successo sul server'],
-'2024 · Сезон 1':['2024 · Sezon 1','2024 · Stagione 1'],
-'9 місяців тиші':['9 miesięcy ciszy','9 mesi di silenzio'],
-'2025 · Відродження':['2025 · Odrodzenie','2025 · Rinascita'],
-'2026 · Стабілізація':['2026 · Stabilizacja','2026 · Stabilizzazione'],
-'Заснування сервера':['Założenie serwera','Fondazione del server'],
-'LankciWorld офіційно запущено — початок історії.':['LankciWorld został oficjalnie uruchomiony — początek historii.','LankciWorld è stato lanciato ufficialmente: inizia la storia.'],
-'Плагіни та лобі':['Pluginy i lobby','Plugin e lobby'],
-'Встановлено перші плагіни, збудовано лобі сервера.':['Zainstalowano pierwsze pluginy i zbudowano lobby serwera.','Installati i primi plugin e costruita la lobby del server.'],
-'Налаштування плагінів':['Konfiguracja pluginów','Configurazione dei plugin'],
-'Донастройка та відлагодження встановлених плагінів.':['Dostrajanie i debugowanie zainstalowanych pluginów.','Rifinitura e debug dei plugin installati.'],
-'Паркур-зона':['Strefa parkouru','Zona parkour'],
-'Збудовано паркур для гравців.':['Zbudowano parkour dla graczy.','Costruito un percorso parkour per i giocatori.'],
-'Нові плагіни':['Nowe pluginy','Nuovi plugin'],
-'Додано новий набір плагінів для покращення геймплею.':['Dodano nowy zestaw pluginów poprawiających rozgrywkę.','Aggiunto un nuovo set di plugin per migliorare il gameplay.'],
-'Підтримка Bedrock':['Obsługa Bedrock','Supporto Bedrock'],
-'Тепер можна грати з телефону через Bedrock Edition.':['Teraz można grać z telefonu przez Bedrock Edition.','Ora si può giocare da telefono tramite Bedrock Edition.'],
-'Проєкт заморожено':['Projekt zawieszony','Progetto sospeso'],
-'Роботу над сервером тимчасово припинено.':['Prace nad serwerem zostały tymczasowo wstrzymane.','I lavori sul server sono stati temporaneamente sospesi.'],
-'Проєкт воскрешено':['Projekt wskrzeszony','Progetto risorto'],
-'Через рік мовчання сервер повертається до життя.':['Po roku milczenia serwer wraca do życia.','Dopo un anno di silenzio il server torna in vita.'],
-'Новий режим виживання':['Nowy tryb przetrwania','Nuova modalità sopravvivenza'],
-'Запущено оновлений режим виживання.':['Uruchomiono odświeżony tryb przetrwania.','Lanciata una modalità sopravvivenza rinnovata.'],
-'1 рік серверу':['1. rocznica serwera','1 anno del server'],
-"Річниця LankciWorld + повне очищення пам'яті сервера.":['Rocznica LankciWorld + pełne wyczyszczenie pamięci serwera.','Anniversario di LankciWorld + pulizia completa della memoria del server.'],
-'Система приватів':['System prywatnych działek','Sistema dei claim privati'],
-'Впроваджено привати для захисту територій гравців.':['Wprowadzono prywatne działki chroniące tereny graczy.','Introdotti i claim privati per proteggere i territori dei giocatori.'],
-'Ребрендинг і новий хостінг':['Rebranding i nowy hosting','Rebranding e nuovo hosting'],
-'Нова аватарка сервера, перехід на новий хостінг.':['Nowy awatar serwera i przejście na nowy hosting.','Nuovo avatar del server e passaggio a un nuovo hosting.'],
-'Жовтень – листопад 2025':['Październik – listopad 2025','Ottobre – novembre 2025'],
-'Ремонт построек':['Naprawa budowli','Riparazione delle costruzioni'],
-'Виправлено пошкоджені будівлі на карті.':['Naprawiono uszkodzone budynki na mapie.','Riparati gli edifici danneggiati sulla mappa.'],
-'Хостінг 2.0':['Hosting 2.0','Hosting 2.0'],
-'Черговий перехід на новий, потужніший хостінг.':['Kolejna migracja na nowy, wydajniejszy hosting.','Un altro passaggio a un nuovo hosting più potente.'],
-'Масове виправлення помилок':['Masowe naprawianie błędów','Correzione massiva dei bug'],
-'Виправлено серію технічних помилок і багів.':['Naprawiono serię błędów technicznych i bugów.','Corretta una serie di problemi tecnici e bug.'],
-'Офіційний реліз':['Oficjalne wydanie','Rilascio ufficiale'],
-'Сервер офіційно виходить з бети в реліз.':['Serwer oficjalnie wychodzi z bety i trafia do pełnego wydania.','Il server esce ufficialmente dalla beta ed entra nella versione finale.'],
-'Технічна пауза':['Przerwa techniczna','Pausa tecnica'],
-'Сервер закрито на технічне обслуговування — 2 місяці.':['Serwer zamknięty na konserwację — 2 miesiące.','Server chiuso per manutenzione — 2 mesi.'],
-'Серпень 2026':['Sierpień 2026','Agosto 2026'],
-'Активна робота над відновленням':['Aktywne prace nad powrotem','Lavori attivi per il ritorno'],
-'Команда працює над поверненням сервера до життя.':['Zespół pracuje nad przywróceniem serwera do życia.','Il team lavora per riportare il server in vita.'],
-'ПРАВИЛА СЕРВЕРА':['ZASADY SERWERA','REGOLE DEL SERVER'],
-'1. Поведінка в чаті':['1. Zachowanie na czacie','1. Comportamento in chat'],
-'2. Читерство':['2. Cheaty','2. Uso di cheat'],
-'3. Гра':['3. Rozgrywka','3. Gioco'],
-'Образа батьків гравців':['Obrażanie rodziców graczy','Insulti ai genitori dei giocatori'],
-'Образа сервера':['Obrażanie serwera','Insulti al server'],
-'Образа адмінів / модераторів':['Obrażanie adminów / moderatorów','Insulti ad admin / moderatori'],
-'Спам у чаті':['Spam na czacie','Spam in chat'],
-'Реклама інших серверів':['Reklama innych serwerów','Pubblicità di altri server'],
-'Образа гравців':['Obrażanie graczy','Insulti ai giocatori'],
-'Використання читів':['Używanie cheatów','Uso di cheat'],
-'Зізнання до покарання':['Przyznanie się przed ukaraniem','Confessione prima della punizione'],
-'Використання багів':['Wykorzystywanie bugów','Sfruttamento dei bug'],
-'Гриферство':['Griefing','Griefing'],
-'Видавати себе за адміна':['Podszywanie się pod admina','Spacciarsi per un admin'],
-'Мут 3 дні':['Mute na 3 dni','Mute di 3 giorni'],
-'Мут 5 хвилин':['Mute na 5 minut','Mute di 5 minuti'],
-'Мут 15 хвилин':['Mute na 15 minut','Mute di 15 minuti'],
-'Мут 30 хвилин':['Mute na 30 minut','Mute di 30 minuti'],
-'Мут 1 година':['Mute na 1 godzinę','Mute di 1 ora'],
-'Бан 7 днів':['Ban na 7 dni','Ban di 7 giorni'],
-'Бан 14 днів':['Ban na 14 dni','Ban di 14 giorni'],
-'Бан 32 дні':['Ban na 32 dni','Ban di 32 giorni'],
-'Дозволено ✓':['Dozwolone ✓','Consentito ✓'],
-'Політ /fly':['Latanie /fly','Volo /fly'],
-'Час та погода':['Czas i pogoda','Tempo e meteo'],
-'8 точок дому':['8 punktów domu','8 punti casa'],
-'5 точок дому':['5 punktów domu','5 punti casa'],
-'10 точок дому':['10 punktów domu','10 punti casa'],
-'2 точки дому':['2 punkty domu','2 punti casa'],
-'Блискавка':['Piorun','Fulmine'],
-'Ситість /feed':['Najedzenie /feed','Sazietà /feed'],
-'Верстак /workbench':['Stół rzemieślniczy /workbench','Banco da lavoro /workbench'],
-'Ефекти темряви':['Efekty ciemności','Effetti oscuri'],
-'Підпалити /burn':['Podpalanie /burn','Dare fuoco /burn'],
-'Зняття ефектів':['Usuwanie efektów','Rimozione degli effetti'],
-'Загасити вогонь':['Gaszenie ognia','Spegnere il fuoco'],
-'Імунітет до лави':['Odporność na lawę','Immunità alla lava'],
-'Блок на голову':['Blok na głowę','Blocco sulla testa'],
-'Лікування /heal':['Leczenie /heal','Cura /heal']
+"ПРИДБАТИ":["KUP TERAZ", "ACQUISTA", "ACHETER"],
+"СКОРО":["WKRÓTCE", "PRESTO", "BIENTÔT"],
+"Скоро...":["Wkrótce...", "Presto...", "Bientôt..."],
+"Скоро":["Wkrótce", "Presto", "Bientôt"],
+"ПРАВИЛА СЕРВЕРА":["ZASADY SERWERA", "REGOLE DEL SERVER", "RÈGLES DU SERVEUR"],
+"1. Поведінка в чаті":["1. Zachowanie na czacie", "1. Comportamento in chat", "1. Comportement dans le chat"],
+"2. Читерство":["2. Cheaty", "2. Uso di cheat", "2. Triche"],
+"3. Гра":["3. Rozgrywka", "3. Gioco", "3. Jeu"],
+"4. Торгівля та донат":["4. Handel i donaty", "4. Scambi e donazioni", "4. Commerce et dons"],
+"5. Відповідальність за порушення":["5. Odpowiedzialność za naruszenia", "5. Responsabilità per le violazioni", "5. Responsabilité en cas d’infraction"],
+"6. Правила для адміністратора":["6. Zasady dla administratora", "6. Regole per l’amministratore", "6. Règles pour l’administrateur"],
+"7. Правила для модератора":["7. Zasady dla moderatora", "7. Regole per il moderatore", "7. Règles pour le modérateur"],
+"Образа батьків гравців":["Obrażanie rodziców graczy", "Insulti ai genitori dei giocatori", "Insultes envers les parents des joueurs"],
+"Образа сервера":["Obrażanie serwera", "Insulti al server", "Insultes envers le serveur"],
+"Образа адмінів / модераторів":["Obrażanie adminów / moderatorów", "Insulti ad admin / moderatori", "Insultes envers les admins / modérateurs"],
+"Спам у чаті":["Spam na czacie", "Spam in chat", "Spam dans le chat"],
+"Реклама інших серверів":["Reklama innych serwerów", "Pubblicità di altri server", "Publicité pour d’autres serveurs"],
+"Образа гравців":["Obrażanie graczy", "Insulti ai giocatori", "Insultes envers les joueurs"],
+"Розпалювання ненависті та дискримінація":["Szerzenie nienawiści i dyskryminacja", "Incitamento all’odio e discriminazione", "Incitation à la haine et discrimination"],
+"Флуд капсом та зловживання символами":["Flood caps lockiem i nadużywanie symboli", "Flood in maiuscolo e abuso di simboli", "Flood en majuscules et abus de symboles"],
+"Розголошення особистих даних гравців":["Ujawnianie danych osobowych graczy", "Diffusione dei dati personali dei giocatori", "Divulgation des données personnelles des joueurs"],
+"Використання читів":["Używanie cheatów", "Uso di cheat", "Utilisation de cheats"],
+"Зізнання до покарання":["Przyznanie się przed ukaraniem", "Confessione prima della punizione", "Aveu avant la sanction"],
+"Використання багів":["Wykorzystywanie bugów", "Sfruttamento dei bug", "Exploitation de bugs"],
+"Заборонені модифікації (X-Ray, автоклікер, Freecam)":["Zakazane modyfikacje (X-Ray, autoclicker, Freecam)", "Mod vietate (X-Ray, autoclicker, Freecam)", "Modifications interdites (X-Ray, autoclicker, Freecam)"],
+"Дюп предметів та навмисне навантаження сервера":["Dupowanie przedmiotów i celowe przeciążanie serwera", "Duplicazione di oggetti e sovraccarico intenzionale del server", "Duplication d’objets et surcharge volontaire du serveur"],
+"Гриферство":["Griefing", "Griefing", "Griefing"],
+"Видавати себе за адміна":["Podszywanie się pod admina", "Spacciarsi per un admin", "Se faire passer pour un admin"],
+"Обхід покарання (альтернативні акаунти)":["Obchodzenie kary (konta alternatywne)", "Elusione della punizione (account alternativi)", "Contournement de la sanction (comptes alternatifs)"],
+"Гриферство та крадіжки на спавні й у лобі":["Griefing i kradzieże na spawnie i w lobby", "Griefing e furti allo spawn e nella lobby", "Griefing et vols au spawn et dans le lobby"],
+"Обхід приватів і захисту територій через баги":["Omijanie prywatnych działek i ochrony terenu przez błędy", "Aggirare i claim privati e la protezione dei territori tramite bug", "Contournement des privés et de la protection des territoires via des bugs"],
+"Шахрайство при обміні між гравцями":["Oszustwa przy wymianie między graczami", "Truffe negli scambi tra giocatori", "Arnaques lors des échanges entre joueurs"],
+"Продаж предметів чи акаунтів за реальні гроші поза магазином":["Sprzedaż przedmiotów lub kont za prawdziwe pieniądze poza sklepem", "Vendita di oggetti o account per denaro reale fuori dal negozio", "Vente d’objets ou de comptes contre argent réel hors de la boutique"],
+"Донат здійснюється лише через офіційного Telegram-бота":["Donaty wyłącznie przez oficjalnego bota Telegram", "Le donazioni solo tramite il bot Telegram ufficiale", "Les dons uniquement via le bot Telegram officiel"],
+"Бан за порушення правил не дає права на повернення коштів за донат":["Ban za naruszenie zasad nie uprawnia do zwrotu pieniędzy za donat", "Un ban per violazione delle regole non dà diritto al rimborso della donazione", "Un ban pour infraction ne donne pas droit au remboursement du don"],
+"Незнання правил не звільняє від відповідальності":["Nieznajomość zasad nie zwalnia z odpowiedzialności", "Non conoscere le regole non esonera dalla responsabilità", "Ignorer les règles ne dispense pas de responsabilité"],
+"Повторне порушення":["Powtórne naruszenie", "Violazione ripetuta", "Récidive"],
+"Оскарження покарання — через адміністрацію сервера":["Odwołanie od kary — przez administrację serwera", "Ricorso contro la punizione — tramite l’amministrazione del server", "Contestation de la sanction — via l’administration du serveur"],
+"Порушення, не зазначені в правилах, розглядає адміністрація":["Naruszenia nieujęte w zasadach rozpatruje administracja", "Le violazioni non previste dalle regole sono valutate dall’amministrazione", "Les infractions non prévues par les règles sont examinées par l’administration"],
+"Не зловживати повноваженнями":["Nie nadużywać uprawnień", "Non abusare dei poteri", "Ne pas abuser de ses pouvoirs"],
+"Не видавати покарання без причини":["Nie wymierzać kar bez powodu", "Non dare punizioni senza motivo", "Ne pas sanctionner sans raison"],
+"Не використовувати права для особистої вигоди":["Nie wykorzystywać uprawnień dla osobistych korzyści", "Non usare i propri poteri per vantaggio personale", "Ne pas utiliser ses droits à des fins personnelles"],
+"Не розголошувати службову інформацію":["Nie ujawniać informacji służbowych", "Non divulgare informazioni di servizio", "Ne pas divulguer les informations de service"],
+"Не втручатися в гру без необхідності":["Nie ingerować w rozgrywkę bez potrzeby", "Non intervenire nel gioco senza necessità", "Ne pas intervenir dans le jeu sans nécessité"],
+"Не карати гравців через особисті конфлікти":["Nie karać graczy z powodu osobistych konfliktów", "Non punire i giocatori per conflitti personali", "Ne pas sanctionner les joueurs pour des conflits personnels"],
+"Дотримуватися правил сервера нарівні з усіма":["Przestrzegać zasad serwera na równi z wszystkimi", "Rispettare le regole del server come tutti gli altri", "Respecter les règles du serveur comme tout le monde"],
+"Відповідально ставитися до скарг":["Odpowiedzialnie podchodzić do skarg", "Trattare i reclami con responsabilità", "Traiter les plaintes avec sérieux"],
+"Правильно використовувати команди":["Poprawnie używać komend", "Usare correttamente i comandi", "Utiliser correctement les commandes"],
+"Видавати покарання лише в межах своїх повноважень":["Wymierzać kary tylko w granicach swoich uprawnień", "Dare punizioni solo entro i propri poteri", "Sanctionner uniquement dans la limite de ses pouvoirs"],
+"Передавати серйозні порушення адміністратору":["Przekazywać poważne naruszenia administratorowi", "Segnalare le violazioni gravi all’amministratore", "Transmettre les infractions graves à l’administrateur"],
+"Бути ввічливим і неупередженим із гравцями":["Być uprzejmym i bezstronnym wobec graczy", "Essere cortesi e imparziali con i giocatori", "Être poli et impartial envers les joueurs"],
+"Мут 3 дні":["Mute na 3 dni", "Mute di 3 giorni", "Mute de 3 jours"],
+"Мут 5 хвилин":["Mute na 5 minut", "Mute di 5 minuti", "Mute de 5 minutes"],
+"Мут 7 днів":["Mute na 7 dni", "Mute di 7 giorni", "Mute de 7 jours"],
+"Мут 10 хвилин":["Mute na 10 minut", "Mute di 10 minuti", "Mute de 10 minutes"],
+"Мут 15 хвилин":["Mute na 15 minut", "Mute di 15 minuti", "Mute de 15 minutes"],
+"Мут 30 хвилин":["Mute na 30 minut", "Mute di 30 minuti", "Mute de 30 minutes"],
+"Мут 1 година":["Mute na 1 godzinę", "Mute di 1 ora", "Mute de 1 heure"],
+"Бан 7 днів":["Ban na 7 dni", "Ban di 7 giorni", "Ban de 7 jours"],
+"Бан 14 днів":["Ban na 14 dni", "Ban di 14 giorni", "Ban de 14 jours"],
+"Бан 32 дні":["Ban na 32 dni", "Ban di 32 giorni", "Ban de 32 jours"],
+"Дозволено ✓":["Dozwolone ✓", "Consentito ✓", "Autorisé ✓"],
+"Покарання подвоюється":["Kara jest podwajana", "La punizione raddoppia", "La sanction est doublée"],
+"Інакше — без гарантій":["W przeciwnym razie — bez gwarancji", "Altrimenti — senza garanzie", "Sinon — sans garantie"],
+"Без компенсації":["Bez rekompensaty", "Nessun rimborso", "Sans compensation"],
+"Покарання діє":["Kara obowiązuje", "La punizione è valida", "La sanction s’applique"],
+"Покарання збільшується":["Kara jest zwiększana", "La punizione aumenta", "La sanction est aggravée"],
+"Політ /fly":["Latanie /fly", "Volo /fly", "Vol /fly"],
+"Час та погода":["Czas i pogoda", "Tempo e meteo", "Heure et météo"],
+"8 точок дому":["8 punktów domu", "8 punti casa", "8 points de maison"],
+"5 точок дому":["5 punktów domu", "5 punti casa", "5 points de maison"],
+"10 точок дому":["10 punktów domu", "10 punti casa", "10 points de maison"],
+"2 точки дому":["2 punkty domu", "2 punti casa", "2 points de maison"],
+"Блискавка":["Piorun", "Fulmine", "Foudre"],
+"Ситість /feed":["Najedzenie /feed", "Sazietà /feed", "Satiété /feed"],
+"Верстак /workbench":["Stół rzemieślniczy /workbench", "Banco da lavoro /workbench", "Établi /workbench"],
+"Ефекти темряви":["Efekty ciemności", "Effetti oscuri", "Effets des ténèbres"],
+"Підпалити /burn":["Podpalanie /burn", "Dare fuoco /burn", "Enflammer /burn"],
+"Зняття ефектів":["Usuwanie efektów", "Rimozione degli effetti", "Retrait des effets"],
+"Загасити вогонь":["Gaszenie ognia", "Spegnere il fuoco", "Éteindre le feu"],
+"Імунітет до лави":["Odporność na lawę", "Immunità alla lava", "Immunité à la lave"],
+"Блок на голову":["Blok na głowę", "Blocco sulla testa", "Bloc sur la tête"],
+"Лікування /heal":["Leczenie /heal", "Cura /heal", "Soin /heal"]
 };
 var EX_SEL='.rb h2,.rcat h3,.rt b,.pun,.fl li,.rn,.fc h3,.bb';
 function applyExtra(l){
-  var i=l==='pl'?0:(l==='it'?1:-1);
+  var i=l==='pl'?0:(l==='it'?1:(l==='fr'?2:-1));
   if(i>=0){
     document.querySelectorAll('[data-ua]').forEach(function(el){
       var k=el.getAttribute('data-ua');
@@ -650,11 +454,10 @@ function applyExtra(l){
     document.getElementById('nb-donate').textContent=U.donate;
     document.getElementById('nb-features').textContent=U.features;
     document.getElementById('nb-rules').textContent=U.rules;
-    document.getElementById('nb-updates').textContent=U.updates;
     document.getElementById('pllbl').textContent=U.pllbl;
     var st=document.getElementById('stxt');
-    if(st._s==='on')st.textContent='Online';
-    else if(st._s==='off')st.textContent='Offline';
+    if(st._s==='on')st.textContent=U.on||'Online';
+    else if(st._s==='off')st.textContent=U.off||'Offline';
     else st.textContent=U.chk;
   }
 }
@@ -671,14 +474,14 @@ for(var i=0;i<14;i++){
 }
 
 /* Навігація */
-var pages=['donate','features','rules','updates'];
+var pages=['donate','features','rules'];
 function showPage(name){
   if(name===cur)return;
   var prev=document.getElementById('pg-'+cur);
   var next=document.getElementById('pg-'+name);
   prev.classList.add('out');
-  prev.addEventListener('animationend',function h(){prev.classList.remove('active','out');prev.removeEventListener('animationend',h);});
-  setTimeout(function(){next.classList.add('active');if(name==='updates'){initTimelineOnce();updateTlFill();revealNodes();}},180);
+  prev.addEventListener('animationend',function h(e){if(e.target!==prev)return;prev.classList.remove('active','out');prev.removeEventListener('animationend',h);});
+  setTimeout(function(){next.classList.add('active');},180);
   document.querySelectorAll('.nvl button').forEach(function(b){b.classList.remove('active');});
   document.getElementById('nb-'+name).classList.add('active');
   cur=name;
@@ -686,7 +489,6 @@ function showPage(name){
 document.getElementById('nb-donate').addEventListener('click',function(){showPage('donate');});
 document.getElementById('nb-features').addEventListener('click',function(){showPage('features');});
 document.getElementById('nb-rules').addEventListener('click',function(){showPage('rules');});
-document.getElementById('nb-updates').addEventListener('click',function(){showPage('updates');});
 
 /* IP */
 function fallback(){
@@ -719,24 +521,24 @@ function setLang(l){
   document.getElementById('nb-donate').textContent=l==='ua'?'Магазин':'Shop';
   document.getElementById('nb-features').textContent=l==='ua'?'Функціонал':'Features';
   document.getElementById('nb-rules').textContent=l==='ua'?'Правила':'Rules';
-  document.getElementById('nb-updates').textContent=l==='ua'?'Оновлення':'Updates';
   document.getElementById('pllbl').textContent=l==='ua'?'Гравці':'Players';
   var st=document.getElementById('stxt');
   if(st._s==='on') st.textContent=l==='ua'?'Онлайн':'Online';
   else if(st._s==='off') st.textContent=l==='ua'?'Офлайн':'Offline';
   else st.textContent=l==='ua'?'Перевірка...':'Checking...';
   applyExtra(l);
-  typeLog();
+  if(window.lankciAI)window.lankciAI.setLang(l);
 }
 document.getElementById('lb-ua').addEventListener('click',function(){setLang('ua');});
 document.getElementById('lb-en').addEventListener('click',function(){setLang('en');});
 document.getElementById('lb-pl').addEventListener('click',function(){setLang('pl');});
 document.getElementById('lb-it').addEventListener('click',function(){setLang('it');});
+document.getElementById('lb-fr').addEventListener('click',function(){setLang('fr');});
 
 function setOff(){
   document.getElementById('sdot').className='sd off';
   var st=document.getElementById('stxt');
-  st.textContent=lang==='ua'?'Офлайн':'Offline';
+  st.textContent=(UI[lang]&&UI[lang].off)||(lang==='ua'?'Офлайн':'Offline');
   st.style.color='var(--rd)';st._s='off';
   document.getElementById('sBadge').className='sbdg off';
   document.getElementById('plf').style.width='0%';
@@ -746,7 +548,7 @@ function setOff(){
 function setOn(online,max){
   document.getElementById('sdot').className='sd on';
   var st=document.getElementById('stxt');
-  st.textContent=lang==='ua'?'Онлайн':'Online';
+  st.textContent=(UI[lang]&&UI[lang].on)||(lang==='ua'?'Онлайн':'Online');
   st.style.color='var(--gr)';st._s='on';
   document.getElementById('sBadge').className='sbdg on';
   document.getElementById('plf').style.width=Math.min(online/max*100,100)+'%';
@@ -788,70 +590,235 @@ function fetchStatus(){
 fetchStatus();
 setInterval(fetchStatus,60000);
 
-/* ═══ Термінал-рядок над журналом оновлень ═══ */
-var logMsgs={ua:'> server.log — 09.07.2024 → сьогодні · 18 записів завантажено',en:'> server.log — 09.07.2024 → today · 18 entries loaded',pl:'> server.log — 09.07.2024 → dziś · wczytano 18 wpisów',it:'> server.log — 09.07.2024 → oggi · 18 voci caricate'};
-var logEl=document.getElementById('logLine');
-var logTimer=null;
-function typeLog(){
-  if(logTimer)clearInterval(logTimer);
-  var full=logMsgs[lang];
-  var i=0;
-  logEl.innerHTML='<span class="curs"></span>';
-  logTimer=setInterval(function(){
-    i++;
-    logEl.innerHTML=full.slice(0,i)+'<span class="curs"></span>';
-    if(i>=full.length)clearInterval(logTimer);
-  },18);
+})();
+</script>
+
+<!-- LANKCI AI -->
+<button class="ai-btn" id="aiBtn" type="button" aria-expanded="false" aria-controls="aiPanel">
+  <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="8" width="16" height="12" rx="3"/><path d="M12 8V5"/><circle cx="12" cy="3.8" r="1.1"/><circle cx="9" cy="14" r="1.2" fill="currentColor" stroke="none"/><circle cx="15" cy="14" r="1.2" fill="currentColor" stroke="none"/><path d="M2 13v3M22 13v3"/></svg>
+</button>
+<div class="ai-panel" id="aiPanel" role="dialog" aria-labelledby="aiTtl">
+  <div class="ai-hd"><span class="ai-ttl" id="aiTtl">LankciAI</span><button class="ai-x" id="aiX" type="button">×</button></div>
+  <div class="ai-msgs" id="aiMsgs" aria-live="polite"></div>
+  <div class="ai-in">
+    <input id="aiIn" type="text" maxlength="500" autocomplete="off">
+    <button id="aiSend" type="button"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></button>
+  </div>
+</div>
+
+<script>
+/* ═══ LankciAI ═══
+   Фронтенд лише надсилає питання на ВАШ backend (див. lankciai-worker.js).
+   API-ключ живе тільки на сервері, у браузері його немає.
+   Поки AI_ENDPOINT порожній, чат чесно повідомляє, що AI ще не підключено. */
+(function(){
+'use strict';
+var AI_ENDPOINT='';   /* напр. 'https://lankciai.your-name.workers.dev/chat' */
+var TG='https://t.me/LankciWorld',DC='https://discord.gg/RKWzGv7M';
+var T={
+ua:{ttl:'LankciAI',hi:'Привіт! 👋 Я помічник LankciWorld. Питай про IP, донат, команди чи правила.',ph:'Напишіть питання...',send:'Надіслати',open:'Відкрити AI-помічника',close:'Закрити',off:'AI-помічник ще не підключений до сервера, тому поки не можу відповідати на питання. Правила, магазин і команди є у вкладках сайту, а живу відповідь можна отримати тут:',err:'Не вдалося отримати відповідь. Спробуйте ще раз пізніше.',wait:'Думаю...'},
+en:{ttl:'LankciAI',hi:'Hi! 👋 I am the LankciWorld helper. Ask about the IP, donations, commands or rules.',ph:'Type your question...',send:'Send',open:'Open AI assistant',close:'Close',off:'The AI assistant is not connected to a server yet, so I cannot answer questions for now. Rules, shop and commands are in the site tabs, and you can get a live answer here:',err:'Could not get a reply. Please try again later.',wait:'Thinking...'},
+pl:{ttl:'LankciAI',hi:'Cześć! 👋 Jestem pomocnikiem LankciWorld. Pytaj o IP, donaty, komendy lub zasady.',ph:'Napisz pytanie...',send:'Wyślij',open:'Otwórz asystenta AI',close:'Zamknij',off:'Asystent AI nie jest jeszcze połączony z serwerem, więc na razie nie mogę odpowiadać na pytania. Zasady, sklep i komendy znajdziesz w zakładkach strony, a odpowiedź na żywo uzyskasz tutaj:',err:'Nie udało się uzyskać odpowiedzi. Spróbuj ponownie później.',wait:'Myślę...'},
+it:{ttl:'LankciAI',hi:'Ciao! 👋 Sono l’assistente di LankciWorld. Chiedimi di IP, donazioni, comandi o regole.',ph:'Scrivi la tua domanda...',send:'Invia',open:'Apri l’assistente AI',close:'Chiudi',off:'L’assistente AI non è ancora collegato a un server, quindi per ora non posso rispondere alle domande. Regole, negozio e comandi sono nelle schede del sito, mentre una risposta in diretta si ottiene qui:',err:'Impossibile ottenere una risposta. Riprova più tardi.',wait:'Sto pensando...'},
+fr:{ttl:'LankciAI',hi:'Salut ! 👋 Je suis l’assistant de LankciWorld. Posez vos questions sur l’IP, les dons, les commandes ou les règles.',ph:'Écrivez votre question...',send:'Envoyer',open:'Ouvrir l’assistant IA',close:'Fermer',off:'L’assistant IA n’est pas encore connecté à un serveur, je ne peux donc pas répondre aux questions pour l’instant. Les règles, la boutique et les commandes sont dans les onglets du site, et une réponse en direct est disponible ici :',err:'Impossible d’obtenir une réponse. Réessayez plus tard.',wait:'Je réfléchis...'}
+};
+var lang='ua',history=[],busy=false,greetEl=null;
+var $=function(id){return document.getElementById(id);};
+var btn=$('aiBtn'),panel=$('aiPanel'),msgs=$('aiMsgs'),inp=$('aiIn'),send=$('aiSend'),xb=$('aiX');
+
+function add(text,who,links){
+  var d=document.createElement('div');
+  d.className='ai-m '+who;
+  d.textContent=text;
+  if(links){
+    [['Telegram',TG],['Discord',DC]].forEach(function(p){
+      var a=document.createElement('a');a.href=p[1];a.target='_blank';a.rel='noopener noreferrer';a.textContent=p[0];d.appendChild(a);
+    });
+  }
+  msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;
+  return d;
+}
+function applyLang(){
+  var t=T[lang]||T.ua;
+  $('aiTtl').textContent=t.ttl;
+  inp.placeholder=t.ph;
+  send.setAttribute('aria-label',t.send);
+  xb.setAttribute('aria-label',t.close);
+  btn.setAttribute('aria-label',t.open);
+  btn.title=t.open;
+  if(greetEl)greetEl.textContent=t.hi;
+}
+function setOpen(o){
+  panel.classList.toggle('open',o);
+  btn.classList.toggle('is-open',o);
+  btn.setAttribute('aria-expanded',o?'true':'false');
+  if(o)setTimeout(function(){inp.focus({preventScroll:true});},230);
 }
 
-/* ═══ Таймлайн: заповнення лінії + реве́л карток ═══ */
-var tlInit=false;
-var tlEl=document.getElementById('tl');
-var tlFillEl=document.getElementById('tlFill');
-var nodes=[];
-function initTimelineOnce(){
-  if(tlInit)return;
-  tlInit=true;
-  nodes=Array.prototype.slice.call(document.querySelectorAll('.tl-node'));
-  if('IntersectionObserver' in window){
-    var io=new IntersectionObserver(function(entries){
-      entries.forEach(function(en){
-        if(en.isIntersecting){
-          en.target.classList.add('in');
-          io.unobserve(en.target);
-        }
-      });
-    },{threshold:.25,rootMargin:'0px 0px -8% 0px'});
-    nodes.forEach(function(n){io.observe(n);});
-  }else{
-    nodes.forEach(function(n){n.classList.add('in');});
+/* Вбудована довідка (працює без backend): лише перевірені факти з сайту.
+   Це не AI — просто відповіді за ключовими словами. Для живого AI вкажіть AI_ENDPOINT. */
+var OPEN=new Date(2026,10,15);
+function daysToOpen(){return Math.ceil((OPEN-new Date())/86400000);}
+var KB=[
+ {k:/не хочу жит|не хочу більше жит|хочу помер|хочу умер|хочу вмерт|покінчити з собою|покончить с собой|вбити себе|убить себя|суїцид|суицид|самогубств|самоубийств|життя не має сенсу|жизнь не имеет смысла|порізати себе|порезать себя|самоушкод|kill myself|suicid|want to die|end my life|dont want to live|don.?t want to live|self.?harm/,
+  ua:'Мені дуже шкода, що тобі зараз так боляче. Ти не сам(а), і твоє життя має значення. Будь ласка, не залишайся з цим наодинці просто зараз: зателефонуй на гарячу лінію Lifeline Ukraine — 7333 (безкоштовно), а якщо є небезпека для життя — на 112. І розкажи про свій стан комусь із близьких, хто поруч. Я лише помічник сервера, але хочу, щоб ти отримав(ла) справжню підтримку.',
+  en:'I am really sorry you are in so much pain right now. You are not alone, and your life matters. Please do not stay with this alone: call a crisis line or emergency number right now (in Ukraine: Lifeline Ukraine 7333, free, or 112 if you are in danger) and tell someone close to you. I am only a server helper, but I want you to get real support.'},
+ {k:/школ|шкіл|вчител|учител|училищ|контрольн|екзамен|домашк|домашнє завдання|school|homework|exam|teacher/,
+  ua:'Ох, розумію — школа іноді реально виснажує 😔 Спробуй трохи перепочити й перемкнутись. Якщо тиск дуже сильний, поговори про це з кимось із близьких. А коли відкриється LankciWorld, буде де розслабитись 🙂',
+  en:'Oh, I get it — school can really wear you out 😔 Try to rest and switch off for a bit. If the pressure is heavy, talk to someone close to you. And when LankciWorld opens, you will have a place to relax 🙂'},
+ {k:/сумно|сумую|мені погано|мне плохо|плохо мне|погано на душі|депрес|самотн|одинок|одиноко|втомив|устал|тяжко|важко мені|мені важко|sad\b|lonely|depress|tired of|bad day/,
+  ua:'Мені шкода, що тобі зараз важко 💛 Якщо хочеш, розкажи, що сталося, — я вислухаю, хоч я лише помічник сервера. А для підтримки від живих людей напиши близьким або в нашу спільноту:',
+  en:'I am sorry things are hard for you right now 💛 If you want, tell me what happened — I will listen, even though I am only a server helper. For support from real people, write to someone close or to our community:',links:true},
+ {k:/злий|злюсь|бісить|бесит|дістал|достал|angry|annoyed|furious/,
+  ua:'Розумію, таке справді бісить 😤 Спробуй зробити паузу й видихнути. Якщо хочеш, розкажи, що сталося.',
+  en:'I get it, that is really annoying 😤 Try to pause and breathe out. If you want, tell me what happened.'},
+ {k:/хуй|хуї|пизд|(^|[\s,.!?])бля|блят|бляд|сука|суки|ебан|ебат|нахуй|нахер|(^|[\s,.!?])хер(\s|$)|fuck|shit|мудак|дебіл|дебил|(^|[\s,.!?])лох|тупий|тупой|дурн|идиот|ідіот|гандон|підор|пидор/,
+  ua:'Давай без образ 🙂 Я допоможу, якщо спитаєш про IP, як почати грати, донат, команди чи правила. (Образи на сервері теж караються — див. вкладку «Правила».)',
+  en:'Let us keep it polite 🙂 I can help with the IP, how to start, donations, commands or rules. (Insults are punished on the server too — see the Rules tab.)'},
+ {k:/коли (відкри|старт|запуск|можна грати|можна зайти|буде|зможу)|коли сервер|дата (відкри|старт|запуск)|когда (откры|старт|запуск|можно играть|можно зайти|будет)|when (does|will|is).*(open|start|launch|release)|release date|opening date/,
+  f:function(g){
+    var d=daysToOpen();
+    if(d>0)return g==='ua'?'Сервер відкриється 15.11.2026 — це через '+d+' дн. З цього дня можна буде грати. Слідкуй за новинами в Telegram і Discord.':'The server opens on 15.11.2026 — in '+d+' days. You can play from that day. Follow the news on Telegram and Discord.';
+    return g==='ua'?'Сервер вже відкритий (старт був 15.11.2026) — можна грати! IP: LankciWorld.mcsh.io':'The server is already open (it started on 15.11.2026) — you can play! IP: LankciWorld.mcsh.io';
+  },links:true},
+ {k:/версі|version|1\.21|яка версія|какая версия|клієнт|client|майнкрафт/,
+  ua:'Підтримуються версії Minecraft Java Edition від 1.21.1 до 26.3. Bedrock Edition не підтримується.',
+  en:'Minecraft Java Edition versions 1.21.1 to 26.3 are supported. Bedrock Edition is not supported.'},
+ {k:/плагін|plugin|антич|anticheat|anti-cheat|на чому працює|на чем работает|що встановлено|что установлено/,
+  ua:'Список плагінів сервера — секретна інформація 🤫',en:'The list of server plugins is secret information 🤫'},
+ {k:/сервер онлайн|сервер працю|сервер офлайн|сервер не працю|онлайн|online|скільки гравців|скільки людей|сколько игроков|how many players|статус|server status|is the server/,
+  f:function(g){
+    var st=document.getElementById('stxt'),pl=document.getElementById('pln');
+    var n=pl?pl.textContent:'—';
+    if(!(st&&st._s==='on')&&daysToOpen()>0)return g==='ua'?'Сервер ще не відкритий: старт 15.11.2026 (через '+daysToOpen()+' дн.).':'The server is not open yet: it starts on 15.11.2026 (in '+daysToOpen()+' days).';
+    if(st&&st._s==='on')return g==='ua'?'Зараз сервер онлайн. Гравців: '+n+'.':'The server is online right now. Players: '+n+'.';
+    if(st&&st._s==='off')return g==='ua'?'Зараз сервер офлайн (статус вгорі сторінки). Спробуй трохи пізніше або перевір новини в Telegram/Discord.':'The server is offline right now (see the status at the top of the page). Try again later or check Telegram/Discord for news.';
+    return g==='ua'?'Статус сервера ще перевіряється — подивись на значок вгорі сторінки за кілька секунд.':'The server status is still being checked — look at the badge at the top of the page in a few seconds.';
+  }},
+ {k:/лаг|\blag\b|не заход|не можу зайти|не вдаєт|не получается|не могу зайти|помилк|ошибк|error|вилітає|вылетает|кікнул|кикнул|kicked|timed out|can.?t connect|cannot connect|не підключ|не подключ/,
+  f:function(g){
+    var pre=daysToOpen()>0?(g==='ua'?'Нагадую: сервер відкриється лише 15.11.2026, тому до цього зайти не вийде. ':'Reminder: the server opens only on 15.11.2026, so you cannot join before that. '):'';
+    return pre+(g==='ua'?'Якщо не виходить зайти: 1) перевір статус сервера вгорі сторінки; 2) перевір, що IP написаний точно: LankciWorld.mcsh.io; 3) використовуй Minecraft Java Edition версій 1.21.1–26.3 (Bedrock не підтримується); 4) перезапусти гру. Якщо не допомогло — напиши текст помилки в Telegram або Discord:':'If you cannot join: 1) check the server status at the top of the page; 2) make sure the IP is exact: LankciWorld.mcsh.io; 3) use Minecraft Java Edition 1.21.1–26.3 (Bedrock is not supported); 4) restart the game. If it does not help, send the error text on Telegram or Discord:');
+  },links:true},
+ {k:/розбан|unban|оскарж|апеляц|appeal|мене забанили|меня забанили|забанили|забанен|мене заблок/,
+  ua:'Покарання оскаржується через адміністрацію сервера. Напиши в Telegram або Discord:',en:'Punishments are appealed through the server administration. Write on Telegram or Discord:',links:true},
+ {k:/адмін|админ|модер|admin|moder|staff|стати адм|как стать/,
+  ua:'Інформації про адміністрацію чи набір у неї в мене немає. Спитай у Telegram або Discord:',en:'I have no information about the staff or how to join it. Ask on Telegram or Discord:',links:true},
+ {k:/реєстр|регистр|register|логін|логин|login|\/reg|парол|password|authme/,
+  ua:'Інформації про реєстрацію чи вхід на сервері в мене немає. Спитай у Telegram або Discord:',en:'I have no information about registration or login. Ask on Telegram or Discord:',links:true},
+ {k:/sethome|точк[аиу] дому|точок дому|дом[ау]\b|\/home|\bhome\b|spawn|спавн|\btpa\b|телепорт|\/tp\b/,
+  ua:'Скільки точок дому дає привілей: Hero — 2, Second — 5, Imperator — 8, Hacker — 10. Самі команди дому й телепорту на сайті не вказані, тому не впевнений у них. Спитай у Telegram або Discord:',
+  en:'Home points per rank: Hero — 2, Second — 5, Imperator — 8, Hacker — 10. The exact home/teleport commands are not listed on the site, so I am not sure about them. Ask on Telegram or Discord:',links:true},
+ {k:/дуел|duel|ставк|\bbet\b|1на1|1 на 1|1v1/,
+  ua:'Дуелі — бої 1 на 1 між гравцями, у яких можна зробити ставку. Точну команду виклику на дуель і правила ставок я не знаю — спитай у Telegram або Discord:',
+  en:'Duels are 1v1 fights between players, and you can place a bet. I do not know the exact duel command or the betting rules — ask on Telegram or Discord:',links:true},
+ {k:/\bsmp\b|смп/,
+  ua:'SMP (Survival Multiplayer) — це звичайне кооперативне виживання разом з іншими гравцями. Особливості саме нашого SMP я не знаю — спитай у Telegram або Discord:',
+  en:'SMP (Survival Multiplayer) is regular cooperative survival with other players. I do not know the specifics of our SMP — ask on Telegram or Discord:',links:true},
+ {k:/хардкор|hardcore/,
+  ua:'Хардкор — виживання з одним життям: після смерті гру не продовжити. Правил саме нашого хардкору я не знаю — спитай у Telegram або Discord:',
+  en:'Hardcore is survival with a single life: after you die you cannot continue. I do not know the rules of our hardcore — ask on Telegram or Discord:',links:true},
+ {k:/анарх|anarchy/,
+  ua:'Анархія — мінімум обмежень: гріферство й PvP дозволені (окрім спавну та лобі), заборонені лише чити, баги, реклама, спам, образи та інше з вкладки «Правила».',
+  en:'Anarchy means minimal restrictions: griefing and PvP are allowed (except at spawn and in the lobby); only cheats, bugs, advertising, spam, insults and the rest in the Rules tab are forbidden.'},
+ {k:/oneblock|one block|один блок|ванблок|ван блок/,
+  ua:'OneBlock — гра, де починаєш на одному блоці, який відновлюється: ламаючи його, отримуєш ресурси й поступово розвиваєшся. Деталі нашого OneBlock я не знаю — спитай у Telegram або Discord:',
+  en:'OneBlock is a mode where you start on a single block that regenerates: by breaking it you get resources and gradually progress. I do not know the details of our OneBlock — ask on Telegram or Discord:',links:true},
+ {k:/виживан|survival/,
+  ua:'Виживання — класична гра в Minecraft: добуваєш ресурси, будуєшся, виживаєш. Особливостей нашого режиму виживання я не знаю — спитай у Telegram або Discord:',
+  en:'Survival is classic Minecraft: gather resources, build, survive. I do not know the specifics of our survival mode — ask on Telegram or Discord:',links:true},
+ {k:/які режими|які є режими|які є ігрові|режими|режим|какие режимы|режимы|game ?modes?|\bmodes\b|що є на сервері|что есть на сервере/,
+  ua:'На LankciWorld заплановані режими: Анархія, Виживання, SMP, Хардкор, OneBlock та Дуелі (зі ставками). Напиши назву режиму — розповім, що це, а деталі нашої реалізації уточнюй у Telegram або Discord:',
+  en:'LankciWorld plans these modes: Anarchy, Survival, SMP, Hardcore, OneBlock and Duels (with bets). Type a mode name and I will explain what it is; for the details of our version ask on Telegram or Discord:',links:true},
+ {k:/як грати|как играть|як почати|з чого почати|с чего начать|how to play|гайд|guide|новач|новиче|новичок|початк|як розпочати/,
+  ua:'Як почати: відкрий Minecraft Java Edition → Multiplayer → Add Server → IP LankciWorld.mcsh.io. Це Anarchy-сервер: гріферство та PvP дозволені (окрім спавну й лобі), тож будь обережним. Правила — у вкладці «Правила», привілеї — у «Магазин». Підтримуються версії від 1.21.1 до 26.3. Є питання? Пиши сюди:',
+  en:'To start: open Minecraft Java Edition → Multiplayer → Add Server → IP LankciWorld.mcsh.io. It is an Anarchy server: griefing and PvP are allowed (except at spawn and in the lobby), so be careful. Rules are in the Rules tab, ranks in the Shop. Supported versions are 1.21.1 to 26.3. More questions? Write here:',links:true},
+ {k:/що за сервер|про сервер|який сервер|что за сервер|about the server|about server|розкажи про|tell me about/,
+  ua:'LankciWorld — це Minecraft Anarchy-сервер: до 24 гравців одночасно, гріферство й PvP дозволені (окрім спавну та лобі), є привілеї з власними наборами й командами. IP: LankciWorld.mcsh.io.',
+  en:'LankciWorld is a Minecraft Anarchy server: up to 24 players at once, griefing and PvP are allowed (except at spawn and in the lobby), and there are ranks with their own kits and commands. IP: LankciWorld.mcsh.io.'},
+ {k:/telegram|телеграм|discord|діскорд|дискорд|канал|channel|соцмереж/,
+  ua:'Наші сторінки:',en:'Our pages:',links:true},
+ {k:/oneblock|one block|анарх|anarchy|duel|дуел|режим|mode/,
+  ua:'Це Anarchy-сервер. Про окремі режими (OneBlock, Duels тощо) у мене немає перевіреної інформації — краще спитати в Telegram або Discord:',
+  en:'This is an Anarchy server. I have no verified info about separate modes (OneBlock, Duels, etc.) — please ask on Telegram or Discord:',links:true},
+ {k:/команд|command|\/kit|\bkit\b|набір|fly|політ|heal|feed|burn|workbench|верстак/,
+  ua:'Команди привілеїв: /fly (політ), /feed (ситість), /workbench (верстак), /burn (підпалити), /heal (лікування). Набори: /kit imperator, second, h4ck3r, dark_lord, chosen, dragon, hero. Що саме доступно — залежить від привілею (вкладка «Функціонал»).',
+  en:'Rank commands: /fly (flight), /feed (hunger), /workbench (crafting table), /burn (set on fire), /heal (healing). Kits: /kit imperator, second, h4ck3r, dark_lord, chosen, dragon, hero. What you get depends on your rank (see the Features tab).'},
+ {k:/правил|rules|\bban\b|бан|мут|mute|чит|cheat|реклам|гриф|griev|pvp|пвп/,
+  ua:'Коротко: мут за образи й спам (від 5 хв до 3 днів), бан 7 днів за рекламу інших серверів, 14 днів за баги, 32 дні за чити. Гріферство й PvP дозволені, окрім спавну та лобі. Повний список — у вкладці «Правила».',
+  en:'In short: mutes for insults and spam (5 min to 3 days), 7-day ban for advertising other servers, 14 days for bugs, 32 days for cheats. Griefing and PvP are allowed, except at spawn and in the lobby. Full list — Rules tab.'},
+ {k:/донат|donat|куп|buy|привіле|rank|ранг|price|цін|ціна|магазин|shop|imperator|hacker|dragon|hero|chosen|dark|second|грн/,
+  ua:'Привілеї: Imperator 1250 грн, Second 489, Hacker 1574, Dark 300, Chosen 499, Dragon 357, Hero 179. Купівля — лише через Telegram-бота https://t.me/LankciDonatbot (кнопка «Придбати» в магазині). Можливості кожного — у вкладці «Функціонал».',
+  en:'Ranks: Imperator 1250 UAH, Second 489, Hacker 1574, Dark 300, Chosen 499, Dragon 357, Hero 179. Purchase only via the Telegram bot https://t.me/LankciDonatbot (the Buy button in the shop). Perks of each rank — Features tab.'},
+ {k:/bedrock|бедрок|телефон|мобіл|mobile|\bpe\b/,
+  ua:'Bedrock Edition на LankciWorld не підтримується (з 2025 року), тому зайти з телефону через Bedrock не вийде.',
+  en:'Bedrock Edition has not been supported on LankciWorld since 2025, so you cannot join from a phone via Bedrock.'},
+ {k:/\bip\b|айпі|айпи|зайти|зайду|заходит|підключ|подключ|connect|join|адрес|address/,
+  ua:'IP сервера: LankciWorld.mcsh.io (клік по IP у шапці сайту копіює його). Сервер для Minecraft Java Edition 1.21.1–26.3; Bedrock Edition не підтримується.',
+  en:'Server IP: LankciWorld.mcsh.io (click the IP in the site header to copy it). The server is for Minecraft Java Edition 1.21.1–26.3; Bedrock Edition is not supported.'},
+ {k:/що вмієш|що ти вмієш|що можеш|help|допом|what can you|вмієш/,
+  ua:'Можу підказати: IP та як зайти, привілеї й ціни, команди, правила, посилання на Telegram і Discord.',
+  en:'I can help with: the IP and how to join, ranks and prices, commands, rules, and Telegram/Discord links.'},
+ {k:/як справ|как дела|як ти\b|как ты|що нового|how are you|what.?s up|wassup|як життя/,
+  ua:'Все добре, дякую! 🙂 Я помічник сервера — питай про IP, як почати грати, донат, команди чи правила.',en:'All good, thanks! 🙂 I am the server helper — ask about the IP, how to start, donations, commands or rules.'},
+ {k:/хто ти|ти хто|хто ви|кто ты|who are you|як тебе звати|как тебя зовут|ти бот|ты бот|are you a bot/,
+  ua:'Я LankciAI — помічник LankciWorld. Відповідаю на питання про сервер, донат, команди та правила; якщо чогось не знаю, чесно кажу про це.',en:'I am LankciAI, the LankciWorld helper. I answer questions about the server, donations, commands and rules; if I do not know something, I say so.'},
+ {k:/дяк|спасиб|thanks|thank you|merci|grazie|dzi[eę]kuj/,
+  ua:'Будь ласка! 😊 Звертайся, якщо ще щось цікавить.',en:'You are welcome! 😊 Ask if you need anything else.'},
+ {k:/бувай|па-па|пока\b|до побачення|до свидания|bye|goodbye|see you/,
+  ua:'Бувай! Гарної гри на LankciWorld 🙂',en:'Bye! Have a great game on LankciWorld 🙂'},
+ {k:/ура\b|круто|супер\b|класно|клас\b|happy|awesome|great news|дуже радий|дуже рада/,
+  ua:'Круто це чути! 🎉',en:'That is great to hear! 🎉'},
+ {k:/нудно|скучно|бореться|bored/,
+  f:function(g){var d=daysToOpen();
+    if(d>0)return g==='ua'?'Нудьга буває 😅 Сервер відкриється 15.11.2026 (через '+d+' дн.), тож скоро буде чим зайнятись!':'Boredom happens 😅 The server opens on 15.11.2026 (in '+d+' days), so there will be something to do soon!';
+    return g==='ua'?'Тоді саме час зайти на LankciWorld! IP: LankciWorld.mcsh.io':'Then it is the perfect time to join LankciWorld! IP: LankciWorld.mcsh.io';}},
+ {k:/ти класн|ти молодець|ти крут|молодець|ты крут|ты молодец|you are great|you.?re great|good bot/,
+  ua:'Дякую, це дуже приємно! 😊',en:'Thank you, that is very kind! 😊'},
+ {k:/прив[іи]т|здоров|добр|hello|\bhi\b|hey|hola|ciao|salut|bonjour|cze[sś][cć]/,
+  ua:'Привіт! 👋 Питай про IP, донат, команди чи правила.',en:'Hi! 👋 Ask me about the IP, donations, commands or rules.'}
+];
+function localReply(q){
+  var t=q.toLowerCase().replace(/ё/g,'е'),g=(lang==='ua')?'ua':'en';
+  for(var i=0;i<KB.length;i++){
+    if(KB[i].k.test(t))return {t:KB[i].f?KB[i].f(g):KB[i][g],links:!!KB[i].links};
   }
-  window.addEventListener('scroll',throttledUpdate,{passive:true});
-  window.addEventListener('resize',throttledUpdate);
-  typeLog();
+  return {t:g==='ua'?'Не маю достатньо інформації з цього питання. Я можу розповісти про: IP і як зайти, як почати грати, статус сервера, привілеї та ціни, команди, правила. Для іншого напиши в Telegram чи Discord:':'I do not have enough information on that. I can tell you about: the IP and how to join, how to start, server status, ranks and prices, commands, rules. For anything else write on Telegram or Discord:',links:true};
 }
-function revealNodes(){
-  /* На випадок якщо секція вже видима одразу (малий екран) */
-  nodes.forEach(function(n){
-    var r=n.getBoundingClientRect();
-    if(r.top<window.innerHeight*.9)n.classList.add('in');
-  });
+function ask(){
+  var q=inp.value.trim();
+  if(!q||busy)return;
+  var t=T[lang]||T.ua;
+  inp.value='';
+  add(q,'me');
+  greetEl=null;
+  if(!AI_ENDPOINT){var lr=localReply(q);setTimeout(function(){add(lr.t,'bot',lr.links);},250);return;}
+  history.push({role:'user',content:q});
+  history=history.slice(-10);
+  busy=true;inp.disabled=true;send.disabled=true;
+  var w=add(t.wait,'bot');
+  var ctrl=window.AbortController?new AbortController():null;
+  var to=setTimeout(function(){if(ctrl)ctrl.abort();},25000);
+  fetch(AI_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:history,lang:lang}),signal:ctrl?ctrl.signal:undefined})
+    .then(function(r){if(!r.ok)throw new Error('http');return r.json();})
+    .then(function(j){
+      var a=(j&&typeof j.reply==='string')?j.reply:'';
+      if(!a)throw new Error('empty');
+      w.textContent=a;history.push({role:'assistant',content:a});
+    })
+    .catch(function(){w.textContent=t.err;history.pop();})
+    .then(function(){clearTimeout(to);busy=false;inp.disabled=false;send.disabled=false;msgs.scrollTop=msgs.scrollHeight;if(panel.classList.contains('open'))inp.focus({preventScroll:true});});
 }
-var rAF=null;
-function throttledUpdate(){
-  if(rAF)return;
-  rAF=requestAnimationFrame(function(){updateTlFill();rAF=null;});
-}
-function updateTlFill(){
-  if(cur!=='updates')return;
-  var r=tlEl.getBoundingClientRect();
-  var vh=window.innerHeight;
-  var total=r.height;
-  if(total<=0)return;
-  var visibleTop=Math.min(Math.max(vh*0.5-r.top,0),total);
-  var pct=(visibleTop/total)*100;
-  tlFillEl.style.height=pct+'%';
-}
+btn.addEventListener('click',function(){setOpen(!panel.classList.contains('open'));});
+xb.addEventListener('click',function(){setOpen(false);btn.focus();});
+send.addEventListener('click',ask);
+inp.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();ask();}});
+document.addEventListener('click',function(e){if(panel.classList.contains('open')&&!panel.contains(e.target)&&!btn.contains(e.target))setOpen(false);});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&panel.classList.contains('open'))setOpen(false);});
+
+greetEl=add('','bot');
+applyLang();
+window.lankciAI={setLang:function(l){lang=T[l]?l:'ua';applyLang();}};
 })();
 </script>
 </body>
