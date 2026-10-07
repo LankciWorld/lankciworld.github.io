@@ -184,6 +184,35 @@ footer span{color:var(--or);}
   .ai-panel,.ai-panel.open{transition:none;}
   .ai-m{animation:none;}
 }
+
+/* LankciAI V2: тема + адаптація */
+.ai-th{margin-left:auto;margin-right:6px;background:transparent;border:1px solid var(--br);border-radius:8px;width:30px;height:28px;cursor:pointer;font-size:14px;line-height:1;-webkit-tap-highlight-color:transparent;}
+.ai-panel.light{--s1:#fff;--s2:#f4f4f6;--br:#dcdce2;--bg:#fff;--mu:#777;box-shadow:0 14px 40px rgba(0,0,0,.25);}
+.ai-panel.light .ai-m.bot{color:#222;}
+.ai-panel.light .ai-in input{color:#111;}
+.ai-panel.light .ai-x:hover{color:#000;}
+.ai-panel{max-width:calc(100vw - 16px);}
+@media(min-width:600px){.ai-panel{width:380px;height:min(540px,calc(100vh - 96px));height:min(540px,calc(100dvh - 96px));}}
+@media(max-width:480px){
+  .ai-btn{right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));}
+  .ai-panel{right:8px;left:8px;width:auto;bottom:calc(66px + env(safe-area-inset-bottom,0px));height:calc(100vh - 90px);height:min(72dvh,calc(100dvh - 90px));}
+}
+.ai-msgs{overflow-x:hidden;}
+.ai-th:focus-visible{outline:2px solid var(--or);outline-offset:1px;}
+
+/* LankciAI 2.0: фото, джерела */
+.ai-pv{display:none;align-items:center;gap:8px;padding:6px 10px;border-top:1px solid var(--br);background:var(--s2);font-size:12px;color:var(--mu);}
+.ai-pv.show{display:flex;}
+.ai-pv img{width:44px;height:44px;object-fit:cover;border-radius:8px;border:1px solid var(--br);flex-shrink:0;}
+.ai-pv img:not([src]){display:none;}
+.ai-pv span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.ai-pv button{background:transparent;border:0;color:var(--mu);font-size:20px;line-height:1;cursor:pointer;padding:0 4px;}
+.ai-in .ai-att{background:transparent;border:1px solid var(--br);color:var(--mu);}
+.ai-in .ai-att:hover{background:rgba(255,106,0,.12);color:var(--or);}
+.ai-img{display:block;max-width:100%;max-height:180px;border-radius:8px;}
+.ai-m.me.img{background:transparent;padding:0;}
+.ai-src{margin-top:8px;padding-top:6px;border-top:1px solid var(--br);font-size:12px;color:var(--mu);}
+.ai-src a{display:block;margin:3px 0 0;font-size:12px;}
 </style>
 </head>
 <body>
@@ -598,9 +627,12 @@ setInterval(fetchStatus,60000);
   <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="8" width="16" height="12" rx="3"/><path d="M12 8V5"/><circle cx="12" cy="3.8" r="1.1"/><circle cx="9" cy="14" r="1.2" fill="currentColor" stroke="none"/><circle cx="15" cy="14" r="1.2" fill="currentColor" stroke="none"/><path d="M2 13v3M22 13v3"/></svg>
 </button>
 <div class="ai-panel" id="aiPanel" role="dialog" aria-labelledby="aiTtl">
-  <div class="ai-hd"><span class="ai-ttl" id="aiTtl">LankciAI</span><button class="ai-x" id="aiX" type="button">×</button></div>
+  <div class="ai-hd"><span class="ai-ttl" id="aiTtl">LankciAI</span><button class="ai-th" id="aiTh" type="button" aria-label="Light theme">☀️</button><button class="ai-x" id="aiX" type="button">×</button></div>
   <div class="ai-msgs" id="aiMsgs" aria-live="polite"></div>
+  <div class="ai-pv" id="aiPv"><img id="aiPvImg" alt=""><span id="aiPvTx"></span><button type="button" id="aiPvX" aria-label="Remove">×</button></div>
+  <input type="file" id="aiFile" accept="image/*" hidden>
   <div class="ai-in">
+    <button class="ai-att" id="aiAtt" type="button" aria-label="Photo"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="1.6"/><path d="M21 16l-5-5-8 9"/></svg></button>
     <input id="aiIn" type="text" maxlength="500" autocomplete="off">
     <button id="aiSend" type="button"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></button>
   </div>
@@ -613,20 +645,22 @@ setInterval(fetchStatus,60000);
    Поки AI_ENDPOINT порожній, чат чесно повідомляє, що AI ще не підключено. */
 (function(){
 'use strict';
-var AI_ENDPOINT='';   /* напр. 'https://lankciai.your-name.workers.dev/chat' */
+var AI_ENDPOINT='';   /* backend: POST {messages,lang} -> {reply, sources:[{title,url}]} */
+var VISION_ENDPOINT='';   /* backend для фото: POST {image(dataURL),question,lang} -> {reply} */
+var WIKI_SEARCH=true;   /* публічний Wikipedia API (без ключа) для питань «хто/що таке ...» */   /* напр. 'https://lankciai.your-name.workers.dev/chat' */
 var TG='https://t.me/LankciWorld',DC='https://discord.gg/RKWzGv7M';
 var T={
-ua:{ttl:'LankciAI',hi:'Привіт! 👋 Я помічник LankciWorld. Питай про IP, донат, команди чи правила.',ph:'Напишіть питання...',send:'Надіслати',open:'Відкрити AI-помічника',close:'Закрити',off:'AI-помічник ще не підключений до сервера, тому поки не можу відповідати на питання. Правила, магазин і команди є у вкладках сайту, а живу відповідь можна отримати тут:',err:'Не вдалося отримати відповідь. Спробуйте ще раз пізніше.',wait:'Думаю...'},
-en:{ttl:'LankciAI',hi:'Hi! 👋 I am the LankciWorld helper. Ask about the IP, donations, commands or rules.',ph:'Type your question...',send:'Send',open:'Open AI assistant',close:'Close',off:'The AI assistant is not connected to a server yet, so I cannot answer questions for now. Rules, shop and commands are in the site tabs, and you can get a live answer here:',err:'Could not get a reply. Please try again later.',wait:'Thinking...'},
-pl:{ttl:'LankciAI',hi:'Cześć! 👋 Jestem pomocnikiem LankciWorld. Pytaj o IP, donaty, komendy lub zasady.',ph:'Napisz pytanie...',send:'Wyślij',open:'Otwórz asystenta AI',close:'Zamknij',off:'Asystent AI nie jest jeszcze połączony z serwerem, więc na razie nie mogę odpowiadać na pytania. Zasady, sklep i komendy znajdziesz w zakładkach strony, a odpowiedź na żywo uzyskasz tutaj:',err:'Nie udało się uzyskać odpowiedzi. Spróbuj ponownie później.',wait:'Myślę...'},
-it:{ttl:'LankciAI',hi:'Ciao! 👋 Sono l’assistente di LankciWorld. Chiedimi di IP, donazioni, comandi o regole.',ph:'Scrivi la tua domanda...',send:'Invia',open:'Apri l’assistente AI',close:'Chiudi',off:'L’assistente AI non è ancora collegato a un server, quindi per ora non posso rispondere alle domande. Regole, negozio e comandi sono nelle schede del sito, mentre una risposta in diretta si ottiene qui:',err:'Impossibile ottenere una risposta. Riprova più tardi.',wait:'Sto pensando...'},
-fr:{ttl:'LankciAI',hi:'Salut ! 👋 Je suis l’assistant de LankciWorld. Posez vos questions sur l’IP, les dons, les commandes ou les règles.',ph:'Écrivez votre question...',send:'Envoyer',open:'Ouvrir l’assistant IA',close:'Fermer',off:'L’assistant IA n’est pas encore connecté à un serveur, je ne peux donc pas répondre aux questions pour l’instant. Les règles, la boutique et les commandes sont dans les onglets du site, et une réponse en direct est disponible ici :',err:'Impossible d’obtenir une réponse. Réessayez plus tard.',wait:'Je réfléchis...'}
+ua:{ttl:'LankciAI 2.0',hi:'Привіт! 👋 Я помічник LankciWorld. Питай про IP, донат, команди чи правила.',ph:'Напишіть питання...',send:'Надіслати',open:'Відкрити AI-помічника',close:'Закрити',off:'AI-помічник ще не підключений до сервера, тому поки не можу відповідати на питання. Правила, магазин і команди є у вкладках сайту, а живу відповідь можна отримати тут:',err:'Не вдалося отримати відповідь. Спробуйте ще раз пізніше.',wait:'Думаю...'},
+en:{ttl:'LankciAI 2.0',hi:'Hi! 👋 I am the LankciWorld helper. Ask about the IP, donations, commands or rules.',ph:'Type your question...',send:'Send',open:'Open AI assistant',close:'Close',off:'The AI assistant is not connected to a server yet, so I cannot answer questions for now. Rules, shop and commands are in the site tabs, and you can get a live answer here:',err:'Could not get a reply. Please try again later.',wait:'Thinking...'},
+pl:{ttl:'LankciAI 2.0',hi:'Cześć! 👋 Jestem pomocnikiem LankciWorld. Pytaj o IP, donaty, komendy lub zasady.',ph:'Napisz pytanie...',send:'Wyślij',open:'Otwórz asystenta AI',close:'Zamknij',off:'Asystent AI nie jest jeszcze połączony z serwerem, więc na razie nie mogę odpowiadać na pytania. Zasady, sklep i komendy znajdziesz w zakładkach strony, a odpowiedź na żywo uzyskasz tutaj:',err:'Nie udało się uzyskać odpowiedzi. Spróbuj ponownie później.',wait:'Myślę...'},
+it:{ttl:'LankciAI 2.0',hi:'Ciao! 👋 Sono l’assistente di LankciWorld. Chiedimi di IP, donazioni, comandi o regole.',ph:'Scrivi la tua domanda...',send:'Invia',open:'Apri l’assistente AI',close:'Chiudi',off:'L’assistente AI non è ancora collegato a un server, quindi per ora non posso rispondere alle domande. Regole, negozio e comandi sono nelle schede del sito, mentre una risposta in diretta si ottiene qui:',err:'Impossibile ottenere una risposta. Riprova più tardi.',wait:'Sto pensando...'},
+fr:{ttl:'LankciAI 2.0',hi:'Salut ! 👋 Je suis l’assistant de LankciWorld. Posez vos questions sur l’IP, les dons, les commandes ou les règles.',ph:'Écrivez votre question...',send:'Envoyer',open:'Ouvrir l’assistant IA',close:'Fermer',off:'L’assistant IA n’est pas encore connecté à un serveur, je ne peux donc pas répondre aux questions pour l’instant. Les règles, la boutique et les commandes sont dans les onglets du site, et une réponse en direct est disponible ici :',err:'Impossible d’obtenir une réponse. Réessayez plus tard.',wait:'Je réfléchis...'}
 };
 var lang='ua',history=[],busy=false,greetEl=null;
 var $=function(id){return document.getElementById(id);};
 var btn=$('aiBtn'),panel=$('aiPanel'),msgs=$('aiMsgs'),inp=$('aiIn'),send=$('aiSend'),xb=$('aiX');
 
-function add(text,who,links){
+function add(text,who,links,srcs){
   var d=document.createElement('div');
   d.className='ai-m '+who;
   d.textContent=text;
@@ -635,8 +669,26 @@ function add(text,who,links){
       var a=document.createElement('a');a.href=p[1];a.target='_blank';a.rel='noopener noreferrer';a.textContent=p[0];d.appendChild(a);
     });
   }
-  msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;
+  msgs.appendChild(d);
+  if(srcs)addSrc(d,srcs);
+  msgs.scrollTop=msgs.scrollHeight;
   return d;
+}
+var curD='ua';
+function addSrc(el,srcs){
+  if(!srcs||!srcs.length)return;
+  var box=document.createElement('div'),h=document.createElement('div'),n=0;
+  box.className='ai-src';h.textContent=(PH[curD]||PH.ua).src;box.appendChild(h);
+  srcs.slice(0,4).forEach(function(x){
+    if(!x||typeof x.url!=='string'||!/^https?:\/\//i.test(x.url))return;
+    var a=document.createElement('a');a.href=x.url;a.target='_blank';a.rel='noopener noreferrer';a.textContent=String(x.title||x.url).slice(0,80);box.appendChild(a);n++;
+  });
+  if(n){el.appendChild(box);msgs.scrollTop=msgs.scrollHeight;}
+}
+function addImg(src){
+  var d=document.createElement('div'),im=document.createElement('img');
+  d.className='ai-m me img';im.className='ai-img';im.alt='';im.src=src;d.appendChild(im);
+  msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;
 }
 function applyLang(){
   var t=T[lang]||T.ua;
@@ -890,30 +942,301 @@ localReply=function(q){
   return r;
 };
 
-function ask(){
-  var q=inp.value.trim();
-  if(!q||busy)return;
-  var t=T[lang]||T.ua;
-  inp.value='';
-  add(q,'me');
-  greetEl=null;
-  if(!AI_ENDPOINT){var lr=localReply(q);setTimeout(function(){add(lr.t,'bot',lr.links);},250);return;}
-  history.push({role:'user',content:q});
-  history=history.slice(-10);
-  busy=true;inp.disabled=true;send.disabled=true;
-  var w=add(t.wait,'bot');
-  var ctrl=window.AbortController?new AbortController():null;
-  var to=setTimeout(function(){if(ctrl)ctrl.abort();},25000);
-  fetch(AI_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:history,lang:lang}),signal:ctrl?ctrl.signal:undefined})
-    .then(function(r){if(!r.ok)throw new Error('http');return r.json();})
-    .then(function(j){
-      var a=(j&&typeof j.reply==='string')?j.reply:'';
-      if(!a)throw new Error('empty');
-      w.textContent=a;history.push({role:'assistant',content:a});
-    })
-    .catch(function(){w.textContent=t.err;history.pop();})
-    .then(function(){clearTimeout(to);busy=false;inp.disabled=false;send.disabled=false;msgs.scrollTop=msgs.scrollHeight;if(panel.classList.contains('open'))inp.focus({preventScroll:true});});
+/* ═══ LankciAI V2 ═══ */
+var V2=(function(){
+var sk=NLU.skel;
+function lv(a,b){var p=[],c,i,j;for(j=0;j<=b.length;j++)p[j]=j;for(i=1;i<=a.length;i++){c=[i];for(j=1;j<=b.length;j++)c[j]=Math.min(p[j]+1,c[j-1]+1,p[j-1]+(a[i-1]===b[j-1]?0:1));p=c;}return p[b.length];}
+function comp(s){return s.split('|').map(sk).filter(Boolean);}
+/* фрази — збіг із початку слова; окремі слова — точно / префікс (≥4) / 1 помилка (≥5) */
+function hit(P,s,tk){
+  var pad=' '+s+' ',i,j,p,t;
+  for(i=0;i<P.length;i++){p=P[i];
+    if(p.indexOf(' ')>0){if(pad.indexOf(' '+p)>=0)return true;}
+    else for(j=0;j<tk.length;j++){t=tk[j];
+      if(t===p||(p.length>=4&&t.indexOf(p)===0)||(p.length>=5&&Math.abs(t.length-p.length)<=1&&lv(t,p)<=1))return true;}
+  }
+  return false;
 }
+/* автовизначення мови повідомлення (UA/EN/PL/IT/FR, UA-трансліт); null = лишити мову сайту */
+var W={
+en:'the is are what how who where when can you your do does my to join about me and this that please hello hey hi thanks server rules shop buy price play open',
+pl:'jaki jaka jak gdzie kto co jest czy mi mam nie tak jakie kiedy mozna moge jestes kim czesc dzieki prosze sie na do witaj serwer serwerze',
+it:'come dove chi cosa sono che il la un una non posso quando ciao grazie per del hai sei quale buongiorno',
+fr:'comment ou qui quoi est suis les des une pas puis quand bonjour merci pour avec tu quel salut es',
+ua:'de kudy vpysaty adresu hostitsa shcho scho yak ya ti dyakuyu diakuiu privit skilki koly mozhna treba chomu khto hto zayty zaity zayti meni tobi ye shos shozh'
+};
+Object.keys(W).forEach(function(k){var o={};W[k].split(' ').forEach(function(w){o[w]=1;});W[k]=o;});
+function dl(q){
+  var l=q.toLowerCase();
+  if(/[а-яіїєґёыэъ]/.test(l)){if(/[іїєґ]/.test(l))return 'ua';if(/[ыэъё]/.test(l)||/(^|[^а-я])(что|как|где|почему|привет|спасибо|когда|сколько|это|тебя|ты|меня|мне|можно|какой|такой)([^а-я]|$)/.test(l))return 'ru';return 'ua';}
+  if(/[ąęłśżźćńó]/.test(l))return 'pl';
+  if(/[çœêâîôû]/.test(l))return 'fr';
+  var w=l.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z]+/g,' ').trim().split(' '),sc={},ks=Object.keys(W),i,j,a=[];
+  ks.forEach(function(k){sc[k]=0;for(j=0;j<w.length;j++)if(W[k][w[j]])sc[k]++;a.push([sc[k],k]);});
+  a.sort(function(x,y){return y[0]-x[0];});
+  return(a[0][0]>0&&a[0][0]>a[1][0])?a[0][1]:null;
+}
+/* пристрій: тільки тип/ОС/браузер з userAgent, без IP і без моделі */
+var DK={ua:{mob:'мобільний пристрій 📱',tab:'планшет 📲',pc:'ПК 💻'},en:{mob:'a mobile device 📱',tab:'a tablet 📲',pc:'a PC 💻'},pl:{mob:'urządzenie mobilne 📱',tab:'tablet 📲',pc:'komputer 💻'},it:{mob:'un dispositivo mobile 📱',tab:'un tablet 📲',pc:'un PC 💻'},fr:{mob:'un appareil mobile 📱',tab:'une tablette 📲',pc:'un PC 💻'}};
+var DP={ua:['Схоже, ви використовуєте ',' Точну модель браузер не повідомляє, тому я її не знаю, і нічого більше про вас не збираю.'],en:['It looks like you are using ',' The browser does not share the exact model, so I do not know it, and I collect nothing else about you.'],pl:['Wygląda na to, że korzystasz z: ',' Przeglądarka nie podaje dokładnego modelu, więc go nie znam, i niczego więcej o Tobie nie zbieram.'],it:['Sembra che tu stia usando ',' Il browser non fornisce il modello esatto, quindi non lo conosco, e non raccolgo altro su di te.'],fr:['Il semble que vous utilisiez ',' Le navigateur ne communique pas le modèle exact, donc je ne le connais pas, et je ne collecte rien d’autre sur vous.']};
+function dev(d){
+  var u=navigator.userAgent||'',tp=navigator.maxTouchPoints||0,k,os,br;
+  if(/iPad|Tablet/i.test(u)||(/Macintosh/.test(u)&&tp>1)||(/Android/i.test(u)&&!/Mobile/i.test(u)))k='tab';
+  else if(/Mobi|iPhone|Android/i.test(u))k='mob';else k='pc';
+  os=/Windows/.test(u)?'Windows':/Android/.test(u)?'Android':/iPhone|iPad|iPod/.test(u)?'iOS':/Macintosh/.test(u)?(tp>1?'iPadOS':'macOS'):/Linux/.test(u)?'Linux':'';
+  br=/Edg\//.test(u)?'Edge':/OPR\/|Opera/.test(u)?'Opera':/Firefox|FxiOS/.test(u)?'Firefox':/Chrome|CriOS/.test(u)?'Chrome':/Safari/.test(u)?'Safari':'';
+  var info=[os,br].filter(Boolean).join(', ');
+  return DP[d][0]+DK[d][k]+(info?' ('+info+')':'')+'.'+DP[d][1];
+}
+var B={
+ua:['Тоді давай щось придумаємо 😄 Можу розповісти цікавий факт чи жарт, або порадити, у що пограти. ','Сервер відкриється 15.11.2026 (через {n} дн.), тож поки вивчи правила й привілеї. ','Заходь на LankciWorld! IP: LankciWorld.mcsh.io. ','Заплановані режими: Анархія, Виживання, SMP, Хардкор, OneBlock, Дуелі. Деталі — тут:'],
+en:['Then let us think of something 😄 I can tell a fun fact or a joke, or suggest what to play. ','The server opens on 15.11.2026 (in {n} days), so for now study the rules and ranks. ','Come join LankciWorld! IP: LankciWorld.mcsh.io. ','Planned modes: Anarchy, Survival, SMP, Hardcore, OneBlock, Duels. Details here:'],
+pl:['Nuda się zdarza 😅 ','Serwer otwiera się 15.11.2026 (za {n} dni), więc na razie poznaj zasady i rangi. ','Wbijaj na LankciWorld! IP: LankciWorld.mcsh.io. ','Planowane tryby: Anarchia, Przetrwanie, SMP, Hardcore, OneBlock, Pojedynki. Szczegóły tutaj:'],
+it:['La noia capita 😅 ','Il server apre il 15.11.2026 (tra {n} giorni), quindi per ora studia regole e rank. ','Entra su LankciWorld! IP: LankciWorld.mcsh.io. ','Modalità previste: Anarchy, Sopravvivenza, SMP, Hardcore, OneBlock, Duelli. Dettagli qui:'],
+fr:['L’ennui, ça arrive 😅 ','Le serveur ouvre le 15.11.2026 (dans {n} jours), alors étudiez d’abord les règles et les rangs. ','Rejoignez LankciWorld ! IP : LankciWorld.mcsh.io. ','Modes prévus : Anarchie, Survie, SMP, Hardcore, OneBlock, Duels. Détails ici :']
+};
+function bored(d){var n=daysToOpen(),b=B[d];return b[0]+(n>0?b[1].replace('{n}',n):b[2])+b[3];}
+/* Інтенти: p = фрази/слова (нормалізуються через skel → UA/RU/translit/PL/IT/FR разом), m = макс. слів у запиті */
+var I=[
+{p:comp('хост|хостинг|хостинга|хоститься|hosting|hosted|hebergeur|hebergement|ospitato|де знаходиться сервер|де розташований сервер|де стоїть сервер|де фізично сервер|де сервак стоїть|where is the server hosted|where is server hosted|where is the server located|gdzie jest hostowany|gdzie znajduje sie serwer|dove si trova il server|ou se trouve le serveur|провайдер|datacenter|дата центр|dedik|vps|де сервер знаходиться|де сервер розташований|де сервер стоїть|де знаходиться|в якій країні|where is server located|where is the server|where is server|where is it hosted|where is it located|server location|server located|gdzie jest serwer|dove e il server|ou est le serveur|де сервер|який у вас хост|який ваш хост|ваш хост|ваш хостинг|де ваш сервер'),nx:1,
+ r:{ua:'Ця інформація є конфіденційною і не розголошується 🤫',en:'This information is confidential and is not disclosed 🤫',pl:'Ta informacja jest poufna i nie jest ujawniana 🤫',it:'Queste informazioni sono riservate e non vengono divulgate 🤫',fr:'Ces informations sont confidentielles et ne sont pas divulguées 🤫',ru:'Эта информация конфиденциальна и не разглашается 🤫'}},
+{p:comp('хто ти|ти хто|хто ви|як тебе звати|яка твоя назва|що ти таке|що ти за|розкажи про себе|хто тебе створив|хто тебе зробив|хто тебе написав|чий це ai|чий ти|який це штучний інтелект|ти бот|кто ты|как тебя зовут|ты бот|who are you|what are you|your name|tell me about yourself|who made you|who created you|who built you|who owns you|are you a bot|are you ai|kim jestes|jak masz na imie|kto cie stworzyl|kto cie zrobil|chi sei|come ti chiami|chi ti ha creato|chi ti ha fatto|qui es tu|tu es qui|qui t a cree|comment t appelles tu|яка модель|яка ти модель|що ти за модель|на якій ти моделі|ти реально|ти штучний інтелект|ти робот|ти нейро|ти людина|ти чат|какая модель|что ты такое|кто ты такой|ты кто|what model|which model|what ai are you|are you real ai|are you ai|quale modello|quel modele|jaki model'),
+ r:{ua:'Я LankciAI 2.0 — AI-помічник сервера LankciWorld, створений власником сервера. Я допомагаю користувачам із питаннями про сервер, сайт, правила, режими, донат та інші речі.',en:'I am LankciAI 2.0, the AI assistant of the LankciWorld server, created by the server owner. I help users with questions about the server, the site, rules, modes, donations and more.',pl:'Jestem LankciAI 2.0, asystentem AI serwera LankciWorld, stworzonym przez właściciela serwera. Pomagam w sprawach serwera, strony, zasad, trybów, donatów i innych.',it:'Sono LankciAI 2.0, l’assistente AI del server LankciWorld, creato dal proprietario del server. Aiuto con domande su server, sito, regole, modalità, donazioni e altro.',fr:'Je suis LankciAI 2.0, l’assistant IA du serveur LankciWorld, créé par le propriétaire du serveur. J’aide pour les questions sur le serveur, le site, les règles, les modes, les dons et plus encore.',ru:'Я LankciAI 2.0 — AI-помощник сервера LankciWorld, созданный владельцем сервера. Помогаю с вопросами о сервере, сайте, правилах, режимах, донате и не только.'}},
+{p:comp('з якого я пристрою|з якого пристрою|який у мене пристрій|який у мене телефон|я на телефоні|я на комп|я на пк|я на планшет|що в мене за пристрій|що за пристрій|який пристрій|what device|which device|am i on mobile|am i on pc|am i on a phone|what phone|my device|jakie mam urzadzenie|na jakim urzadzeniu|quale dispositivo|che dispositivo|sono su cellulare|quel appareil|suis je sur mobile|phone or pc|pc or phone|tablet or pc|pc or tablet|tablet or phone|mobile or pc|phone or computer|what device am i|я з телефону|я з телефона|я з пк|я з комп|я з планшета|я з мобільного|ya z telefonu|sono da cellulare|sono da pc|je suis sur mobile|jestem na telefonie|jestem na komputerze'),f:dev,qm:1},
+{p:comp('як справи|як ти|як життя|що нового|шо нового|як настрій|как дела|как ты|how are you|hows it going|what s up|whats up|wassup|jak sie masz|jak leci|co slychac|come stai|come va|ca va|comment ca va|comment vas tu'),m:6,
+ r:{ua:['Все чудово, дякую! 😊 А в тебе як справи? Можу підказати щось про сервер або порадити, чим зайнятись.','Нормально, працюю 😄 А в тебе як?'],en:['All great, thanks! 😊 How about you? I can tell you about the server or suggest something to do.','Doing fine, working away 😄 And you?'],pl:'Wszystko świetnie, dzięki! 😊 A u Ciebie? Mogę opowiedzieć o serwerze lub podpowiedzieć, co robić.',it:'Tutto benissimo, grazie! 😊 E tu? Posso parlarti del server o suggerirti cosa fare.',fr:'Tout va très bien, merci ! 😊 Et vous ? Je peux parler du serveur ou suggérer quoi faire.'}},
+{p:comp('дякую|дяка|спасибі|спасибо|thanks|thank you|thx|dziekuje|dzieki|grazie|merci|mersi'),m:5,
+ r:{ua:['Будь ласка! ❤️','Радий допомогти 😊','Звертайся ще 🙂'],en:['You are welcome! ❤️','Glad to help 😊','Anytime 🙂'],pl:'Proszę bardzo! ❤️',it:'Prego! ❤️',fr:'Avec plaisir ! ❤️'}},
+{p:comp('ти крутий|ти класний|ти молодець|ти найкращий|ти топ|ты крутой|you are great|you re great|you are cool|you re cool|you re awesome|good bot|jestes super|jestes swietny|sei fantastico|sei bravo|tu es genial|tu es super|молодець'),m:6,
+ r:{ua:['Дякую, мені дуже приємно! 😊 Ти теж крутий(а)!','Ой, дякую 😊'],en:['Thank you, that is very kind! 😊 You are awesome too!','Aw, thanks 😊'],pl:'Dziękuję, bardzo miło! 😊 Ty też jesteś super!',it:'Grazie, che gentile! 😊 Anche tu sei fantastico!',fr:'Merci, c’est très gentil ! 😊 Vous aussi, vous êtes super !'}},
+{p:comp('нудно|скучно|bored|nudze|annoio|ennuie|що робити|що мені робити|what to do|co robic|cosa fare|que faire|що робити на сервері|що робити коли нудно|що робити якщо нудно|чим займатись|чим зайнятись|what should i do|what can i do on the server|co mam robic|co robic na serwerze|cosa faccio|cosa posso fare|que dois je faire|que faire sur le serveur'),f:bored,l:1,m:6},
+{p:comp('що порадиш|порадь|поради|порада|як краще грати|як краще почати|tips|advice|any tips|beginner tips|co poradzisz|porady|consigli|consiglio|conseils|conseil'),l:1,
+ r:{ua:'Поради новачку 💡 1) Прочитай вкладку «Правила»: на нашій Anarchy гріферство й PvP дозволені, але не на спавні та в лобі. 2) Не довіряй незнайомцям при обмінах — шахрайство карається баном. 3) Спершу їжа, інструменти й схованка, потім розвивайся. 4) Донат — лише через офіційного Telegram-бота. Деталі саме нашого сервера уточнюй тут:',en:'Beginner tips 💡 1) Read the Rules tab: on our Anarchy griefing and PvP are allowed, but not at spawn and in the lobby. 2) Do not trust strangers in trades — scamming gets you banned. 3) Food, tools and a shelter first, then expand. 4) Donations only via the official Telegram bot. For server-specific details ask here:',pl:'Porady dla nowych 💡 1) Przeczytaj zakładkę „Zasady”: na naszej Anarchii griefing i PvP są dozwolone, ale nie na spawnie i w lobby. 2) Nie ufaj nieznajomym przy wymianach — oszustwa kończą się banem. 3) Najpierw jedzenie, narzędzia i schronienie, potem rozwój. 4) Donaty tylko przez oficjalnego bota Telegram. Szczegóły serwera sprawdź tutaj:',it:'Consigli per i nuovi 💡 1) Leggi la scheda «Regole»: sulla nostra Anarchy griefing e PvP sono consentiti, ma non allo spawn e nella lobby. 2) Non fidarti degli sconosciuti negli scambi: le truffe portano al ban. 3) Prima cibo, strumenti e un rifugio, poi espanditi. 4) Donazioni solo tramite il bot Telegram ufficiale. Per i dettagli del server chiedi qui:',fr:'Conseils pour débuter 💡 1) Lisez l’onglet « Règles » : sur notre Anarchy, le griefing et le PvP sont autorisés, mais pas au spawn ni dans le lobby. 2) Ne faites pas confiance aux inconnus lors des échanges : les arnaques sont bannies. 3) D’abord nourriture, outils et abri, puis développez-vous. 4) Dons uniquement via le bot Telegram officiel. Pour les détails du serveur, demandez ici :'}},
+{p:comp('як виживати|як вижити|як заробити ресурси|як добути ресурси|де брати ресурси|як фармити|ресурси|how to survive|how to get resources|how to farm|resources|jak przetrwac|jak zdobyc zasoby|come sopravvivere|come ottenere risorse|comment survivre|comment obtenir des ressources'),l:1,
+ r:{ua:'Загальні поради з Minecraft 🌲 Почни з дерева й кам’яних інструментів, далі залізо; зроби просту ферму їжі; у шахту йди з їжею, факелами й запасною зброєю; цінні речі ховай у скриню. Специфіку ресурсів на LankciWorld я не знаю — питай тут:',en:'General Minecraft tips 🌲 Start with wood and stone tools, then iron; set up a simple food farm; go mining with food, torches and a spare weapon; keep valuables in a chest. I do not know LankciWorld-specific resource details — ask here:',pl:'Ogólne porady do Minecrafta 🌲 Zacznij od drewna i kamiennych narzędzi, potem żelazo; postaw prostą farmę jedzenia; do kopalni idź z jedzeniem, pochodniami i zapasową bronią; cenne rzeczy chowaj w skrzyni. Nie znam szczegółów zasobów na LankciWorld — zapytaj tutaj:',it:'Consigli generali su Minecraft 🌲 Inizia con legno e strumenti di pietra, poi il ferro; fai una semplice fattoria di cibo; in miniera vai con cibo, torce e un’arma di scorta; metti gli oggetti di valore in un baule. Non conosco i dettagli sulle risorse di LankciWorld — chiedi qui:',fr:'Conseils généraux Minecraft 🌲 Commencez par le bois et les outils en pierre, puis le fer ; faites une ferme simple pour la nourriture ; allez à la mine avec de la nourriture, des torches et une arme de rechange ; rangez vos objets de valeur dans un coffre. Je ne connais pas les détails des ressources sur LankciWorld — demandez ici :'}},
+{p:comp('ти вірус|ти вирус|ти троян|ти шкідлив|ти небезпечн|ти безпечн|ти не вірус|це вірус|ты вирус|ты троян|ты опасн|ты вредн|are you a virus|are you virus|are you malware|are you a trojan|are you dangerous|are you harmful|are you safe|jestes wirusem|jestes grozny|sei un virus|sei pericoloso|es tu un virus|es tu dangereux'),
+ r:{ua:'Ні, я не вірус і не шкідлива програма. Я LankciAI 2.0 — AI-помічник LankciWorld.',en:'No, I am not a virus or malware. I am LankciAI 2.0, the LankciWorld assistant.',pl:'Nie, nie jestem wirusem ani szkodliwym programem. Jestem LankciAI 2.0, asystentem LankciWorld.',it:'No, non sono un virus né un programma dannoso. Sono LankciAI 2.0, l’assistente di LankciWorld.',fr:'Non, je ne suis pas un virus ni un programme malveillant. Je suis LankciAI 2.0, l’assistant de LankciWorld.',ru:'Нет, я не вирус и не вредоносная программа. Я LankciAI 2.0 — AI-помощник LankciWorld.'}},
+{p:comp('ти тупий|ти тупа|ти тупой|ти поганий|ти погана|ти нічого не вмієш|ти нічого не можеш|ти безтолковий|ти дебіл|ти ідіот|ти дурний|ти відстій|ты тупой|ты плохой|ты ничего не умеешь|ты бесполезный|ты дурак|ты дебил|you are stupid|you re stupid|you are dumb|you re dumb|you suck|you are useless|you re useless|you are bad|you are trash|you are an idiot|bad bot|stupid bot|jestes glupi|jestes beznadziejny|jestes do niczego|sei stupido|sei inutile|sei scarso|tu es nul|tu es stupide|tu es inutile'),pre:1,
+ r:{ua:['Можливо, я ще не вмію всього 😅 Я постійно розвиваюся і можу помилятися.','Буває 😅 Якщо я щось зрозумів не так — підкажи, і я спробую ще раз.','Приймаю критику 🙂 Давай спробуємо інакше: що саме ти хотів дізнатися?'],en:['Maybe I cannot do everything yet 😅 I keep improving and I can make mistakes.','Fair enough 😅 If I misunderstood something, tell me and I will try again.'],pl:'Może jeszcze nie wszystko umiem 😅 Cały czas się rozwijam i mogę się mylić.',it:'Forse non so ancora fare tutto 😅 Continuo a migliorare e posso sbagliare.',fr:'Je ne sais peut-être pas encore tout faire 😅 Je progresse et je peux me tromper.',ru:['Возможно, я пока умею не всё 😅 Я постоянно развиваюсь и могу ошибаться.','Бывает 😅 Если я что-то понял не так — подскажи, и я попробую ещё раз.']}},
+{p:comp('цікавий факт|цікавинку|дай факт|дай мені факт|розкажи факт|факт про|интересный факт|расскажи факт|fun fact|funfact|give me a fact|tell me a fact|random fact|fact about|facts about|ciekawostka|ciekawostke|fatto interessante|fatto curioso|curiosita|le saviez vous|fait amusant|anecdote'),f:fact},
+{p:comp('що можна пограти|у що пограти|у що зіграти|в що пограти|що пограти|во что поиграть|what can i play|what to play|what should i play|w co zagrac|a cosa giocare|a quoi jouer|que jouer'),l:1,
+ r:{ua:'Якщо любиш Minecraft — спробуй виживання, будівництво чи PvP 🎮 На LankciWorld заплановані режими: Анархія, Виживання, SMP, Хардкор, OneBlock та Дуелі. Деталі — тут:',en:'If you like Minecraft, try survival, building or PvP 🎮 LankciWorld plans these modes: Anarchy, Survival, SMP, Hardcore, OneBlock and Duels. Details here:',ru:'Если любишь Minecraft — попробуй выживание, строительство или PvP 🎮 На LankciWorld запланированы режимы: Анархия, Выживание, SMP, Хардкор, OneBlock и Дуэли. Подробности здесь:'}},
+{p:comp('розкажи історію|розкажи цікаву історію|розкажи казку|розкажи байку|tell me a story|opowiedz historie|raccontami una storia|raconte moi une histoire|расскажи историю|расскажи сказку'),
+ r:{ua:['Жив-був кріпер, який мріяв потоваришувати з гравцями. Але щойно він підходив ближче — лунало «ссс…» і всі тікали. Тоді він вирішив триматися осторонь і просто махати рукою. І саме тоді з ним нарешті заговорили 😄','Один гравець цілу ніч копав шахту, щоб знайти алмази. Знайшов… лише гравій. Зате зранку збудував із нього найкращий міст на всьому узбережжі ⛏️'],en:['Once upon a time a creeper dreamed of making friends. But every time it came closer, everyone ran from the “sss…”. So it stayed at a distance and just waved. That is when someone finally talked to it 😄','A player dug all night looking for diamonds and found only gravel. In the morning he built the best bridge on the coast out of it ⛏️'],ru:'Жил-был крипер, который мечтал подружиться с игроками. Но стоило ему подойти ближе — раздавалось «ссс…» и все разбегались. Тогда он остался в стороне и просто махал рукой. И вот тогда с ним наконец заговорили 😄'}},
+{p:comp('лол|хаха|ахах|хех|хіхі|кек|lol|haha|ahah|lmao|xd|jaja|hihi|hehe|heh|mdr|ptdr'),a:1,m:4,
+ r:{ua:['Хаха 😄','Ахах 😁 Весело!','😄'],en:['Haha 😄','Ha! 😁','😄 Glad you enjoyed it!'],pl:'Haha 😄',it:'Ahah 😄',fr:'Haha 😄'}},
+{p:comp('ок|окей|ясно|зрозуміло|ага|угу|добре|ладно|понятно|ok|okay|jasne|capito|compris|nice|cool|круто|супер|класно'),a:1,m:4,
+ r:{ua:['Добре 👍','Супер! Якщо будуть питання — пиши 🙂'],en:['Okay 👍','Great! Ask me if you need anything 🙂'],pl:'Okej 👍',it:'Ok 👍',fr:'D’accord 👍'}},
+{p:comp('будь|ласка|please|plz|pls|prosze|per|favore|s|il|vous|plait|пожалуйста'),a:1,m:4,
+ r:{ua:['Прошу 😊','Звертайся 🙂'],en:['You are welcome 😊','Anytime 🙂'],pl:'Proszę 😊',it:'Prego 😊',fr:'Je vous en prie 😊'}},
+{p:comp('жарт|жарти|анекдот|пожартуй|розсміши|joke|jokes|funny|make me laugh|żart|zart|dowcip|barzelletta|battuta|blague'),
+ r:{ua:['Кріпер підходить до гравця: «Ссс... можна обійму?» 💥','Чому гравець узяв драбину в шахту? Щоб дістатися наступного рівня! ⛏️','Ендермен ніколи не виграє в гляделки: ледь глянеш — він уже злий 😄'],en:['A creeper walks up to a player: “Sss... can I have a hug?” 💥','Why did the player bring a ladder to the mine? To reach the next level! ⛏️','Endermen never win staring contests: look at them and they get angry 😄'],pl:'Creeper podchodzi do gracza: „Sss... mogę się przytulić?” 💥',it:'Un creeper si avvicina a un giocatore: «Sss... posso abbracciarti?» 💥',fr:'Un creeper s’approche d’un joueur : « Sss... un câlin ? » 💥'}},
+{p:comp('розкажи щось|розкажи що небудь|скажи щось|цікавинка|цікавий факт|расскажи что нибудь|tell me something|say something|fun fact|something interesting|powiedz cos|opowiedz cos|dimmi qualcosa|raccontami qualcosa|dis moi quelque chose|raconte moi quelque chose'),
+ r:{ua:['Цікаво: максимум гравців на LankciWorld — 24 🙂','Факт: Hacker має найбільше точок дому серед привілеїв — 10 🏠','Факт: привілей Dragon дає імунітет до лави 🔥','Факт: підтримуються версії Minecraft Java від 1.21.1 до 26.3 🎮'],en:['Fun fact: LankciWorld holds up to 24 players 🙂','Fact: Hacker has the most home points of all ranks — 10 🏠','Fact: the Dragon rank gives lava immunity 🔥','Fact: Minecraft Java versions 1.21.1 to 26.3 are supported 🎮'],pl:['Ciekawostka: na LankciWorld może grać do 24 graczy 🙂','Hacker ma najwięcej punktów domu spośród rang — 10 🏠'],it:['Curiosità: LankciWorld ospita fino a 24 giocatori 🙂','Hacker ha più punti casa di tutti i rank — 10 🏠'],fr:['Le saviez-vous : LankciWorld accueille jusqu’à 24 joueurs 🙂','Hacker a le plus de points de maison de tous les rangs — 10 🏠']}},
+{p:comp('бувай|па па|пока|до побачення|до зустрічі|bye|goodbye|see you|dowidzenia|arrivederci|au revoir|a bientot'),m:4,
+ r:{ua:['Бувай! Гарної гри на LankciWorld 🙂','До зустрічі! 👋'],en:['Bye! Have a great game on LankciWorld 🙂','See you! 👋'],pl:'Cześć! Miłej gry na LankciWorld 🙂',it:'Ciao! Buon divertimento su LankciWorld 🙂',fr:'À bientôt ! Bon jeu sur LankciWorld 🙂'}},
+{p:comp('привіт|привет|здоров|вітаю|добрий день|добрий вечір|доброго дня|слава україні|hello|hi|hey|hola|ciao|salut|bonjour|czesc|witaj|buongiorno|buonasera|bonsoir|yo|хай|ку|good morning|good evening|good afternoon|доброго ранку|добрий ранок|доброго вечора|dzien dobry|dobry wieczor|buon pomeriggio|bon apres midi'),ex:['priv','prv'],m:4,
+ r:{ua:['Привіт! 👋 Я LankciAI. Чим можу допомогти?','Хей! 😊 Питай про сервер, донат чи правила.','Привіт-привіт! 👋 Що цікавить?'],en:['Hi! 👋 I am LankciAI. How can I help?','Hey there! 😊 Ask me about the server, donations or rules.','Hello! 👋 What are you curious about?'],pl:'Cześć! 👋 Jestem LankciAI. W czym mogę pomóc?',it:'Ciao! 👋 Sono LankciAI. Come posso aiutarti?',fr:'Salut ! 👋 Je suis LankciAI. Comment puis-je vous aider ?'}}
+];
+var UNK={
+ua:['Не зовсім зрозумів 😅 Можеш пояснити трохи інакше?','Можеш уточнити, що саме ти хочеш дізнатися?','Хм, тут я не певен 🤔 Спробуй переформулювати питання.','Я не маю достовірної інформації про це. Можу розповісти про IP, правила, донат, команди — або просто поговорити 🙂'],
+en:['I did not quite get that 😅 Could you put it a little differently?','Could you clarify what exactly you want to know?','Hmm, I am not sure about that 🤔 Try rephrasing the question.','I do not have reliable information about that. I can talk about the IP, rules, donations, commands — or just chat 🙂'],
+pl:['Nie do końca zrozumiałem 😅 Możesz ująć to inaczej?','Możesz doprecyzować, czego dokładnie chcesz się dowiedzieć?'],
+it:['Non ho capito bene 😅 Puoi spiegarlo in un altro modo?','Puoi chiarire cosa vuoi sapere esattamente?'],
+fr:['Je n’ai pas bien compris 😅 Pouvez-vous reformuler ?','Pouvez-vous préciser ce que vous voulez savoir ?'],
+ru:['Не совсем понял 😅 Можешь объяснить немного иначе?','Можешь уточнить, что именно ты хочешь узнать?','Я не располагаю достоверной информацией об этом. Могу рассказать про IP, правила, донат, команды — или просто поболтать 🙂']};
+var FA={
+space:{ua:['На Венері доба довша за рік: навколо осі вона обертається повільніше, ніж облітає Сонце 🪐','Світло від Сонця доходить до Землі приблизно за 8 хвилин ☀️','Юпітер масивніший за всі інші планети Сонячної системи разом узяті 🪐','У космосі немає звуку: там немає повітря, яке передавало б звукові хвилі 🔇','Марс червоний через оксиди заліза («іржу») на його поверхні 🔴'],
+ en:['A day on Venus is longer than its year: it rotates more slowly than it orbits the Sun 🪐','Sunlight takes about 8 minutes to reach Earth ☀️','Jupiter is more massive than all the other planets in the Solar System combined 🪐','There is no sound in space: there is no air to carry sound waves 🔇','Mars looks red because of iron oxides (“rust”) on its surface 🔴']},
+animals:{ua:['Восьминіг має три серця і блакитну кров 🐙','Сови майже не рухають очима, тому повертають голову дуже далеко — приблизно на 270° 🦉','Синій кит — найбільша відома тварина в історії Землі 🐋','Слони належать до тварин, які впізнають себе в дзеркалі 🐘','Равлики можуть місяцями ховатися в мушлі під час посухи 🐌'],
+ en:['An octopus has three hearts and blue blood 🐙','Owls can barely move their eyes, so they turn their heads very far — about 270° 🦉','The blue whale is the largest known animal in Earth’s history 🐋','Elephants are among the animals that recognise themselves in a mirror 🐘','Snails can hide in their shells for months during a drought 🐌']},
+people:{ua:['У дорослої людини 206 кісток 🦴','Серце людини б’ється приблизно 100 000 разів на добу ❤️','Відбитки пальців унікальні навіть у близнюків 🖐️','Людський мозок приблизно на три чверті складається з води 🧠','Людське око здатне розрізняти до мільйона відтінків кольорів 👁️'],
+ en:['An adult human has 206 bones 🦴','The human heart beats about 100,000 times a day ❤️','Fingerprints are unique even among identical twins 🖐️','The human brain is roughly three quarters water 🧠','The human eye can tell apart up to about a million shades of colour 👁️']},
+mc:{ua:['Minecraft створив Маркус «Нотч» Перссон; перша публічна версія вийшла 2009 року ⛏️','Кріпер з’явився випадково — через помилку під час спроби зробити свиню 💥','Minecraft — одна з найпродаваніших відеоігор усіх часів 🎮','Вода завдає шкоди ендерменам 🌊','У Minecraft можна приручити вовків кістками 🐺'],
+ en:['Minecraft was created by Markus “Notch” Persson; the first public version came out in 2009 ⛏️','The creeper appeared by accident — a bug while trying to make a pig 💥','Minecraft is one of the best-selling video games of all time 🎮','Water damages endermen 🌊','You can tame wolves in Minecraft with bones 🐺']}};
+var BAG={};
+function bagPick(k,arr){var b=BAG[k],n,v;if(!b||!b.length){b=BAG[k]=arr.map(function(_,i){return i;});}n=Math.floor(Math.random()*b.length);v=b.splice(n,1)[0];return arr[v];}
+function fact(d,q,s){
+  var l=(d==='ua'||d==='ru')?'ua':'en',c='all',arr=[];
+  if(/(^| )(kosm|cosm|space|spazio|espace|planet|zirk|zvizd|gwiazd|galakt|solnec|mars|venera)/.test(s))c='space';
+  else if(/(^| )(tvarin|animal|zvir|zwierz|jivotn)/.test(s))c='animals';
+  else if(/(^| )(ludin|ludi|ludei|ludzi|people|human|body|tilo|cialo|corpo|corps|celovek)/.test(s))c='people';
+  else if(/craft|kraft/.test(s))c='mc';
+  if(c==='all')Object.keys(FA).forEach(function(k){arr=arr.concat(FA[k][l]);});else arr=FA[c][l];
+  return bagPick(c+l,arr);
+}
+var SP=['хто такий','хто така','хто таке','хто такі','хто це','що таке','що за','розкажи мені про','розкажи про','коли народився','коли народилась','коли народилася','коли помер','коли померла','хто створив','хто винайшов','хто написав','кто такой','кто такая','кто это','что такое','расскажи о','расскажи про','когда родился','когда родилась','кто создал','who is','who was','who are','what is','what are','what was','tell me about','when was','when did','who created','who made','who invented','who founded','kim jest','kim był','kim była','co to jest','co to','czym jest','opowiedz o','kto stworzył','chi è','chi era','che cos è','che cosa è','cos è','parlami di','chi ha creato','qui est','qui était','qu est ce que','c est quoi','parle moi de','qui a créé'];
+SP.sort(function(x,y){return y.length-x.length;});
+/* «хто/що таке X» → X (для пошуку у Wikipedia); null, якщо це не такий запит */
+function subj(q){
+  var l=q.toLowerCase().replace(/ё/g,'е').replace(/[’‘`´]/g,"'").replace(/['\-]/g,' ').replace(/[?!.,;:()"«»]/g,' ').replace(/\s+/g,' ').trim(),i,p,x;
+  l=l.replace(/^а /,'');
+  for(i=0;i<SP.length;i++){p=SP[i];
+    if(l.indexOf(p+' ')===0){
+      x=l.slice(p.length+1).replace(/^(про|о|об|the|a|an|da|di|de|du|des|la|le|il|lo) /,'').replace(/ (born|народився|народилась|народилася|родился|родилась|urodził się|urodziła się|створив|created|made|invented|написав)$/,'').trim();
+      if(x.length<2||x.length>70||/^(you|yourself|me|тебе|ти|себе|вас|ви|ciebie|toi|te|tu|ty)$/.test(x)||/lankci|server|сервер|serwer|serveur/.test(x))return null;
+      return x;
+    }
+  }
+  return null;
+}
+function unk(d){return pick(UNK[d]||UNK.ua,'unk'+d);}
+var TOP={},LAST={};
+'cant refund appeal opening status bedrock version ip start oneblock duels smp hardcore survival anarchy modes home cmds donate rules staff reg plugins links about'.split(' ').forEach(function(k){TOP[k]=1;});
+function pick(a,i){if(typeof a==='string')return a;var n,k=0;do{n=Math.floor(Math.random()*a.length);}while(a.length>1&&n===LAST[i]&&k++<9);LAST[i]=n;return a[n];}
+function topical(tk,dt){var i,x;if(dt&&TOP[dt])return true;for(i=0;i<tk.length;i++){x=NLU.detect(tk[i]);if(x&&TOP[x])return true;}return false;}
+function okm(it,s,tk){
+  if(it.a)return tk.every(function(t){return hit(it.p,t,[t])||(it.ex&&it.ex.indexOf(t)>=0);});
+  return hit(it.p,s,tk)||(it.ex&&tk.some(function(t){return it.ex.indexOf(t)>=0;}));
+}
+function reply(q,d,pre){
+  var s=sk(q),tk=s.split(' '),i,it,dt=NLU.detect(q),tp=null,rr,fd;
+  if(!pre&&(dt==='cant'||dt==='appeal'||dt==='refund'))return null;
+  for(i=0;i<I.length;i++){it=I[i];
+    if(pre&&!it.pre)continue;
+    if(it.m||it.qm){if(tp===null)tp=topical(tk,dt);}
+    if(it.m&&(tk.length>it.m||tp))continue;
+    if(it.qm&&tp&&q.indexOf('?')<0)continue;
+    if(it.nx&&/(^| )(ip|aipi|aip|adres)( |$)/.test(s))continue;
+    if(!okm(it,s,tk))continue;
+    fd=(d==='ru'&&it.f&&it.f!==fact)?'ua':d;
+    rr=it.f?it.f(fd,q,s):pick(it.r[d]||(d==='ru'?it.r.ua:null)||it.r.en,i);
+    return {t:rr,links:!!it.l,v2:1};
+  }
+  return null;
+}
+return {reply:reply,dl:dl,subj:subj,unk:unk};
+})();
+var _p2=localReply;
+var UNKRE=/^(Не маю достатньо інформації|I do not have enough|Nie mam wystarczających|Non ho abbastanza|Je n’ai pas assez)/;
+localReply=function(q){
+  var keep=lang,d=V2.dl(q)||lang,t=q.toLowerCase().replace(/ё/g,'е'),i,r;
+  if(d!=='ru'&&!T[d])d='ua';
+  lang=T[d]?d:'ua'; /* тимчасово: відповідь мовою повідомлення користувача (ru → ua для старих відповідей) */
+  try{
+    r=V2.reply(q,d,true); /* образи в бік AI — спокійна відповідь */
+    if(r)return r;
+    for(i=0;i<5;i++)if(KB[i].k.test(t)){r=_p2(q);return r;} /* кризові/емоційні/образи — стара логіка */
+    r=V2.reply(q,d)||_p2(q);
+    if(!r.v2&&UNKRE.test(r.t))r={t:V2.unk(d),links:false,unk:true};
+  }finally{lang=keep;}
+  return r;
+};
+/* Кризові фрази PL/IT/FR — додаються до існуючого правила KB[0] */
+KB[0].k=new RegExp(KB[0].k.source+'|chcę umrzeć|chce umrzec|chcę się zabić|nie chcę żyć|nie chce zyc|samobójstw|voglio morire|vorrei morire|je veux mourir|envie de mourir|me suicider|me tuer');
+/* Тема AI (лише панель AI; на сайті власної системи тем немає) */
+var thB=$('aiTh');
+function setTh(l){
+  panel.classList.toggle('light',l);
+  thB.textContent=l?'🌙':'☀️';
+  thB.setAttribute('aria-label',l?'Dark theme / Темна тема':'Light theme / Світла тема');
+  try{localStorage.setItem('lankciAiTheme',l?'light':'dark');}catch(e){}
+}
+var _th=false;try{_th=localStorage.getItem('lankciAiTheme')==='light';}catch(e){}
+setTh(_th);
+thB.addEventListener('click',function(){setTh(!panel.classList.contains('light'));});
+/* Кризові фрази PL/IT/FR — додаються до існуючого правила KB[0] */
+KB[0].k=new RegExp(KB[0].k.source+'|chcę umrzeć|chce umrzec|chcę się zabić|nie chcę żyć|nie chce zyc|samobójstw|voglio morire|vorrei morire|je veux mourir|envie de mourir|me suicider|me tuer');
+
+
+var PH={
+ua:{att:'Додати фото',off:'Розпізнавання фото ще не підключено до сервера, тому я не можу проаналізувати зображення. Власник сайту може підключити vision-API (VISION_ENDPOINT у коді). Поки що опиши питання текстом:',err:'Не вдалося обробити фото. Спробуй інше зображення (JPG, PNG, WebP).',bad:'Оберіть файл-зображення.',big:'Фото завелике (максимум 10 МБ).',busy:'Обробка фото...',wait:'Аналізую фото...',src:'Джерела:',nf:'Я не маю достовірної інформації про це.'},
+en:{att:'Add a photo',off:'Photo recognition is not connected to a server yet, so I cannot analyse images. The site owner can connect a vision API (VISION_ENDPOINT in the code). For now, describe your question in text:',err:'Could not process the photo. Try another image (JPG, PNG, WebP).',bad:'Please choose an image file.',big:'The photo is too large (10 MB max).',busy:'Processing photo...',wait:'Analysing the photo...',src:'Sources:',nf:'I do not have reliable information about that.'},
+pl:{att:'Dodaj zdjęcie',off:'Rozpoznawanie zdjęć nie jest jeszcze połączone z serwerem, więc nie mogę analizować obrazów. Na razie opisz pytanie tekstem:',err:'Nie udało się przetworzyć zdjęcia. Spróbuj innego obrazu.',bad:'Wybierz plik obrazu.',big:'Zdjęcie jest za duże (maks. 10 MB).',busy:'Przetwarzanie zdjęcia...',wait:'Analizuję zdjęcie...',src:'Źródła:',nf:'Nie mam wiarygodnych informacji na ten temat.'},
+it:{att:'Aggiungi una foto',off:'Il riconoscimento delle foto non è ancora collegato a un server, quindi non posso analizzare le immagini. Per ora descrivi la domanda con il testo:',err:'Impossibile elaborare la foto. Prova un’altra immagine.',bad:'Scegli un file immagine.',big:'La foto è troppo grande (max 10 MB).',busy:'Elaborazione della foto...',wait:'Analizzo la foto...',src:'Fonti:',nf:'Non ho informazioni affidabili su questo.'},
+fr:{att:'Ajouter une photo',off:'La reconnaissance de photos n’est pas encore connectée à un serveur, je ne peux donc pas analyser les images. Pour l’instant, décrivez votre question par écrit :',err:'Impossible de traiter la photo. Essayez une autre image.',bad:'Choisissez un fichier image.',big:'La photo est trop grande (10 Mo max).',busy:'Traitement de la photo...',wait:'J’analyse la photo...',src:'Sources :',nf:'Je n’ai pas d’informations fiables à ce sujet.'}};
+PH.ru=PH.ua;
+function L(d){return PH[d]||PH.ua;}
+var pend=null,pvBusy=false,pv=$('aiPv'),pvImg=$('aiPvImg'),pvTx=$('aiPvTx'),pvX=$('aiPvX'),att=$('aiAtt'),fileIn=$('aiFile');
+var _al=applyLang;
+applyLang=function(){_al();var t=L(lang);att.setAttribute('aria-label',t.att);att.title=t.att;};
+function lock(b){busy=b;inp.disabled=b;send.disabled=b;att.disabled=b;}
+function unlock(){clearTimeout(0);lock(false);msgs.scrollTop=msgs.scrollHeight;if(panel.classList.contains('open'))inp.focus({preventScroll:true});}
+function clearPend(){pend=null;pv.classList.remove('show');pvImg.removeAttribute('src');fileIn.value='';}
+function pickFile(f){
+  var t=L(lang);
+  if(!f)return;
+  if(!/^image\//.test(f.type)){add(t.bad,'bot');fileIn.value='';return;}
+  if(f.size>10*1024*1024){add(t.big,'bot');fileIn.value='';return;}
+  pvBusy=true;pend=null;pv.classList.add('show');pvImg.removeAttribute('src');pvTx.textContent=t.busy;
+  function fail(){pvBusy=false;clearPend();add(t.err,'bot');}
+  var fr=new FileReader();
+  fr.onerror=fail;
+  fr.onload=function(){
+    var im=new Image();
+    im.onerror=fail;
+    im.onload=function(){
+      try{
+        var w=im.naturalWidth,h=im.naturalHeight,k=Math.min(1,1024/Math.max(w,h)),c=document.createElement('canvas'),u;
+        c.width=Math.max(1,Math.round(w*k));c.height=Math.max(1,Math.round(h*k));
+        c.getContext('2d').drawImage(im,0,0,c.width,c.height);
+        u=c.toDataURL('image/jpeg',0.85);
+        pend={url:u};pvImg.src=u;pvTx.textContent=f.name;pvBusy=false;inp.focus({preventScroll:true});
+      }catch(e){fail();}
+    };
+    im.src=fr.result;
+  };
+  fr.readAsDataURL(f);
+}
+function sendPhoto(q){
+  var p=pend,d=q?(V2.dl(q)||lang):lang,t=L(d),w,ctrl,to;
+  curD=d;clearPend();addImg(p.url);if(q)add(q,'me');greetEl=null;
+  if(!VISION_ENDPOINT){setTimeout(function(){add(t.off,'bot',true);},250);return;}
+  lock(true);w=add(t.wait,'bot');
+  ctrl=window.AbortController?new AbortController():null;
+  to=setTimeout(function(){if(ctrl)ctrl.abort();},40000);
+  fetch(VISION_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({image:p.url,question:q,lang:d}),signal:ctrl?ctrl.signal:undefined})
+    .then(function(r){if(!r.ok)throw new Error('http');return r.json();})
+    .then(function(j){var a=(j&&typeof j.reply==='string')?j.reply:'';if(!a)throw new Error('empty');w.textContent=a;addSrc(w,j.sources);})
+    .catch(function(){w.textContent=t.err;})
+    .then(function(){clearTimeout(to);unlock();});
+}
+var WL={ua:'uk',ru:'ru',en:'en',pl:'pl',it:'it',fr:'fr'};
+function wikiGet(wl,sj){
+  var u='https://'+wl+'.wikipedia.org/w/api.php?action=query&generator=search&gsrlimit=1&prop=extracts%7Cinfo&exintro=1&explaintext=1&exsentences=3&inprop=url&redirects=1&format=json&origin=*&gsrsearch='+encodeURIComponent(sj);
+  return fetch(u).then(function(r){return r.ok?r.json():null;}).then(function(j){
+    var ps=j&&j.query&&j.query.pages,k,p;
+    if(!ps)return null;
+    for(k in ps){p=ps[k];break;}
+    if(!p||!p.extract||p.extract.length<30||!/^https?:\/\//.test(p.fullurl||''))return null;
+    return {t:p.extract.length>700?p.extract.slice(0,700).replace(/\s+\S*$/,'')+'…':p.extract,title:p.title,url:p.fullurl};
+  }).catch(function(){return null;});
+}
+function wiki(sj,d){
+  var wl=WL[d]||'en';
+  return wikiGet(wl,sj).then(function(r){return (r||wl==='en')?r:wikiGet('en',sj);}).then(function(r){return r?{t:r.t,srcs:[{title:'Wikipedia — '+r.title,url:r.url}]}:null;});
+}
+function remote(q,d){
+  if(!AI_ENDPOINT)return Promise.resolve(null);
+  history.push({role:'user',content:q});history=history.slice(-10);
+  var ctrl=window.AbortController?new AbortController():null,to=setTimeout(function(){if(ctrl)ctrl.abort();},25000);
+  return fetch(AI_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:history,lang:d}),signal:ctrl?ctrl.signal:undefined})
+    .then(function(r){if(!r.ok)throw new Error('http');return r.json();})
+    .then(function(j){var a=(j&&typeof j.reply==='string')?j.reply:'';if(!a)throw new Error('empty');history.push({role:'assistant',content:a});return {t:a,srcs:j.sources};})
+    .catch(function(){history.pop();return null;})
+    .then(function(r){clearTimeout(to);return r;});
+}
+/* Конвеєр: локальні відповіді → Wikipedia (джерела) → AI-backend (якщо підключений) → чесне «не знаю» */
+function ask(){
+  var q=inp.value.trim(),t=T[lang]||T.ua,d,sj,lr,ext,w,p;
+  if(busy||pvBusy||(!q&&!pend))return;
+  inp.value='';
+  if(pend){sendPhoto(q);return;}
+  add(q,'me');greetEl=null;
+  d=V2.dl(q)||lang;curD=d;
+  lr=localReply(q);sj=V2.subj(q);
+  ext=(sj&&!lr.v2&&!NLU.detect(sj))?true:!!lr.unk;
+  if(!ext){setTimeout(function(){add(lr.t,'bot',lr.links);},250);return;}
+  lock(true);w=add(t.wait,'bot');
+  p=(sj&&WIKI_SEARCH)?wiki(sj,d):Promise.resolve(null);
+  p.then(function(r){return r||remote(q,d);}).then(function(r){
+    if(r){w.textContent=r.t.replace(/\s+/g,' ');addSrc(w,r.srcs);}
+    else w.textContent=sj?L(d).nf:lr.t;
+  }).catch(function(){w.textContent=lr.t;}).then(unlock);
+}
+att.addEventListener('click',function(){fileIn.click();});
+fileIn.addEventListener('change',function(){pickFile(fileIn.files&&fileIn.files[0]);});
+pvX.addEventListener('click',function(){pvBusy=false;clearPend();});
 btn.addEventListener('click',function(){setOpen(!panel.classList.contains('open'));});
 xb.addEventListener('click',function(){setOpen(false);btn.focus();});
 send.addEventListener('click',ask);
