@@ -235,6 +235,29 @@ footer span{color:var(--or);}
 .sp-st.s-closed{color:var(--mu);}
 .sp-ti{display:block;margin-top:8px;max-width:100%;max-height:140px;border-radius:8px;border:1px solid var(--br);cursor:zoom-in;}
 .sp-empty{font-size:13px;color:var(--mu);}
+/* АКАУНТ */
+.ac-tabs{display:flex;gap:6px;margin-bottom:4px;}
+.ac-tab{flex:1;background:var(--s2);border:1px solid var(--br);color:var(--t2);font-family:'Exo 2','Segoe UI',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;padding:10px 8px;border-radius:8px;cursor:pointer;transition:border-color .2s,color .2s,background .2s;}
+.ac-tab:hover{border-color:var(--or);color:var(--or);}
+.ac-tab.active{border-color:var(--or);color:var(--or);background:rgba(255,106,0,.06);}
+.ac-tab:focus-visible,.sp-btn:focus-visible,.sp-btn2:focus-visible{outline:2px solid var(--or);outline-offset:2px;}
+.ac-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:10px 0;border-bottom:1px solid var(--br);font-size:14px;}
+.ac-row:last-of-type{border-bottom:0;}
+.ac-k{color:var(--mu);flex-shrink:0;}
+.ac-v{color:var(--tw);font-weight:600;text-align:right;overflow-wrap:anywhere;}
+.ac-badge{display:inline-block;margin-left:8px;padding:1px 8px;border-radius:999px;border:1px solid rgba(255,106,0,.4);color:var(--or);font-size:11px;font-weight:700;}
+.ac-ol{margin:8px 0 4px 20px;font-size:13px;line-height:1.55;color:var(--t3);}
+.ac-pend{background:var(--s2);border:1px solid rgba(255,106,0,.35);border-radius:10px;padding:12px;margin:4px 0 8px;font-size:13px;line-height:1.5;color:var(--t3);}
+.ac-pend strong{color:var(--tw);}
+.ac-pp{margin-top:6px;}
+.ac-cd{font-weight:700;color:var(--or);font-variant-numeric:tabular-nums;}
+.ac-btns{display:flex;gap:8px;flex-wrap:wrap;}
+.ac-btns .sp-btn,.ac-btns .sp-btn2{margin-top:14px;width:auto;flex:1 1 140px;}
+.sp-btn2.ac-danger{border-color:rgba(239,68,68,.45);color:var(--rd);}
+.sp-btn2.ac-danger:hover:not(:disabled){border-color:var(--rd);color:var(--rd);}
+.ac-chk{display:flex;gap:10px;align-items:flex-start;margin:10px 0 4px;font-size:13px;line-height:1.5;color:var(--t3);cursor:pointer;}
+.ac-chk input{margin-top:3px;width:18px;height:18px;flex-shrink:0;accent-color:var(--or);}
+.ac-h3{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--mu);margin:18px 0 6px;font-weight:700;}
 
 /* ВИБІР МОВИ: компактний випадаючий перемикач */
 .lcur{display:flex;align-items:center;gap:5px;background:transparent;color:var(--t2);border:1px solid var(--br);padding:5px 8px 5px 10px;height:26px;border-radius:5px;cursor:pointer;font-size:10px;font-family:'Exo 2','Segoe UI',sans-serif;font-weight:600;letter-spacing:1px;transition:border-color .2s,color .2s,background .2s;-webkit-tap-highlight-color:transparent;}
@@ -370,6 +393,7 @@ footer span{color:var(--or);}
   <button id="nb-donate"   class="active">Магазин</button>
   <button id="nb-support">Підтримка</button>
   <button id="nb-rules">Правила</button>
+<button id="nb-account">Акаунт</button>
 </div>
 <div class="lsw" id="lsw">
   <button type="button" class="lcur" id="lcur" aria-haspopup="listbox" aria-expanded="false" aria-controls="lmenu" aria-label="Мова / Language" title="Мова / Language"><span id="lcurt">UA</span><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
@@ -510,6 +534,11 @@ footer span{color:var(--or);}
 <div class="ri"><span class="rnm">7.8</span><div class="rt"><b>Правильно використовувати команди</b></div></div>
 </div>
 </div>
+</section>
+
+<!-- АКАУНТ -->
+<section id="pg-account" class="pg">
+<div class="sp" id="acRoot"><div class="sp-box"><p class="sp-note">Завантаження…</p></div></div>
 </section>
 
 </div>
@@ -663,7 +692,7 @@ for(var i=0;i<14;i++){
 }
 
 /* Навігація */
-var pages=['donate','support','rules'];
+var pages=['donate','support','rules','account'];
 function showPage(name){
   if(name===cur)return;
   var prev=document.getElementById('pg-'+cur);
@@ -678,6 +707,7 @@ function showPage(name){
 document.getElementById('nb-donate').addEventListener('click',function(){showPage('donate');});
 document.getElementById('nb-support').addEventListener('click',function(){showPage('support');});
 document.getElementById('nb-rules').addEventListener('click',function(){showPage('rules');});
+document.getElementById('nb-account').addEventListener('click',function(){showPage('account');});
 
 /* IP */
 function fallback(){
@@ -3034,6 +3064,587 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'&&panel.class
 greetEl=add('','bot');
 applyLang();
 window.lankciAI={setLang:function(l){lang=T[l]?l:'ua';applyLang();}};
+})();
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.100.1/dist/umd/supabase.js"></script>
+<script>
+/* ═══ Акаунт (етап 1): реєстрація, вхід, кабінет, прив’язка ніка Minecraft ═══
+   Бекенд: Supabase. Тут лише ПУБЛІЧНИЙ (publishable) ключ — він безпечний для сайту.
+   Секретні ключі (sb_secret_… / service_role) у цей файл ніколи не вставляти. */
+(function(){
+'use strict';
+
+/* ── Налаштування ── */
+var SUPABASE_URL='https://gnihbplmupknrcpbpzdp.supabase.co';
+var SUPABASE_KEY='sb_publishable_pf9CORZo-qpF-bs__h3JHQ_0wLmxPGs';
+var AUTH_DOMAIN='users.lankciworld.invalid'; /* службова пошта: нік@цей-домен. Листи не надсилаються. */
+var PLUGIN_READY=true;                      /* став true, коли на сервері з’явиться плагін (етап 2) */
+var NICK_RE=/^[A-Za-z0-9_]{3,16}$/;
+var MIN_PASS=8;
+
+var $=function(id){return document.getElementById(id);};
+var root=$('acRoot');
+if(!root)return;
+
+var lang='ua';
+var LOCALES={ua:'uk-UA',en:'en-GB',pl:'pl-PL',it:'it-IT',fr:'fr-FR'};
+var NAV={ua:'Акаунт',en:'Account',pl:'Konto',it:'Account',fr:'Compte'};
+
+/* ── Тексти (UA / EN; PL / IT / FR поки показують англійську) ── */
+var T={
+ua:{
+title:'АКАУНТ',loading:'Завантаження…',
+noLib:'Не вдалося завантажити модуль акаунтів. Перевір інтернет і онови сторінку.',
+tabLogin:'Вхід',tabReg:'Реєстрація',
+lblNick:'Нік на сайті',hintNick:'3–16 символів: латинські літери, цифри та _',
+lblPass:'Пароль для сайту',hintPass:'Мінімум 8 символів. Це не пароль від гри — придумай інший.',
+lblPass2:'Повтори пароль',
+btnLogin:'Увійти',btnReg:'Створити акаунт',logout:'Вийти',
+cabTitle:'КАБІНЕТ',rowNick:'Нік на сайті',rowCreated:'Акаунт створено',rowRole:'Роль',
+role_owner:'Власник',role_moderator:'Модератор',
+mcTitle:'НІК MINECRAFT',mcNone:'Нік Minecraft ще не прив’язано.',
+mcSteps:['Зайди на сервер і ввійди в гру через AuthMe.','Введи свій нік нижче й натисни «Надіслати запит».','У грі напиши команду /link accept.'],
+lblMc:'Нік у Minecraft',btnSend:'Надіслати запит',
+pluginNote:'Підтвердження в грі ще не підключене: його додасть плагін сервера на наступному етапі. Запит уже можна створити, але прийняти його в грі поки не вийде.',
+pendTitle:'Чекаємо підтвердження в грі',
+pendBody:'Зайди на сервер як {nick} і напиши /link accept. Запит діє ще {time}.',
+btnCancel:'Скасувати запит',
+rowMc:'Нік Minecraft',rowLinked:'Прив’язано',
+btnUnlink:'Відв’язати',unlinkAsk:'Точно відв’язати? Нову прив’язку можна буде зробити лише через 7 днів.',
+btnUnlinkYes:'Так, відв’язати',btnNo:'Ні',
+cooldown:'Нову прив’язку можна зробити після {date}.',
+justLinked:'Нік прив’язано ✓',reqExpired:'Запит прострочено або скасовано. Створи новий.',
+unlinked:'Нік відв’язано.',
+secTitle:'БЕЗПЕКА',
+secIntro:'Захист входу: якщо хтось заходить на сервер з нового IP, його не пустять, доки ти не підтвердиш тут. Для цього сервер зберігає хеш IP і приблизне місто.',
+secConsent:'Я згоден(на): хеш IP і приблизне місто (його визначає сторонній сервіс за IP) зберігаються до 30 днів, їх бачу лише я. Захист можна вимкнути будь-коли.',
+btnProtOn:'Увімкнути захист',btnProtOff:'Вимкнути захист',protOn:'Захист входу увімкнено. Перший вхід після ввімкнення теж треба буде підтвердити тут.',
+apprTitle:'Хтось заходить з нового IP. Це ти?',btnItMe:'Це я',btnNotMe:'Це не я',unknownPlace:'місце невідоме',
+lockH:'Блокування і кік',lockOff:'Акаунт не заблоковано.',lockOn:'Акаунт заблоковано: з цим ніком не пустять на сервер.',
+btnLock:'Заблокувати',btnUnlock:'Розблокувати',btnKick:'Вигнати мене з сервера',
+kickSent:'Запит надіслано. Якщо ти онлайн, тебе вижене за кілька секунд.',
+histH:'Історія входів',histEmpty:'Поки порожньо.',btnHistDel:'Видалити історію',
+geoNote:'Місто приблизне: VPN і мобільні оператори можуть показувати інше.',
+r_ok:'вхід',r_blocked_new_ip:'заблоковано: новий IP',r_blocked_locked:'заблоковано: акаунт заблоковано',
+e_consent_required:'Постав галочку згоди.',e_too_fast:'Зачекай кілька секунд.',e_not_found:'Запит не знайдено.',
+e_nick_format:'Нік: 3–16 символів, лише латинські літери, цифри та _.',
+e_pass_short:'Пароль має містити щонайменше 8 символів.',
+e_pass_mismatch:'Паролі не збігаються.',
+e_nick_taken:'Цей нік на сайті вже зайнятий.',
+e_bad_creds:'Невірний нік або пароль.',
+e_rate:'Забагато спроб. Зачекай кілька хвилин і спробуй знову.',
+e_network:'Немає зв’язку з сервером. Перевір інтернет.',
+e_email_invalid:'Сервер не прийняв службову пошту. Напиши власнику сайту й надішли йому цей текст помилки:',
+e_confirm_on:'У Supabase ще увімкнено підтвердження пошти (Confirm email). Власнику треба його вимкнути.',
+e_signup_off:'Реєстрацію вимкнено в налаштуваннях Supabase.',
+e_no_sql:'База даних ще не налаштована (не виконано SQL етапу 1). Напиши власнику сайту.',
+e_invalid_mc_nick:'Нік Minecraft: 3–16 символів, лише латинські літери, цифри та _.',
+e_already_linked:'Нік уже прив’язано.',
+e_relink_cooldown:'Нову прив’язку можна зробити лише через 7 днів після відв’язки.',
+e_mc_nick_taken:'Цей нік Minecraft уже прив’язаний до іншого акаунта.',
+e_too_many_requests:'Забагато запитів. Спробуй через годину.',
+e_nick_busy:'На цей нік уже створено кілька запитів. Спробуй за кілька хвилин.',
+e_not_linked:'Нік не прив’язано.',
+e_not_authenticated:'Сесія закінчилась. Увійди знову.',
+e_no_profile:'Профіль не знайдено. Спробуй вийти й увійти знову.',
+e_generic:'Щось пішло не так. Спробуй ще раз; якщо повторюється — напиши власнику сайту. Код помилки:'
+},
+en:{
+title:'ACCOUNT',loading:'Loading…',
+noLib:'Could not load the account module. Check your connection and reload the page.',
+tabLogin:'Log in',tabReg:'Sign up',
+lblNick:'Site nickname',hintNick:'3–16 characters: Latin letters, digits and _',
+lblPass:'Site password',hintPass:'At least 8 characters. This is not your in-game password — use a different one.',
+lblPass2:'Repeat password',
+btnLogin:'Log in',btnReg:'Create account',logout:'Log out',
+cabTitle:'PROFILE',rowNick:'Site nickname',rowCreated:'Account created',rowRole:'Role',
+role_owner:'Owner',role_moderator:'Moderator',
+mcTitle:'MINECRAFT NICKNAME',mcNone:'No Minecraft nickname linked yet.',
+mcSteps:['Join the server and log in through AuthMe.','Enter your nickname below and press “Send request”.','In game, type the command /link accept.'],
+lblMc:'Minecraft nickname',btnSend:'Send request',
+pluginNote:'In-game confirmation is not connected yet: the server plugin will add it in the next stage. You can create a request now, but it cannot be accepted in game yet.',
+pendTitle:'Waiting for in-game confirmation',
+pendBody:'Join the server as {nick} and type /link accept. The request is valid for {time} more.',
+btnCancel:'Cancel request',
+rowMc:'Minecraft nickname',rowLinked:'Linked',
+btnUnlink:'Unlink',unlinkAsk:'Unlink for sure? You will only be able to link again after 7 days.',
+btnUnlinkYes:'Yes, unlink',btnNo:'No',
+cooldown:'You can link a nickname again after {date}.',
+justLinked:'Nickname linked ✓',reqExpired:'The request expired or was cancelled. Create a new one.',
+unlinked:'Nickname unlinked.',
+secTitle:'SECURITY',
+secIntro:'Login protection: if someone joins from a new IP, they will be refused until you confirm here. The server stores an IP hash and the approximate city.',
+secConsent:'I agree: an IP hash and the approximate city (looked up by a third-party service) are stored for up to 30 days, only I can see them. I can turn this off any time.',
+btnProtOn:'Turn on protection',btnProtOff:'Turn off protection',protOn:'Login protection is on. Your first login after turning it on must be confirmed here too.',
+apprTitle:'Someone is joining from a new IP. Is it you?',btnItMe:'It’s me',btnNotMe:'Not me',unknownPlace:'unknown place',
+lockH:'Lock and kick',lockOff:'The account is not locked.',lockOn:'The account is locked: this nickname cannot join the server.',
+btnLock:'Lock account',btnUnlock:'Unlock',btnKick:'Kick me from the server',
+kickSent:'Request sent. If you are online, you will be kicked in a few seconds.',
+histH:'Login history',histEmpty:'Nothing yet.',btnHistDel:'Delete history',
+geoNote:'The city is approximate: VPNs and mobile carriers may show a different one.',
+r_ok:'login',r_blocked_new_ip:'blocked: new IP',r_blocked_locked:'blocked: account locked',
+e_consent_required:'Tick the consent box.',e_too_fast:'Wait a few seconds.',e_not_found:'Request not found.',
+e_nick_format:'Nickname: 3–16 characters, Latin letters, digits and _ only.',
+e_pass_short:'The password must be at least 8 characters long.',
+e_pass_mismatch:'Passwords do not match.',
+e_nick_taken:'This site nickname is already taken.',
+e_bad_creds:'Wrong nickname or password.',
+e_rate:'Too many attempts. Wait a few minutes and try again.',
+e_network:'Cannot reach the server. Check your connection.',
+e_email_invalid:'The server rejected the service email. Tell the site owner and send him this error text:',
+e_confirm_on:'Email confirmation (Confirm email) is still enabled in Supabase. The owner needs to turn it off.',
+e_signup_off:'Sign-ups are disabled in the Supabase settings.',
+e_no_sql:'The database is not set up yet (the stage 1 SQL has not been run). Tell the site owner.',
+e_invalid_mc_nick:'Minecraft nickname: 3–16 characters, Latin letters, digits and _ only.',
+e_already_linked:'A nickname is already linked.',
+e_relink_cooldown:'You can link again only 7 days after unlinking.',
+e_mc_nick_taken:'This Minecraft nickname is already linked to another account.',
+e_too_many_requests:'Too many requests. Try again in an hour.',
+e_nick_busy:'Several requests for this nickname already exist. Try again in a few minutes.',
+e_not_linked:'No nickname is linked.',
+e_not_authenticated:'Your session has expired. Log in again.',
+e_no_profile:'Profile not found. Try logging out and in again.',
+e_generic:'Something went wrong. Try again; if it keeps happening, tell the site owner. Error code:'
+}
+};
+function t(k){
+  var d=T[lang]||T.en;
+  if(d[k]!==undefined)return d[k];
+  if(T.en[k]!==undefined)return T.en[k];
+  return k;
+}
+function fill(s,o){return String(s).replace(/\{(\w+)\}/g,function(_,k){return(o&&o[k]!=null)?o[k]:'';});}
+function fmtDate(iso,withTime){
+  try{
+    var d=new Date(iso);
+    var o=withTime?{day:'numeric',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit'}:{day:'numeric',month:'long',year:'numeric'};
+    return d.toLocaleString(LOCALES[lang]||'en-GB',o);
+  }catch(e){return String(iso);}
+}
+function mmss(ms){
+  var s=Math.max(0,Math.ceil(ms/1000)),m=Math.floor(s/60),r=s%60;
+  return m+':'+(r<10?'0':'')+r;
+}
+
+/* ── Supabase-клієнт ── */
+var sb=null;
+try{
+  if(window.supabase&&typeof window.supabase.createClient==='function'){
+    sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:false}});
+  }
+}catch(e){console.error('[LW account] createClient',e);}
+
+/* ── Стан ── */
+var state={ready:false,mode:'login',busy:false,user:null,acc:null,msg:null,form:{},confirmUnlink:false,sec:null};
+var started=false,timer=null,tick=0,polling=false;
+
+function setErr(e){
+  var key=(typeof e==='string')?e:mapErr(e);
+  var detail='';
+  if(key==='e_generic'||key==='e_email_invalid')detail=String((e&&(e.code||e.message))||'');
+  state.msg={k:'err',key:key,detail:detail};
+}
+function setMsg(kind,key){state.msg={k:kind,key:key,detail:''};}
+
+function mapErr(e){
+  var m=(e&&e.message)||'',c=(e&&(e.code||e.error_code))||'';
+  var known=['consent_required','too_fast','not_found','invalid_mc_nick','already_linked','relink_cooldown','mc_nick_taken','too_many_requests','nick_busy','not_linked','not_authenticated','no_profile'];
+  for(var i=0;i<known.length;i++){if(m.indexOf(known[i])>-1)return 'e_'+known[i];}
+  if(c==='PGRST202'||/Could not find the function/i.test(m))return 'e_no_sql';
+  if(/Failed to fetch|NetworkError|Load failed/i.test(m))return 'e_network';
+  if(c==='invalid_credentials'||/Invalid login credentials/i.test(m))return 'e_bad_creds';
+  if(c==='user_already_exists'||/already registered|already been registered/i.test(m))return 'e_nick_taken';
+  if(c==='email_address_invalid'||/email address.*invalid/i.test(m))return 'e_email_invalid';
+  if(c==='weak_password'||/password should/i.test(m))return 'e_pass_short';
+  if(c==='signup_disabled'||/signups not allowed/i.test(m))return 'e_signup_off';
+  if(c==='over_request_rate_limit'||c==='over_email_send_rate_limit'||/rate limit/i.test(m))return 'e_rate';
+  console.error('[LW account]',e);
+  return 'e_generic';
+}
+
+/* ── Допоміжне створення елементів (без innerHTML — безпечно для будь-яких ніків) ── */
+function h(tag,props,kids){
+  var e=document.createElement(tag);
+  if(props){
+    Object.keys(props).forEach(function(k){
+      var v=props[k];
+      if(v===false||v==null)return;
+      if(k==='class')e.className=v;
+      else if(k==='text')e.textContent=v;
+      else if(k.slice(0,2)==='on')e.addEventListener(k.slice(2),v);
+      else if(v===true)e.setAttribute(k,'');
+      else e.setAttribute(k,v);
+    });
+  }
+  (kids||[]).forEach(function(c){
+    if(c==null||c===false)return;
+    e.appendChild(typeof c==='string'?document.createTextNode(c):c);
+  });
+  return e;
+}
+function inp(id,type,extra){
+  var p={id:id,name:id,type:type,class:'sp-in',value:state.form[id]||'',autocapitalize:'none',autocorrect:'off',spellcheck:'false',
+    oninput:function(ev){state.form[id]=ev.target.value;}};
+  Object.keys(extra||{}).forEach(function(k){p[k]=extra[k];});
+  var e=h('input',p);
+  e.value=state.form[id]||'';
+  return e;
+}
+function msgEl(){
+  if(!state.msg)return null;
+  var kids=[t(state.msg.key)];
+  if(state.msg.detail)kids.push(h('div',{class:'sp-hint',text:state.msg.detail}));
+  return h('div',{class:'sp-msg '+state.msg.k,role:'status'},kids);
+}
+
+/* ── Екрани ── */
+function viewAuth(){
+  var reg=state.mode==='reg';
+  function tab(mode,label){
+    return h('button',{type:'button',class:'ac-tab'+(state.mode===mode?' active':''),role:'tab','aria-selected':state.mode===mode?'true':'false',text:label,
+      onclick:function(){if(state.mode===mode)return;state.mode=mode;state.msg=null;render();}});
+  }
+  var form=h('form',{novalidate:true,onsubmit:function(ev){ev.preventDefault();if(reg)doRegister();else doLogin();}},[
+    h('label',{class:'sp-lab','for':'acNick',text:t('lblNick')}),
+    inp('acNick','text',{autocomplete:'username',maxlength:'16',inputmode:'text'}),
+    reg?h('div',{class:'sp-hint',text:t('hintNick')}):null,
+    h('label',{class:'sp-lab','for':'acPass',text:t('lblPass')}),
+    inp('acPass','password',{autocomplete:reg?'new-password':'current-password',maxlength:'72'}),
+    reg?h('div',{class:'sp-hint',text:t('hintPass')}):null,
+    reg?h('label',{class:'sp-lab','for':'acPass2',text:t('lblPass2')}):null,
+    reg?inp('acPass2','password',{autocomplete:'new-password',maxlength:'72'}):null,
+    h('button',{class:'sp-btn',type:'submit',disabled:state.busy,text:reg?t('btnReg'):t('btnLogin')})
+  ]);
+  return [h('div',{class:'sp-box'},[
+    h('h2',{class:'sp-h',text:t('title')}),
+    h('div',{class:'ac-tabs',role:'tablist'},[tab('login',t('tabLogin')),tab('reg',t('tabReg'))]),
+    form,
+    msgEl()
+  ])];
+}
+
+function row(k,v,badge){
+  var val=h('span',{class:'ac-v'},[v]);
+  if(badge)val.appendChild(h('span',{class:'ac-badge',text:badge}));
+  return h('div',{class:'ac-row'},[h('span',{class:'ac-k',text:k}),val]);
+}
+
+function viewCabinet(){
+  var a=state.acc;
+  var role=(a.role==='owner'||a.role==='moderator')?t('role_'+a.role):null;
+  var cab=h('div',{class:'sp-box'},[
+    h('div',{class:'sp-hd'},[
+      h('h2',{class:'sp-h',text:t('cabTitle')}),
+      h('button',{type:'button',class:'sp-btn2',disabled:state.busy,text:t('logout'),onclick:doLogout})
+    ]),
+    row(t('rowNick'),a.nick),
+    row(t('rowCreated'),fmtDate(a.created_at,false)),
+    role?row(t('rowRole'),role):null
+  ]);
+
+  var kids=[h('h2',{class:'sp-h',text:t('mcTitle')})];
+  if(a.mc_nick){
+    kids.push(row(t('rowMc'),a.mc_nick));
+    kids.push(row(t('rowLinked'),fmtDate(a.linked_at,false)));
+    if(state.confirmUnlink){
+      kids.push(h('p',{class:'sp-note',text:t('unlinkAsk')}));
+      kids.push(h('div',{class:'ac-btns'},[
+        h('button',{type:'button',class:'sp-btn2 ac-danger',disabled:state.busy,text:t('btnUnlinkYes'),onclick:doUnlink}),
+        h('button',{type:'button',class:'sp-btn2',disabled:state.busy,text:t('btnNo'),onclick:function(){state.confirmUnlink=false;render();}})
+      ]));
+    }else{
+      kids.push(h('div',{class:'ac-btns'},[
+        h('button',{type:'button',class:'sp-btn2 ac-danger',disabled:state.busy,text:t('btnUnlink'),onclick:function(){state.confirmUnlink=true;state.msg=null;render();}})
+      ]));
+    }
+  }else if(a.pending){
+    var left=new Date(a.pending.expires_at).getTime()-Date.now();
+    var parts=fill(t('pendBody'),{nick:a.pending.mc_nick,time:'\u0000'}).split('\u0000');
+    kids.push(h('div',{class:'ac-pend'},[
+      h('strong',{text:t('pendTitle')}),
+      h('p',{class:'ac-pp'},[parts[0],h('span',{id:'acCd',class:'ac-cd',text:mmss(left)}),parts[1]||''])
+    ]));
+    if(!PLUGIN_READY)kids.push(h('p',{class:'sp-note',text:t('pluginNote')}));
+    kids.push(h('div',{class:'ac-btns'},[
+      h('button',{type:'button',class:'sp-btn2',disabled:state.busy,text:t('btnCancel'),onclick:doCancel})
+    ]));
+  }else if(a.relink_at){
+    kids.push(h('p',{class:'sp-note',text:fill(t('cooldown'),{date:fmtDate(a.relink_at,true)})}));
+  }else{
+    kids.push(h('p',{class:'sp-note',text:t('mcNone')}));
+    kids.push(h('ol',{class:'ac-ol'},(T[lang]&&T[lang].mcSteps?T[lang].mcSteps:T.en.mcSteps).map(function(s){return h('li',{text:s});})));
+    if(!PLUGIN_READY)kids.push(h('p',{class:'sp-note',text:t('pluginNote')}));
+    kids.push(h('form',{novalidate:true,onsubmit:function(ev){ev.preventDefault();doRequest();}},[
+      h('label',{class:'sp-lab','for':'acMc',text:t('lblMc')}),
+      inp('acMc','text',{autocomplete:'off',maxlength:'16'}),
+      h('button',{class:'sp-btn',type:'submit',disabled:state.busy,text:t('btnSend')})
+    ]));
+  }
+  var showSec=!!(a.mc_nick&&state.sec);
+  if(!showSec)kids.push(msgEl());
+  var out=[cab,h('div',{class:'sp-box'},kids)];
+  if(showSec)out.push(viewSecurity());
+  return out;
+}
+
+function render(){
+  var nodes;
+  if(!state.ready){
+    nodes=[h('div',{class:'sp-box'},[h('p',{class:'sp-note',text:t('loading')})])];
+  }else if(!sb){
+    nodes=[h('div',{class:'sp-box'},[h('p',{class:'sp-msg err',text:t('noLib')})])];
+  }else if(!state.user||!state.acc){
+    nodes=viewAuth();
+  }else{
+    nodes=viewCabinet();
+  }
+  root.textContent='';
+  nodes.forEach(function(n){if(n)root.appendChild(n);});
+}
+
+/* ── Дії ── */
+async function run(fn){
+  if(state.busy)return;
+  state.busy=true;state.msg=null;render();
+  try{await fn();}catch(e){setErr(e);}
+  state.busy=false;render();
+}
+function emailFor(nick){return nick.toLowerCase()+'@'+AUTH_DOMAIN;}
+
+async function loadAccount(){
+  var r=await sb.rpc('get_my_account');
+  if(r.error){
+    var m=r.error.message||'';
+    if(m.indexOf('not_authenticated')>-1||/JWT/i.test(m)){
+      try{await sb.auth.signOut({scope:'local'});}catch(e){}
+      state.user=null;state.acc=null;
+    }
+    throw r.error;
+  }
+  state.acc=r.data;
+  if(r.data&&r.data.mc_nick){
+    try{var sr=await sb.rpc('get_security');state.sec=sr.error?null:sr.data;}catch(e){state.sec=null;}
+  }else{state.sec=null;}
+  startTimer();
+  return r.data;
+}
+
+function doRegister(){
+  return run(async function(){
+    var nick=(state.form.acNick||'').trim();
+    var p1=state.form.acPass||'',p2=state.form.acPass2||'';
+    if(!NICK_RE.test(nick)){setErr('e_nick_format');return;}
+    if(p1.length<MIN_PASS){setErr('e_pass_short');return;}
+    if(p1!==p2){setErr('e_pass_mismatch');return;}
+    var av=await sb.rpc('nick_available',{p_nick:nick});
+    if(av.error)throw av.error;
+    if(av.data===false){setErr('e_nick_taken');return;}
+    var s=await sb.auth.signUp({email:emailFor(nick),password:p1,options:{data:{nick:nick}}});
+    if(s.error)throw s.error;
+    if(!s.data||!s.data.session){setErr('e_confirm_on');return;}
+    state.user=s.data.session.user;
+    state.form.acPass='';state.form.acPass2='';
+    await loadAccount();
+  });
+}
+
+function doLogin(){
+  return run(async function(){
+    var nick=(state.form.acNick||'').trim();
+    var p1=state.form.acPass||'';
+    if(!NICK_RE.test(nick)||!p1){setErr('e_bad_creds');return;}
+    var r=await sb.auth.signInWithPassword({email:emailFor(nick),password:p1});
+    if(r.error)throw r.error;
+    state.user=r.data.user;
+    state.form.acPass='';
+    await loadAccount();
+  });
+}
+
+async function doLogout(){
+  if(state.busy)return;
+  state.busy=true;render();
+  try{await sb.auth.signOut({scope:'local'});}catch(e){console.error('[LW account]',e);}
+  stopTimer();
+  state.user=null;state.acc=null;state.msg=null;state.mode='login';state.sec=null;state.confirmUnlink=false;state.form={};state.busy=false;
+  render();
+}
+
+function doRequest(){
+  return run(async function(){
+    var nick=(state.form.acMc||'').trim();
+    if(!NICK_RE.test(nick)){setErr('e_invalid_mc_nick');return;}
+    var r=await sb.rpc('request_link',{p_mc_nick:nick});
+    if(r.error)throw r.error;
+    state.acc=r.data;state.form.acMc='';
+    startTimer();
+  });
+}
+function doCancel(){
+  return run(async function(){
+    var r=await sb.rpc('cancel_link_request');
+    if(r.error)throw r.error;
+    state.acc=r.data;
+  });
+}
+function doUnlink(){
+  return run(async function(){
+    var r=await sb.rpc('unlink_mc');
+    state.confirmUnlink=false;
+    if(r.error)throw r.error;
+    state.acc=r.data;state.sec=null;
+    setMsg('inf','unlinked');
+  });
+}
+
+/* ── Безпека: захист входу, блокування, кік, історія ── */
+function place(o){
+  return [o.city,o.region,o.country].filter(Boolean).join(', ')||t('unknownPlace');
+}
+function secCall(fn,args,okKey){
+  return run(async function(){
+    var r=await sb.rpc(fn,args||{});
+    if(r.error)throw r.error;
+    state.sec=r.data;
+    if(okKey)setMsg('inf',okKey);
+  });
+}
+function viewSecurity(){
+  var s=state.sec,kids=[h('h2',{class:'sp-h',text:t('secTitle')})];
+  if(!s.protection){
+    kids.push(h('p',{class:'sp-note',text:t('secIntro')}));
+    kids.push(h('label',{class:'ac-chk'},[
+      h('input',{type:'checkbox',id:'acConsent',checked:!!state.form.acConsent,onchange:function(ev){state.form.acConsent=ev.target.checked;}}),
+      h('span',{text:t('secConsent')})
+    ]));
+    kids.push(h('div',{class:'ac-btns'},[
+      h('button',{type:'button',class:'sp-btn',disabled:state.busy,text:t('btnProtOn'),onclick:function(){secCall('set_protection',{p_enabled:true,p_consent:!!state.form.acConsent});}})
+    ]));
+  }else{
+    kids.push(h('p',{class:'sp-note',text:t('protOn')}));
+    (s.approvals||[]).forEach(function(ap){
+      kids.push(h('div',{class:'ac-pend'},[
+        h('strong',{text:t('apprTitle')}),
+        h('p',{class:'ac-pp',text:place(ap)+' · '+fmtDate(ap.created_at,true)}),
+        h('div',{class:'ac-btns'},[
+          h('button',{type:'button',class:'sp-btn',disabled:state.busy,text:t('btnItMe'),onclick:function(){secCall('resolve_approval',{p_id:ap.id,p_approve:true});}}),
+          h('button',{type:'button',class:'sp-btn2 ac-danger',disabled:state.busy,text:t('btnNotMe'),onclick:function(){secCall('resolve_approval',{p_id:ap.id,p_approve:false});}})
+        ])
+      ]));
+    });
+  }
+  kids.push(h('h3',{class:'ac-h3',text:t('lockH')}));
+  kids.push(h('p',{class:'sp-note',text:s.locked?t('lockOn'):t('lockOff')}));
+  kids.push(h('div',{class:'ac-btns'},[
+    h('button',{type:'button',class:s.locked?'sp-btn2':'sp-btn2 ac-danger',disabled:state.busy,text:s.locked?t('btnUnlock'):t('btnLock'),onclick:function(){secCall(s.locked?'unlock_account':'lock_account');}}),
+    h('button',{type:'button',class:'sp-btn2',disabled:state.busy,text:t('btnKick'),onclick:function(){secCall('request_kick',null,'kickSent');}})
+  ]));
+  if(s.protection||(s.events&&s.events.length)){
+    kids.push(h('h3',{class:'ac-h3',text:t('histH')}));
+    if(!s.events||!s.events.length)kids.push(h('p',{class:'sp-note',text:t('histEmpty')}));
+    (s.events||[]).forEach(function(e){
+      kids.push(h('div',{class:'ac-row'},[
+        h('span',{class:'ac-k',text:fmtDate(e.at,true)}),
+        h('span',{class:'ac-v',text:place(e)+' · '+t('r_'+e.result)})
+      ]));
+    });
+    kids.push(h('p',{class:'sp-note',text:t('geoNote')}));
+    kids.push(h('div',{class:'ac-btns'},[
+      h('button',{type:'button',class:'sp-btn2 ac-danger',disabled:state.busy,text:t('btnHistDel'),onclick:function(){secCall('delete_login_history');}})
+    ]));
+  }
+  if(s.protection){
+    kids.push(h('div',{class:'ac-btns'},[
+      h('button',{type:'button',class:'sp-btn2',disabled:state.busy,text:t('btnProtOff'),onclick:function(){secCall('set_protection',{p_enabled:false,p_consent:false});}})
+    ]));
+  }
+  kids.push(msgEl());
+  return h('div',{class:'sp-box'},kids);
+}
+/* раз на 6 с підтягуємо нові запити «це ти?», поки вкладка відкрита */
+async function secTick(){
+  var pg=$('pg-account');
+  if(!sb||!state.user||!state.acc||!state.acc.mc_nick||state.busy||document.hidden||!pg||!pg.classList.contains('active'))return;
+  try{
+    var r=await sb.rpc('get_security');
+    if(r.error||!r.data||state.busy)return;
+    if(JSON.stringify(r.data)!==JSON.stringify(state.sec)){state.sec=r.data;render();}
+  }catch(e){}
+}
+
+/* ── Очікування підтвердження: таймер і перевірка раз на 4 с ── */
+function startTimer(){
+  if(timer||!(state.acc&&state.acc.pending))return;
+  tick=0;timer=setInterval(onTick,1000);
+}
+function stopTimer(){if(timer){clearInterval(timer);timer=null;}}
+async function onTick(){
+  var p=state.acc&&state.acc.pending;
+  if(!p||!state.user){stopTimer();return;}
+  var cd=$('acCd');
+  if(cd)cd.textContent=mmss(new Date(p.expires_at).getTime()-Date.now());
+  tick++;
+  var pg=$('pg-account');
+  if(document.hidden||state.busy||polling||!pg||!pg.classList.contains('active'))return;
+  if(tick%4!==0)return;
+  polling=true;
+  try{
+    var before=p.id;
+    await loadAccount();
+    var now=state.acc;
+    if(!now.pending||now.pending.id!==before){
+      if(now.mc_nick)setMsg('ok','justLinked');
+      else setMsg('inf','reqExpired');
+      render();
+    }
+    if(!now.pending)stopTimer();
+  }catch(e){
+    /* тимчасова помилка мережі: просто спробуємо ще раз */
+    if(!state.user){stopTimer();render();}
+  }
+  polling=false;
+}
+
+/* ── Запуск (лише коли відкрили вкладку «Акаунт») ── */
+async function init(){
+  setInterval(secTick,6000);
+  render();
+  if(sb){
+    try{
+      var r=await sb.auth.getSession();
+      if(r.data&&r.data.session){
+        state.user=r.data.session.user;
+        await loadAccount();
+      }
+    }catch(e){
+      state.msg=null;
+      if(state.user)setErr(e);
+    }
+    try{
+      sb.auth.onAuthStateChange(function(ev){
+        if(ev==='SIGNED_OUT'){
+          setTimeout(function(){
+            if(state.user){stopTimer();state.user=null;state.acc=null;render();}
+          },0);
+        }
+      });
+    }catch(e){console.error('[LW account]',e);}
+  }
+  state.ready=true;
+  render();
+}
+
+var navBtn=$('nb-account');
+if(navBtn)navBtn.addEventListener('click',function(){if(!started){started=true;init();}});
+
+/* ── Мова ── */
+function applyNav(){if(navBtn)navBtn.textContent=NAV[lang]||NAV.en;}
+['ua','en','pl','it','fr'].forEach(function(l){
+  var b=$('lb-'+l);
+  if(b)b.addEventListener('click',function(){lang=l;applyNav();if(started)render();});
+});
+applyNav();
+render();
 })();
 </script>
 <script>
