@@ -257,6 +257,20 @@ footer span{color:var(--or);}
 .sp-btn2.ac-danger:hover:not(:disabled){border-color:var(--rd);color:var(--rd);}
 .ac-chk{display:flex;gap:10px;align-items:flex-start;margin:10px 0 4px;font-size:13px;line-height:1.5;color:var(--t3);cursor:pointer;}
 .ac-chk input{margin-top:3px;width:18px;height:18px;flex-shrink:0;accent-color:var(--or);}
+.ac-ban{height:96px;border-radius:10px;background:var(--s2) center/cover no-repeat;border:1px solid var(--br);}
+.ac-phead{display:flex;gap:12px;align-items:center;margin:-28px 8px 8px;position:relative;}
+.ac-av{width:64px;height:64px;border-radius:50%;object-fit:cover;border:3px solid var(--br);background:var(--s2);flex-shrink:0;}
+.ac-av0{display:flex;align-items:center;justify-content:center;font-weight:700;font-size:26px;color:var(--or);}
+.ac-pn{font-size:18px;color:var(--tw);}
+.ac-file{display:none;}
+.ac-up{cursor:pointer;text-align:center;}
+.ac-person{display:flex;align-items:center;gap:10px;width:100%;background:var(--s2);border:1px solid var(--br);border-radius:8px;padding:8px 10px;margin-top:6px;color:var(--tw);font-family:inherit;font-size:14px;cursor:pointer;}
+.ac-person .ac-av{width:32px;height:32px;border-width:1px;font-size:14px;}
+.ac-skin{image-rendering:pixelated;width:96px;height:192px;display:block;margin:10px auto 4px;}
+.fe-pv{display:block;width:100%;max-height:220px;object-fit:cover;border-radius:8px;margin:8px 0;}
+.fe-chips .ac-tab{flex:0 0 auto;padding:8px 12px;}
+.fe-like.on{border-color:var(--or);color:var(--or);}
+textarea.sp-in{resize:vertical;font-family:inherit;}
 .ac-h3{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--mu);margin:18px 0 6px;font-weight:700;}
 
 /* ВИБІР МОВИ: компактний випадаючий перемикач */
@@ -323,7 +337,7 @@ footer span{color:var(--or);}
 .ai-msgs{overflow-x:hidden;}
 .ai-th:focus-visible{outline:2px solid var(--or);outline-offset:1px;}
 
-/* LankciAI 2.3: фото, джерела */
+/* LankciAI 2.4: фото, джерела */
 .ai-pv{display:none;align-items:center;gap:8px;padding:6px 10px;border-top:1px solid var(--br);background:var(--s2);font-size:12px;color:var(--mu);}
 .ai-pv.show{display:flex;}
 .ai-pv img{width:44px;height:44px;object-fit:cover;border-radius:8px;border:1px solid var(--br);flex-shrink:0;}
@@ -393,6 +407,7 @@ footer span{color:var(--or);}
   <button id="nb-donate"   class="active">Магазин</button>
   <button id="nb-support">Підтримка</button>
   <button id="nb-rules">Правила</button>
+<button id="nb-feed">Стрічка</button>
 <button id="nb-account">Акаунт</button>
 </div>
 <div class="lsw" id="lsw">
@@ -421,13 +436,15 @@ footer span{color:var(--or);}
 <!-- МАГАЗИН -->
 <section id="pg-donate" class="pg active">
 <div class="grid">
-<div class="card" style="--rc:#22c55e"><div class="rn">Hacker</div><div class="pr">1574 грн</div><div class="acts"><a href="https://t.me/LankciDonatbot" class="bb" data-ua="ПРИДБАТИ" data-en="BUY NOW">ПРИДБАТИ</a><button type="button" class="pb" data-pd="pd-hacker" aria-expanded="false" aria-controls="pd-hacker" title="Можливості привілею" aria-label="Можливості привілею"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.5" cy="6" r="1" fill="currentColor"/><circle cx="3.5" cy="12" r="1" fill="currentColor"/><circle cx="3.5" cy="18" r="1" fill="currentColor"/></svg></button></div><div class="pd" id="pd-hacker"><div class="pdi"><ul class="fl"><li>10 точок дому</li><li>Політ /fly</li><li>Верстак /workbench</li></ul><div class="kt">/kit h4ck3r</div></div></div></div>
-<div class="card" style="--rc:#ffd700"><div class="rn">Imperator</div><div class="pr">1250 грн</div><div class="acts"><a href="https://t.me/LankciDonatbot" class="bb" data-ua="ПРИДБАТИ" data-en="BUY NOW">ПРИДБАТИ</a><button type="button" class="pb" data-pd="pd-imperator" aria-expanded="false" aria-controls="pd-imperator" title="Можливості привілею" aria-label="Можливості привілею"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.5" cy="6" r="1" fill="currentColor"/><circle cx="3.5" cy="12" r="1" fill="currentColor"/><circle cx="3.5" cy="18" r="1" fill="currentColor"/></svg></button></div><div class="pd" id="pd-imperator"><div class="pdi"><ul class="fl"><li>Політ /fly</li><li>Час та погода</li><li>8 точок дому</li><li>Блискавка</li></ul><div class="kt">/kit imperator</div></div></div></div>
-<div class="card" style="--rc:#3b82f6"><div class="rn">Dragon</div><div class="pr">400 грн</div><div class="acts"><a href="https://t.me/LankciDonatbot" class="bb" data-ua="ПРИДБАТИ" data-en="BUY NOW">ПРИДБАТИ</a><button type="button" class="pb" data-pd="pd-dragon" aria-expanded="false" aria-controls="pd-dragon" title="Можливості привілею" aria-label="Можливості привілею"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.5" cy="6" r="1" fill="currentColor"/><circle cx="3.5" cy="12" r="1" fill="currentColor"/><circle cx="3.5" cy="18" r="1" fill="currentColor"/></svg></button></div><div class="pd" id="pd-dragon"><div class="pdi"><ul class="fl"><li>Політ /fly</li><li>Імунітет до лави</li><li>Блок на голову</li></ul><div class="kt">/kit dragon</div></div></div></div>
-<div class="card" style="--rc:#a855f7"><div class="rn">Elite</div><div class="pr">350 грн</div><div class="acts"><a href="https://t.me/LankciDonatbot" class="bb" data-ua="ПРИДБАТИ" data-en="BUY NOW">ПРИДБАТИ</a><button type="button" class="pb" data-pd="pd-elite" aria-expanded="false" aria-controls="pd-elite" title="Можливості привілею" aria-label="Можливості привілею"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.5" cy="6" r="1" fill="currentColor"/><circle cx="3.5" cy="12" r="1" fill="currentColor"/><circle cx="3.5" cy="18" r="1" fill="currentColor"/></svg></button></div><div class="pd" id="pd-elite"><div class="pdi"><ul class="fl"><li>Верстак /workbench</li><li>RTP — випадкова телепортація</li><li>Near — найближчі гравці</li><li>Блок на голову</li><li>Зняття ефектів</li></ul><div class="kt">/kit elite</div></div></div></div>
-<div class="card" style="--rc:#ef4444"><div class="rn">Dark</div><div class="pr">300 грн</div><div class="acts"><a href="https://t.me/LankciDonatbot" class="bb" data-ua="ПРИДБАТИ" data-en="BUY NOW">ПРИДБАТИ</a><button type="button" class="pb" data-pd="pd-dark" aria-expanded="false" aria-controls="pd-dark" title="Можливості привілею" aria-label="Можливості привілею"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.5" cy="6" r="1" fill="currentColor"/><circle cx="3.5" cy="12" r="1" fill="currentColor"/><circle cx="3.5" cy="18" r="1" fill="currentColor"/></svg></button></div><div class="pd" id="pd-dark"><div class="pdi"><ul class="fl"><li>Ефекти темряви</li><li>Підпалити /burn</li></ul><div class="kt">/kit dark_lord</div></div></div></div>
-<div class="card sigma" style="--rc:#4cc9f0"><div class="rn">Sigma</div><div class="pr">250 грн</div><div class="acts"><a href="https://t.me/LankciDonatbot" class="bb" data-ua="ПРИДБАТИ" data-en="BUY NOW">ПРИДБАТИ</a><button type="button" class="pb" data-pd="pd-sigma" aria-expanded="false" aria-controls="pd-sigma" title="Можливості привілею" aria-label="Можливості привілею"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.5" cy="6" r="1" fill="currentColor"/><circle cx="3.5" cy="12" r="1" fill="currentColor"/><circle cx="3.5" cy="18" r="1" fill="currentColor"/></svg></button></div><div class="pd" id="pd-sigma"><div class="pdi"><ul class="fl"><li>Верстак /workbench</li><li>Повне лікування /heal</li><li>Перезарядка лікування — 15 хв</li></ul><div class="kt">/kit sigma</div></div></div></div>
-<div class="card" style="--rc:#00d4ff"><div class="rn">Hero</div><div class="pr">179 грн</div><div class="acts"><a href="https://t.me/LankciDonatbot" class="bb" data-ua="ПРИДБАТИ" data-en="BUY NOW">ПРИДБАТИ</a><button type="button" class="pb" data-pd="pd-hero" aria-expanded="false" aria-controls="pd-hero" title="Можливості привілею" aria-label="Можливості привілею"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.5" cy="6" r="1" fill="currentColor"/><circle cx="3.5" cy="12" r="1" fill="currentColor"/><circle cx="3.5" cy="18" r="1" fill="currentColor"/></svg></button></div><div class="pd" id="pd-hero"><div class="pdi"><ul class="fl"><li>2 точки дому</li><li>Лікування /heal</li></ul><div class="kt">/kit hero</div></div></div></div>
+<div class="card" style="--rc:#22c55e"><div class="rn">Hacker</div><div class="pr">1574 грн</div><div class="acts"><a href="https://t.me/LankciDonatbot" class="bb" data-ua="ПРИДБАТИ" data-en="BUY NOW">ПРИДБАТИ</a><button type="button" class="pb" data-pd="pd-hacker" aria-expanded="false" aria-controls="pd-hacker" title="Можливості привілею" aria-label="Можливості привілею"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.5" cy="6" r="1" fill="currentColor"/><circle cx="3.5" cy="12" r="1" fill="currentColor"/><circle cx="3.5" cy="18" r="1" fill="currentColor"/></svg></button></div><div class="pd" id="pd-hacker"><div class="pdi"><ul class="fl"><li>Лікування /heal (з обмеженнями)</li><li>Ремонт предметів /repair</li><li>Ендер-скриня /enderchest</li><li>Підйом на поверхню /top</li><li>Стискання ресурсів /condense</li><li>Рецепти предметів /recipe</li><li>Розширена статистика боїв і смертей</li></ul><div class="kt">/kit hacker</div></div></div></div>
+<div class="card" style="--rc:#ffd700"><div class="rn">Imperator</div><div class="pr">1250 грн</div><div class="acts"><a href="https://t.me/LankciDonatbot" class="bb" data-ua="ПРИДБАТИ" data-en="BUY NOW">ПРИДБАТИ</a><button type="button" class="pb" data-pd="pd-imperator" aria-expanded="false" aria-controls="pd-imperator" title="Можливості привілею" aria-label="Можливості привілею"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.5" cy="6" r="1" fill="currentColor"/><circle cx="3.5" cy="12" r="1" fill="currentColor"/><circle cx="3.5" cy="18" r="1" fill="currentColor"/></svg></button></div><div class="pd" id="pd-imperator"><div class="pdi"><ul class="fl"><li>Лікування /heal</li><li>Ремонт предметів /repair</li><li>Ендер-скриня /enderchest</li><li>Підйом на поверхню /top</li><li>Стискання ресурсів /condense</li><li>Відновлення голоду /feed</li><li>Розширена статистика власних боїв</li></ul><div class="kt">/kit imperator</div></div></div></div>
+<div class="card" style="--rc:#ec4899"><div class="rn">Cobra</div><div class="pr">650 грн</div><div class="acts"><a href="https://t.me/LankciDonatbot" class="bb" data-ua="ПРИДБАТИ" data-en="BUY NOW">ПРИДБАТИ</a><button type="button" class="pb" data-pd="pd-cobra" aria-expanded="false" aria-controls="pd-cobra" title="Можливості привілею" aria-label="Можливості привілею"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.5" cy="6" r="1" fill="currentColor"/><circle cx="3.5" cy="12" r="1" fill="currentColor"/><circle cx="3.5" cy="18" r="1" fill="currentColor"/></svg></button></div><div class="pd" id="pd-cobra"><div class="pdi"><ul class="fl"><li>Лікування /heal (з обмеженнями)</li><li>Ремонт предметів /repair</li><li>Ендер-скриня /enderchest</li><li>Ковальський стіл /smithingtable</li><li>Стіл картографа /cartographytable</li><li>Підйом на поверхню /top</li></ul><div class="kt">/kit cobra</div></div></div></div>
+
+<div class="card" style="--rc:#3b82f6"><div class="rn">Dragon</div><div class="pr">400 грн</div><div class="acts"><a href="https://t.me/LankciDonatbot" class="bb" data-ua="ПРИДБАТИ" data-en="BUY NOW">ПРИДБАТИ</a><button type="button" class="pb" data-pd="pd-dragon" aria-expanded="false" aria-controls="pd-dragon" title="Можливості привілею" aria-label="Можливості привілею"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.5" cy="6" r="1" fill="currentColor"/><circle cx="3.5" cy="12" r="1" fill="currentColor"/><circle cx="3.5" cy="18" r="1" fill="currentColor"/></svg></button></div><div class="pd" id="pd-dragon"><div class="pdi"><ul class="fl"><li>Ремонт предметів /repair</li><li>Ковадло /anvil</li><li>Каменеріз /stonecutter</li><li>Стіл картографа /cartographytable</li><li>Ковальський стіл /smithingtable</li><li>Відновлення голоду /feed</li></ul><div class="kt">/kit dragon</div></div></div></div>
+<div class="card" style="--rc:#a855f7"><div class="rn">Elite</div><div class="pr">350 грн</div><div class="acts"><a href="https://t.me/LankciDonatbot" class="bb" data-ua="ПРИДБАТИ" data-en="BUY NOW">ПРИДБАТИ</a><button type="button" class="pb" data-pd="pd-elite" aria-expanded="false" aria-controls="pd-elite" title="Можливості привілею" aria-label="Можливості привілею"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.5" cy="6" r="1" fill="currentColor"/><circle cx="3.5" cy="12" r="1" fill="currentColor"/><circle cx="3.5" cy="18" r="1" fill="currentColor"/></svg></button></div><div class="pd" id="pd-elite"><div class="pdi"><ul class="fl"><li>Підйом на поверхню /top</li><li>Ремонт предметів /repair</li><li>Ендер-скриня /enderchest</li><li>Верстак /workbench</li><li>Відновлення голоду /feed</li><li>Стискання ресурсів /condense</li></ul><div class="kt">/kit elite</div></div></div></div>
+<div class="card" style="--rc:#ef4444"><div class="rn">Dark</div><div class="pr">300 грн</div><div class="acts"><a href="https://t.me/LankciDonatbot" class="bb" data-ua="ПРИДБАТИ" data-en="BUY NOW">ПРИДБАТИ</a><button type="button" class="pb" data-pd="pd-dark" aria-expanded="false" aria-controls="pd-dark" title="Можливості привілею" aria-label="Можливості привілею"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.5" cy="6" r="1" fill="currentColor"/><circle cx="3.5" cy="12" r="1" fill="currentColor"/><circle cx="3.5" cy="18" r="1" fill="currentColor"/></svg></button></div><div class="pd" id="pd-dark"><div class="pdi"><ul class="fl"><li>Ендер-скриня /enderchest</li><li>Відновлення голоду /feed</li><li>Ремонт предметів /repair</li><li>Особистий час /ptime</li><li>Ткацький верстат /loom</li><li>Точило /grindstone</li></ul><div class="kt">/kit dark</div></div></div></div>
+<div class="card sigma" style="--rc:#4cc9f0"><div class="rn">Sigma</div><div class="pr">250 грн</div><div class="acts"><a href="https://t.me/LankciDonatbot" class="bb" data-ua="ПРИДБАТИ" data-en="BUY NOW">ПРИДБАТИ</a><button type="button" class="pb" data-pd="pd-sigma" aria-expanded="false" aria-controls="pd-sigma" title="Можливості привілею" aria-label="Можливості привілею"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.5" cy="6" r="1" fill="currentColor"/><circle cx="3.5" cy="12" r="1" fill="currentColor"/><circle cx="3.5" cy="18" r="1" fill="currentColor"/></svg></button></div><div class="pd" id="pd-sigma"><div class="pdi"><ul class="fl"><li>Стискання ресурсів /condense</li><li>Ендер-скриня /enderchest</li><li>Каменеріз /stonecutter</li><li>Стіл картографа /cartographytable</li><li>Ковальський стіл /smithingtable</li><li>Рецепти предметів /recipe</li><li>Ковадло /anvil</li></ul><div class="kt">/kit sigma</div></div></div></div>
+<div class="card" style="--rc:#00d4ff"><div class="rn">Hero</div><div class="pr">179 грн</div><div class="acts"><a href="https://t.me/LankciDonatbot" class="bb" data-ua="ПРИДБАТИ" data-en="BUY NOW">ПРИДБАТИ</a><button type="button" class="pb" data-pd="pd-hero" aria-expanded="false" aria-controls="pd-hero" title="Можливості привілею" aria-label="Можливості привілею"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.5" cy="6" r="1" fill="currentColor"/><circle cx="3.5" cy="12" r="1" fill="currentColor"/><circle cx="3.5" cy="18" r="1" fill="currentColor"/></svg></button></div><div class="pd" id="pd-hero"><div class="pdi"><ul class="fl"><li>Відновлення голоду /feed</li><li>Верстак /workbench</li><li>Блок на голову /hat</li><li>Верстак /craft</li><li>Особистий час /ptime</li><li>Ткацький верстат /loom</li><li>Точило /grindstone</li></ul><div class="kt">/kit hero</div></div></div></div>
 <div class="card" style="--rc:#333"><div class="rn" style="color:#444">Скоро...</div><div class="pr" style="color:#333">???</div><a href="#" class="bb" style="background:#1c1c1c;color:#444;cursor:default">СКОРО</a></div>
 </div>
 </section>
@@ -536,6 +553,11 @@ footer span{color:var(--or);}
 </div>
 </section>
 
+<!-- СТРІЧКА -->
+<section id="pg-feed" class="pg">
+<div class="sp" id="feRoot"></div>
+</section>
+
 <!-- АКАУНТ -->
 <section id="pg-account" class="pg">
 <div class="sp" id="acRoot"><div class="sp-box"><p class="sp-note">Завантаження…</p></div></div>
@@ -566,6 +588,25 @@ var TR={
 "ПРИДБАТИ":["KUP TERAZ", "ACQUISTA", "ACHETER"],
 "СКОРО":["WKRÓTCE", "PRESTO", "BIENTÔT"],
 "Скоро...":["Wkrótce...", "Presto...", "Bientôt..."],
+"Стискання ресурсів /condense":["Kompresja zasobów /condense", "Compressione risorse /condense", "Compression des ressources /condense"],
+"Рецепти предметів /recipe":["Receptury przedmiotów /recipe", "Ricette degli oggetti /recipe", "Recettes d’objets /recipe"],
+"Розширена статистика боїв і смертей":["Rozszerzone statystyki walk i śmierci", "Statistiche avanzate di battaglie e morti", "Statistiques avancées des combats et des morts"],
+"Відновлення голоду /feed":["Przywracanie głodu /feed", "Ripristino della fame /feed", "Restauration de la faim /feed"],
+"Верстак /workbench":["Stół rzemieślniczy /workbench", "Banco da lavoro /workbench", "Établi /workbench"],
+"Верстак /craft":["Stół rzemieślniczy /craft", "Banco da lavoro /craft", "Établi /craft"],
+"Блок на голову /hat":["Blok na głowę /hat", "Blocco sulla testa /hat", "Bloc sur la tête /hat"],
+"Особистий час /ptime":["Osobisty czas /ptime", "Orario personale /ptime", "Heure personnelle /ptime"],
+"Ткацький верстат /loom":["Krosno /loom", "Telaio /loom", "Métier à tisser /loom"],
+"Точило /grindstone":["Szlifierka /grindstone", "Mola /grindstone", "Meule /grindstone"],
+"Каменеріз /stonecutter":["Przecinarka do kamienia /stonecutter", "Tagliapietre /stonecutter", "Scie à pierre /stonecutter"],
+"Ковадло /anvil":["Kowadło /anvil", "Incudine /anvil", "Enclume /anvil"],
+"Розширена статистика власних боїв":["Rozszerzone statystyki własnych walk", "Statistiche avanzate dei propri combattimenti", "Statistiques avancées de vos propres combats"],
+"Лікування /heal (з обмеженнями)":["Leczenie /heal (z ograniczeniami)", "Cura /heal (con limiti)", "Soin /heal (avec limites)"],
+"Ремонт предметів /repair":["Naprawa przedmiotów /repair", "Riparazione oggetti /repair", "Réparation d’objets /repair"],
+"Ендер-скриня /enderchest":["Skrzynia Endu /enderchest", "Baule dell’End /enderchest", "Coffre de l’Ender /enderchest"],
+"Ковальський стіл /smithingtable":["Stół kowalski /smithingtable", "Tavolo del fabbro /smithingtable", "Table de forge /smithingtable"],
+"Стіл картографа /cartographytable":["Stół kartografa /cartographytable", "Tavolo del cartografo /cartographytable", "Table de cartographie /cartographytable"],
+"Підйом на поверхню /top":["Wyjście na powierzchnię /top", "Salita in superficie /top", "Remonter à la surface /top"],
 "Скоро":["Wkrótce", "Presto", "Bientôt"],
 "ПРАВИЛА СЕРВЕРА":["ZASADY SERWERA", "REGOLE DEL SERVER", "RÈGLES DU SERVEUR"],
 "1. Поведінка в чаті":["1. Zachowanie na czacie", "1. Comportamento in chat", "1. Comportement dans le chat"],
@@ -692,7 +733,7 @@ for(var i=0;i<14;i++){
 }
 
 /* Навігація */
-var pages=['donate','support','rules','account'];
+var pages=['donate','support','rules','feed','account'];
 function showPage(name){
   if(name===cur)return;
   var prev=document.getElementById('pg-'+cur);
@@ -707,6 +748,7 @@ function showPage(name){
 document.getElementById('nb-donate').addEventListener('click',function(){showPage('donate');});
 document.getElementById('nb-support').addEventListener('click',function(){showPage('support');});
 document.getElementById('nb-rules').addEventListener('click',function(){showPage('rules');});
+document.getElementById('nb-feed').addEventListener('click',function(){showPage('feed');});
 document.getElementById('nb-account').addEventListener('click',function(){showPage('account');});
 
 /* IP */
@@ -841,9 +883,19 @@ pl:{h1:'Zgłoś problem',note:'Opisz problem na stronie lub serwerze Minecraft. 
 it:{h1:'Segnala un problema',note:'Descrivi un problema sul sito o sul server Minecraft. Le richieste vengono conservate per 14 giorni e poi eliminate automaticamente. Non inserire password o dati personali. Le richieste sono visibili solo in questo browser.',off:'Il supporto non è ancora collegato a un server, quindi per ora non si possono inviare richieste. Scrivici su Telegram o Discord.',lt:'Titolo del problema',ld:'Cos’è successo? (descrizione dettagliata)',ls:'Screenshot (facoltativo)',pick:'Allega screenshot',hint:'PNG, JPEG o WebP, fino a 5 MB',rm:'Rimuovi screenshot',submit:'Invia richiesta',sending:'Invio…',loadImg:'Elaborazione dell’immagine…',ok:'Richiesta inviata. Sarà conservata per 14 giorni.',listH:'Le mie richieste',refresh:'Aggiorna',empty:'Nessuna richiesta.',loading:'Caricamento…',loadErr:'Impossibile caricare le richieste. Riprova più tardi.',left:'Eliminata tra {n} giorni',leftLt:'Eliminata tra meno di un giorno',st_open:'Aperta',st_in_progress:'In lavorazione',st_resolved:'Risolta',st_closed:'Chiusa',eTitle:'Il titolo deve avere da 3 a 100 caratteri.',eDesc:'La descrizione deve avere da 10 a 2000 caratteri.',eType:'Sono ammesse solo immagini PNG, JPEG o WebP.',eSize:'Il file è troppo grande (max 5 MB).',eImg:'Impossibile elaborare l’immagine. Prova un altro file.',eNet:'Invio non riuscito: nessun collegamento al server. Riprova.',eMany:'Hai troppe richieste attive (max 10). Attendi che quelle vecchie vengano eliminate.',eBig:'I dati sono troppo grandi. Usa uno screenshot più piccolo.',eSrv:'Errore del server. Riprova più tardi.',ph1:'In breve: cosa non funziona',ph2:'Cosa hai fatto, cosa ti aspettavi e cosa è successo…',shot:'Screenshot della richiesta'},
 fr:{h1:'Signaler un problème',note:'Décrivez un problème sur le site ou le serveur Minecraft. Les demandes sont conservées 14 jours puis supprimées automatiquement. N’indiquez ni mots de passe ni données personnelles. Les demandes ne sont visibles que dans ce navigateur.',off:'Le support n’est pas encore connecté à un serveur, les demandes ne peuvent donc pas être envoyées pour le moment. Écrivez-nous sur Telegram ou Discord.',lt:'Titre du problème',ld:'Que s’est-il passé ? (description détaillée)',ls:'Capture d’écran (facultatif)',pick:'Joindre une capture',hint:'PNG, JPEG ou WebP, jusqu’à 5 Mo',rm:'Supprimer la capture',submit:'Envoyer la demande',sending:'Envoi…',loadImg:'Traitement de l’image…',ok:'Demande envoyée. Elle sera conservée 14 jours.',listH:'Mes demandes',refresh:'Actualiser',empty:'Aucune demande pour l’instant.',loading:'Chargement…',loadErr:'Impossible de charger vos demandes. Réessayez plus tard.',left:'Supprimée dans {n} jours',leftLt:'Supprimée dans moins d’un jour',st_open:'Ouverte',st_in_progress:'En cours',st_resolved:'Résolue',st_closed:'Fermée',eTitle:'Le titre doit contenir de 3 à 100 caractères.',eDesc:'La description doit contenir de 10 à 2000 caractères.',eType:'Seules les images PNG, JPEG ou WebP sont autorisées.',eSize:'Le fichier est trop volumineux (5 Mo max).',eImg:'Impossible de traiter l’image. Essayez un autre fichier.',eNet:'Envoi impossible : pas de connexion au serveur. Réessayez.',eMany:'Vous avez trop de demandes actives (10 max). Attendez que les anciennes soient supprimées.',eBig:'Les données sont trop volumineuses. Utilisez une capture plus petite.',eSrv:'Erreur du serveur. Réessayez plus tard.',ph1:'En bref : ce qui ne fonctionne pas',ph2:'Ce que vous avez fait, ce que vous attendiez et ce qui s’est passé…',shot:'Capture de la demande'}
 };
+S.ua.note='Опиши проблему на сайті чи сервері Minecraft. Звернення бачиш лише ти та модератори. Виконані звернення видаляються через 14 днів. Не вказуй паролі чи особисті дані.';
+S.en.note='Describe a problem with the site or the Minecraft server. Only you and the moderators can see your requests. Completed requests are deleted after 14 days. Do not include passwords or personal data.';
+S.pl.note='Opisz problem ze stroną lub serwerem Minecraft. Zgłoszenia widzisz tylko ty i moderatorzy. Wykonane zgłoszenia są usuwane po 14 dniach. Nie podawaj haseł ani danych osobowych.';
+S.it.note='Descrivi un problema del sito o del server Minecraft. Le richieste sono visibili solo a te e ai moderatori. Quelle risolte vengono eliminate dopo 14 giorni. Non inserire password o dati personali.';
+S.fr.note='Décrivez un problème du site ou du serveur Minecraft. Seuls vous et les modérateurs voyez les demandes. Les demandes traitées sont supprimées après 14 jours. N’indiquez ni mots de passe ni données personnelles.';
+S.ua.off='Щоб надіслати звернення, увійди в акаунт (вкладка «Акаунт»).';
+S.en.off='Log in (the “Account” tab) to send a request.';
+S.pl.off='Zaloguj się (zakładka „Konto”), aby wysłać zgłoszenie.';
+S.it.off='Accedi (scheda «Account») per inviare una richiesta.';
+S.fr.off='Connectez-vous (onglet «Compte») pour envoyer une demande.';
 var LOC={ua:'uk-UA',en:'en-GB',pl:'pl-PL',it:'it-IT',fr:'fr-FR'};
 function T(k){return (S[lang]&&S[lang][k])||S.ua[k]||'';}
-function on(){return !!SUPPORT_ENDPOINT;}
+function on(){return !!(window.__lw&&window.__lw.user&&window.__lw.user());}
 
 function applyTexts(){
   Array.prototype.forEach.call(document.querySelectorAll('#pg-support [data-s]'),function(el){el.textContent=T(el.getAttribute('data-s'));});
@@ -862,10 +914,37 @@ function getKey(){
   try{var k=localStorage.getItem(KEYNAME);if(k&&/^[a-f0-9]{64}$/.test(k))return k;k=rnd();localStorage.setItem(KEYNAME,k);return k;}
   catch(e){return memKey||(memKey=rnd());}
 }
+function resp(st,data,bf){return Promise.resolve({status:st,ok:st>=200&&st<300,json:function(){return Promise.resolve(data);},blob:bf||function(){return Promise.reject(0);}});}
 function api(path,opt){
-  var c=window.AbortController?new AbortController():null,to=setTimeout(function(){if(c)c.abort();},25000);
-  opt=opt||{};opt.headers=opt.headers||{};opt.headers['X-LW-Key']=getKey();if(c)opt.signal=c.signal;
-  return fetch(SUPPORT_ENDPOINT.replace(/\/+$/,'')+path,opt).then(function(r){clearTimeout(to);return r;},function(e){clearTimeout(to);throw e;});
+  var sb=window.__lw&&window.__lw.sb;
+  if(!sb)return resp(500,null);
+  if(path==='/tickets'&&opt&&opt.method==='POST'){
+    var b=JSON.parse(opt.body),uid=window.__lw.uid();
+    return (async function(){
+      var shot=null;
+      if(img&&img.blob){
+        shot=uid+'/'+crypto.randomUUID()+'.jpg';
+        var up=await sb.storage.from('support').upload(shot,img.blob,{contentType:img.blob.type||'image/jpeg'});
+        if(up.error)return resp(/size|large/i.test(up.error.message||'')?413:500,null);
+      }
+      var r=await sb.rpc('create_support',{p_title:b.title,p_desc:b.description,p_shot:shot});
+      if(r.error){var m=r.error.message||'';return resp(m.indexOf('too_many')>-1?429:(m.indexOf('bad_input')>-1?400:500),null);}
+      return resp(201,{id:r.data});
+    })();
+  }
+  if(path==='/tickets'){
+    return sb.rpc('my_support').then(function(r){
+      if(r.error)return resp(500,null);
+      return resp(200,{tickets:(r.data||[]).map(function(x){return {id:x.id,title:x.title,description:x.description,status:x.status,reply:x.reply,createdAt:Date.parse(x.created_at),expiresAt:x.expires_at?Date.parse(x.expires_at):0,hasImage:!!x.shot,shot:x.shot};})});
+    });
+  }
+  var m=/^\/tickets\/([a-z0-9-]+)\/image$/.exec(path);
+  if(m){
+    var t=(tickets||[]).filter(function(x){return x.id===m[1];})[0];
+    if(!t||!t.shot)return resp(404,null);
+    return sb.storage.from('support').download(t.shot).then(function(r){return (r.error||!r.data)?resp(500,null):resp(200,null,function(){return Promise.resolve(r.data);});});
+  }
+  return resp(404,null);
 }
 
 /* ── Повідомлення ── */
@@ -939,9 +1018,9 @@ function renderList(){
     var c=document.createElement('div'),h=document.createElement('div'),d=document.createElement('div'),m=document.createElement('div'),st=document.createElement('span'),dt=document.createElement('span'),ex=document.createElement('span'),left=Math.ceil((x.expiresAt-Date.now())/DAY),stt=['open','in_progress','resolved','closed'].indexOf(x.status)>=0?x.status:'open';
     c.className='sp-t';h.className='sp-tt';h.textContent=String(x.title||'');d.className='sp-td';d.textContent=String(x.description||'');
     m.className='sp-tm';st.className='sp-st s-'+stt;st.textContent=T('st_'+stt);dt.textContent=fmt(x.createdAt);
-    ex.textContent=left>=2?T('left').replace('{n}',left):T('leftLt');
-    m.appendChild(st);m.appendChild(dt);m.appendChild(ex);c.appendChild(h);c.appendChild(d);c.appendChild(m);
-    if(x.hasImage&&/^[a-z0-9]{6,40}$/.test(String(x.id))){
+    ex.textContent=(stt==='resolved'||stt==='closed')?(left>=2?T('left').replace('{n}',left):T('leftLt')):'';
+    m.appendChild(st);m.appendChild(dt);m.appendChild(ex);c.appendChild(h);c.appendChild(d);if(x.reply){var rp=document.createElement('div');rp.className='sp-td';rp.textContent='↳ '+String(x.reply);c.appendChild(rp);}c.appendChild(m);
+    if(x.hasImage&&/^[a-z0-9-]{6,40}$/.test(String(x.id))){
       var im=document.createElement('img');im.className='sp-ti';im.alt=T('shot');im.hidden=true;c.appendChild(im);
       api('/tickets/'+x.id+'/image').then(function(r){if(!r.ok)throw 0;return r.blob();}).then(function(b){var u=URL.createObjectURL(b);imgUrls.push(u);im.src=u;im.hidden=false;im.addEventListener('click',function(){window.open(u,'_blank','noopener');});}).catch(function(){});
     }
@@ -951,6 +1030,7 @@ function renderList(){
 
 /* ── Підключення ── */
 $('spForm').addEventListener('submit',submit);
+$('nb-support').addEventListener('click',function(){Promise.resolve(window.__lw&&window.__lw.ensure&&window.__lw.ensure()).then(function(){applyTexts();if(on())loadList();});});
 $('spPick').addEventListener('click',function(){$('spFile').click();});
 $('spFile').addEventListener('change',function(){pickFile($('spFile').files&&$('spFile').files[0]);});
 $('spRm').addEventListener('click',function(){clearImg();msg('');});
@@ -1069,11 +1149,11 @@ var OWNER_PHONE='Redmi Note 13 Pro+ 5G';   /* слова власника сай
 var WIKI_SEARCH=true;   /* публічний Wikipedia API (без ключа) для питань «хто/що таке ...» */   /* напр. 'https://lankciai.your-name.workers.dev/chat' */
 var TG='https://t.me/LankciWorld',DC='https://discord.gg/RKWzGv7M';
 var T={
-ua:{ttl:'LankciAI 2.3',hi:'Привіт! 👋 Я помічник LankciWorld. Питай про IP, донат, команди чи правила.',ph:'Напишіть питання...',send:'Надіслати',open:'Відкрити AI-помічника',close:'Закрити',off:'AI-помічник ще не підключений до сервера, тому поки не можу відповідати на питання. Правила, магазин і команди є у вкладках сайту, а живу відповідь можна отримати тут:',err:'Не вдалося отримати відповідь. Спробуйте ще раз пізніше.',wait:'Думаю...'},
-en:{ttl:'LankciAI 2.3',hi:'Hi! 👋 I am the LankciWorld helper. Ask about the IP, donations, commands or rules.',ph:'Type your question...',send:'Send',open:'Open AI assistant',close:'Close',off:'The AI assistant is not connected to a server yet, so I cannot answer questions for now. Rules, shop and commands are in the site tabs, and you can get a live answer here:',err:'Could not get a reply. Please try again later.',wait:'Thinking...'},
-pl:{ttl:'LankciAI 2.3',hi:'Cześć! 👋 Jestem pomocnikiem LankciWorld. Pytaj o IP, donaty, komendy lub zasady.',ph:'Napisz pytanie...',send:'Wyślij',open:'Otwórz asystenta AI',close:'Zamknij',off:'Asystent AI nie jest jeszcze połączony z serwerem, więc na razie nie mogę odpowiadać na pytania. Zasady, sklep i komendy znajdziesz w zakładkach strony, a odpowiedź na żywo uzyskasz tutaj:',err:'Nie udało się uzyskać odpowiedzi. Spróbuj ponownie później.',wait:'Myślę...'},
-it:{ttl:'LankciAI 2.3',hi:'Ciao! 👋 Sono l’assistente di LankciWorld. Chiedimi di IP, donazioni, comandi o regole.',ph:'Scrivi la tua domanda...',send:'Invia',open:'Apri l’assistente AI',close:'Chiudi',off:'L’assistente AI non è ancora collegato a un server, quindi per ora non posso rispondere alle domande. Regole, negozio e comandi sono nelle schede del sito, mentre una risposta in diretta si ottiene qui:',err:'Impossibile ottenere una risposta. Riprova più tardi.',wait:'Sto pensando...'},
-fr:{ttl:'LankciAI 2.3',hi:'Salut ! 👋 Je suis l’assistant de LankciWorld. Posez vos questions sur l’IP, les dons, les commandes ou les règles.',ph:'Écrivez votre question...',send:'Envoyer',open:'Ouvrir l’assistant IA',close:'Fermer',off:'L’assistant IA n’est pas encore connecté à un serveur, je ne peux donc pas répondre aux questions pour l’instant. Les règles, la boutique et les commandes sont dans les onglets du site, et une réponse en direct est disponible ici :',err:'Impossible d’obtenir une réponse. Réessayez plus tard.',wait:'Je réfléchis...'}
+ua:{ttl:'LankciAI 2.4',hi:'Привіт! 👋 Я помічник LankciWorld. Питай про IP, донат, команди чи правила.',ph:'Напишіть питання...',send:'Надіслати',open:'Відкрити AI-помічника',close:'Закрити',off:'AI-помічник ще не підключений до сервера, тому поки не можу відповідати на питання. Правила, магазин і команди є у вкладках сайту, а живу відповідь можна отримати тут:',err:'Не вдалося отримати відповідь. Спробуйте ще раз пізніше.',wait:'Думаю...'},
+en:{ttl:'LankciAI 2.4',hi:'Hi! 👋 I am the LankciWorld helper. Ask about the IP, donations, commands or rules.',ph:'Type your question...',send:'Send',open:'Open AI assistant',close:'Close',off:'The AI assistant is not connected to a server yet, so I cannot answer questions for now. Rules, shop and commands are in the site tabs, and you can get a live answer here:',err:'Could not get a reply. Please try again later.',wait:'Thinking...'},
+pl:{ttl:'LankciAI 2.4',hi:'Cześć! 👋 Jestem pomocnikiem LankciWorld. Pytaj o IP, donaty, komendy lub zasady.',ph:'Napisz pytanie...',send:'Wyślij',open:'Otwórz asystenta AI',close:'Zamknij',off:'Asystent AI nie jest jeszcze połączony z serwerem, więc na razie nie mogę odpowiadać na pytania. Zasady, sklep i komendy znajdziesz w zakładkach strony, a odpowiedź na żywo uzyskasz tutaj:',err:'Nie udało się uzyskać odpowiedzi. Spróbuj ponownie później.',wait:'Myślę...'},
+it:{ttl:'LankciAI 2.4',hi:'Ciao! 👋 Sono l’assistente di LankciWorld. Chiedimi di IP, donazioni, comandi o regole.',ph:'Scrivi la tua domanda...',send:'Invia',open:'Apri l’assistente AI',close:'Chiudi',off:'L’assistente AI non è ancora collegato a un server, quindi per ora non posso rispondere alle domande. Regole, negozio e comandi sono nelle schede del sito, mentre una risposta in diretta si ottiene qui:',err:'Impossibile ottenere una risposta. Riprova più tardi.',wait:'Sto pensando...'},
+fr:{ttl:'LankciAI 2.4',hi:'Salut ! 👋 Je suis l’assistant de LankciWorld. Posez vos questions sur l’IP, les dons, les commandes ou les règles.',ph:'Écrivez votre question...',send:'Envoyer',open:'Ouvrir l’assistant IA',close:'Fermer',off:'L’assistant IA n’est pas encore connecté à un serveur, je ne peux donc pas répondre aux questions pour l’instant. Les règles, la boutique et les commandes sont dans les onglets du site, et une réponse en direct est disponible ici :',err:'Impossible d’obtenir une réponse. Réessayez plus tard.',wait:'Je réfléchis...'}
 };
 var lang='ua',history=[],busy=false,greetEl=null,lastSj='';
 var $=function(id){return document.getElementById(id);};
@@ -1228,8 +1308,8 @@ var KB=[
  {k:/реєстр|регистр|register|логін|логин|login|\/reg|парол|password|authme/,
   ua:'Інформації про реєстрацію чи вхід на сервері в мене немає. Спитай у Telegram або Discord:',en:'I have no information about registration or login. Ask on Telegram or Discord:',links:true},
  {k:/sethome|точк[аиу] дому|точок дому|дом[ау]\b|\/home|\bhome\b|spawn|спавн|\btpa\b|телепорт|\/tp\b/,
-  ua:'Скільки точок дому дає привілей: Hero — 2, Second — 5, Imperator — 8, Hacker — 10. Самі команди дому й телепорту на сайті не вказані, тому не впевнений у них. Спитай у Telegram або Discord:',
-  en:'Home points per rank: Hero — 2, Second — 5, Imperator — 8, Hacker — 10. The exact home/teleport commands are not listed on the site, so I am not sure about them. Ask on Telegram or Discord:',links:true},
+  ua:'Кількість точок дому для привілеїв на сайті більше не вказана, а команди дому й телепорту там теж не вказані, тому не впевнений у них. Спитай у Telegram або Discord:',
+  en:'The site no longer lists home points per rank, and the home and teleport commands are not listed either, so I am not sure about them. Ask on Telegram or Discord:',links:true},
  {k:/дуел|duel|ставк|\bbet\b|1на1|1 на 1|1v1/,
   ua:'Дуелі — бої 1 на 1 між гравцями, у яких можна зробити ставку. Точну команду виклику на дуель і правила ставок я не знаю — спитай у Telegram або Discord:',
   en:'Duels are 1v1 fights between players, and you can place a bet. I do not know the exact duel command or the betting rules — ask on Telegram or Discord:',links:true},
@@ -1263,14 +1343,14 @@ var KB=[
   ua:'Це Anarchy-сервер. Про окремі режими (OneBlock, Duels тощо) у мене немає перевіреної інформації — краще спитати в Telegram або Discord:',
   en:'This is an Anarchy server. I have no verified info about separate modes (OneBlock, Duels, etc.) — please ask on Telegram or Discord:',links:true},
  {k:/команд|command|\/kit|\bkit\b|набір|fly|політ|heal|feed|burn|workbench|верстак/,
-  ua:'Команди привілеїв: /fly (політ), /feed (ситість), /workbench (верстак), /burn (підпалити), /heal (лікування). Набори: /kit imperator, second, h4ck3r, dark_lord, chosen, dragon, hero. Що саме доступно — залежить від привілею (вкладка «Функціонал»).',
-  en:'Rank commands: /fly (flight), /feed (hunger), /workbench (crafting table), /burn (set on fire), /heal (healing). Kits: /kit imperator, second, h4ck3r, dark_lord, chosen, dragon, hero. What you get depends on your rank (see the Features tab).'},
+  ua:'Команди привілеїв (за даними сайту): /heal, /feed, /repair, /top, /condense, /recipe, /workbench, /craft, /hat, /ptime, /enderchest, /loom, /grindstone, /stonecutter, /cartographytable, /smithingtable, /anvil. Набори: /kit hacker, imperator, cobra, dragon, elite, dark, sigma, hero. Що саме доступно, залежить від привілею: розкрий список біля кнопки «Придбати» в магазині.',
+  en:'Rank commands (from the site): /heal, /feed, /repair, /top, /condense, /recipe, /workbench, /craft, /hat, /ptime, /enderchest, /loom, /grindstone, /stonecutter, /cartographytable, /smithingtable, /anvil. Kits: /kit hacker, imperator, cobra, dragon, elite, dark, sigma, hero. What you get depends on your rank: open the list next to the Buy button in the shop.'},
  {k:/правил|rules|\bban\b|бан|мут|mute|чит|cheat|реклам|гриф|griev|pvp|пвп/,
   ua:'Коротко: мут за образи й спам (від 5 хв до 3 днів), бан 7 днів за рекламу інших серверів, 14 днів за баги, 32 дні за чити. Гріферство й PvP дозволені, окрім спавну та лобі. Повний список — у вкладці «Правила».',
   en:'In short: mutes for insults and spam (5 min to 3 days), 7-day ban for advertising other servers, 14 days for bugs, 32 days for cheats. Griefing and PvP are allowed, except at spawn and in the lobby. Full list — Rules tab.'},
- {k:/донат|donat|куп|buy|привіле|rank|ранг|price|цін|ціна|магазин|shop|imperator|hacker|dragon|hero|chosen|dark|second|грн/,
-  ua:'Привілеї: Imperator 1250 грн, Second 489, Hacker 1574, Dark 300, Chosen 499, Dragon 357, Hero 179. Купівля — лише через Telegram-бота https://t.me/LankciDonatbot (кнопка «Придбати» в магазині). Можливості кожного — у вкладці «Функціонал». Бот LankciDonatbot ще допрацьовується, тому деякі функції можуть не працювати.',
-  en:'Ranks: Imperator 1250 UAH, Second 489, Hacker 1574, Dark 300, Chosen 499, Dragon 357, Hero 179. Purchase only via the Telegram bot https://t.me/LankciDonatbot (the Buy button in the shop). Perks of each rank — Features tab. The LankciDonatbot bot is still being finished, so some features may not work.'},
+ {k:/донат|donat|куп|buy|привіле|rank|ранг|price|цін|ціна|магазин|shop|imperator|hacker|dragon|hero|chosen|dark|second|cobra|кобра|elite|еліт|sigma|сігма|грн/,
+  ua:'Привілеї: Hacker 1574 грн, Imperator 1250, Cobra 650, Dragon 400, Elite 350, Dark 300, Sigma 250, Hero 179. Second і Chosen більше не продаються. Купівля — лише через Telegram-бота https://t.me/LankciDonatbot (кнопка «Придбати» в магазині). Що вміє кожна привілея, видно в списку, який розкривається кнопкою зі значком списку біля «Придбати». Бот LankciDonatbot ще допрацьовується, тому деякі функції можуть не працювати.',
+  en:'Ranks: Hacker 1574 UAH, Imperator 1250, Cobra 650, Dragon 400, Elite 350, Dark 300, Sigma 250, Hero 179. Second and Chosen are no longer sold. Purchase only via the Telegram bot https://t.me/LankciDonatbot (the Buy button in the shop). What each rank can do is in the list that opens with the list-icon button next to Buy. The LankciDonatbot bot is still being finished, so some features may not work.'},
  {k:/bedrock|бедрок|телефон|мобіл|mobile|\bpe\b/,
   ua:'Bedrock Edition на LankciWorld не підтримується (з 2025 року), тому зайти з телефону через Bedrock не вийде.',
   en:'Bedrock Edition has not been supported on LankciWorld since 2025, so you cannot join from a phone via Bedrock.'},
@@ -1470,7 +1550,7 @@ var I=[
 {p:comp('хост|хостинг|хостинга|хоститься|hosting|hosted|hebergeur|hebergement|ospitato|де знаходиться сервер|де розташований сервер|де стоїть сервер|де фізично сервер|де сервак стоїть|where is the server hosted|where is server hosted|where is the server located|gdzie jest hostowany|gdzie znajduje sie serwer|dove si trova il server|ou se trouve le serveur|провайдер|datacenter|дата центр|dedik|vps|де сервер знаходиться|де сервер розташований|де сервер стоїть|де знаходиться|в якій країні|where is server located|where is the server|where is server|where is it hosted|where is it located|server location|server located|gdzie jest serwer|dove e il server|ou est le serveur|де сервер|який у вас хост|який ваш хост|ваш хост|ваш хостинг|де ваш сервер'),nx:1,
  r:{ua:'Ця інформація є конфіденційною і не розголошується 🤫',en:'This information is confidential and is not disclosed 🤫',pl:'Ta informacja jest poufna i nie jest ujawniana 🤫',it:'Queste informazioni sono riservate e non vengono divulgate 🤫',fr:'Ces informations sont confidentielles et ne sont pas divulguées 🤫',ru:'Эта информация конфиденциальна и не разглашается 🤫'}},
 {p:comp('хто ти|ти хто|хто ви|як тебе звати|яка твоя назва|що ти таке|що ти за|розкажи про себе|хто тебе створив|хто тебе зробив|хто тебе написав|чий це ai|чий ти|який це штучний інтелект|ти бот|кто ты|как тебя зовут|ты бот|who are you|what are you|your name|tell me about yourself|who made you|who created you|who built you|who owns you|are you a bot|are you ai|kim jestes|jak masz na imie|kto cie stworzyl|kto cie zrobil|chi sei|come ti chiami|chi ti ha creato|chi ti ha fatto|qui es tu|tu es qui|qui t a cree|comment t appelles tu|яка модель|яка ти модель|що ти за модель|на якій ти моделі|ти реально|ти штучний інтелект|ти робот|ти нейро|ти людина|ти чат|какая модель|что ты такое|кто ты такой|ты кто|what model|which model|what ai are you|are you real ai|are you ai|quale modello|quel modele|jaki model'),
- r:{ua:'Я LankciAI 2.3 — AI-помічник сервера LankciWorld, створений власником сервера. Я допомагаю користувачам із питаннями про сервер, сайт, правила, режими, донат та інші речі.',en:'I am LankciAI 2.3, the AI assistant of the LankciWorld server, created by the server owner. I help users with questions about the server, the site, rules, modes, donations and more.',pl:'Jestem LankciAI 2.3, asystentem AI serwera LankciWorld, stworzonym przez właściciela serwera. Pomagam w sprawach serwera, strony, zasad, trybów, donatów i innych.',it:'Sono LankciAI 2.3, l’assistente AI del server LankciWorld, creato dal proprietario del server. Aiuto con domande su server, sito, regole, modalità, donazioni e altro.',fr:'Je suis LankciAI 2.3, l’assistant IA du serveur LankciWorld, créé par le propriétaire du serveur. J’aide pour les questions sur le serveur, le site, les règles, les modes, les dons et plus encore.',ru:'Я LankciAI 2.3 — AI-помощник сервера LankciWorld, созданный владельцем сервера. Помогаю с вопросами о сервере, сайте, правилах, режимах, донате и не только.'}},
+ r:{ua:'Я LankciAI 2.4 — AI-помічник сервера LankciWorld, створений власником сервера. Я допомагаю користувачам із питаннями про сервер, сайт, правила, режими, донат та інші речі.',en:'I am LankciAI 2.4, the AI assistant of the LankciWorld server, created by the server owner. I help users with questions about the server, the site, rules, modes, donations and more.',pl:'Jestem LankciAI 2.4, asystentem AI serwera LankciWorld, stworzonym przez właściciela serwera. Pomagam w sprawach serwera, strony, zasad, trybów, donatów i innych.',it:'Sono LankciAI 2.4, l’assistente AI del server LankciWorld, creato dal proprietario del server. Aiuto con domande su server, sito, regole, modalità, donazioni e altro.',fr:'Je suis LankciAI 2.4, l’assistant IA du serveur LankciWorld, créé par le propriétaire du serveur. J’aide pour les questions sur le serveur, le site, les règles, les modes, les dons et plus encore.',ru:'Я LankciAI 2.4 — AI-помощник сервера LankciWorld, созданный владельцем сервера. Помогаю с вопросами о сервере, сайте, правилах, режимах, донате и не только.'}},
 {p:comp('з якого я пристрою|з якого пристрою|який у мене пристрій|який у мене телефон|я на телефоні|я на комп|я на пк|я на планшет|що в мене за пристрій|що за пристрій|який пристрій|what device|which device|am i on mobile|am i on pc|am i on a phone|what phone|my device|jakie mam urzadzenie|na jakim urzadzeniu|quale dispositivo|che dispositivo|sono su cellulare|quel appareil|suis je sur mobile|phone or pc|pc or phone|tablet or pc|pc or tablet|tablet or phone|mobile or pc|phone or computer|what device am i|я з телефону|я з телефона|я з пк|я з комп|я з планшета|я з мобільного|ya z telefonu|sono da cellulare|sono da pc|je suis sur mobile|jestem na telefonie|jestem na komputerze'),f:dev,qm:1},
 {p:comp('як справи|як ти|як життя|що нового|шо нового|як настрій|как дела|как ты|how are you|hows it going|what s up|whats up|wassup|jak sie masz|jak leci|co slychac|come stai|come va|ca va|comment ca va|comment vas tu'),m:6,
  r:{ua:['Все чудово, дякую! 😊 А в тебе як справи? Можу підказати щось про сервер або порадити, чим зайнятись.','Нормально, працюю 😄 А в тебе як?'],en:['All great, thanks! 😊 How about you? I can tell you about the server or suggest something to do.','Doing fine, working away 😄 And you?'],pl:'Wszystko świetnie, dzięki! 😊 A u Ciebie? Mogę opowiedzieć o serwerze lub podpowiedzieć, co robić.',it:'Tutto benissimo, grazie! 😊 E tu? Posso parlarti del server o suggerirti cosa fare.',fr:'Tout va très bien, merci ! 😊 Et vous ? Je peux parler du serveur ou suggérer quoi faire.'}},
@@ -1484,7 +1564,7 @@ var I=[
 {p:comp('як виживати|як вижити|як заробити ресурси|як добути ресурси|де брати ресурси|як фармити|ресурси|how to survive|how to get resources|how to farm|resources|jak przetrwac|jak zdobyc zasoby|come sopravvivere|come ottenere risorse|comment survivre|comment obtenir des ressources'),l:1,
  r:{ua:'Загальні поради з Minecraft 🌲 Почни з дерева й кам’яних інструментів, далі залізо; зроби просту ферму їжі; у шахту йди з їжею, факелами й запасною зброєю; цінні речі ховай у скриню. Специфіку ресурсів на LankciWorld я не знаю — питай тут:',en:'General Minecraft tips 🌲 Start with wood and stone tools, then iron; set up a simple food farm; go mining with food, torches and a spare weapon; keep valuables in a chest. I do not know LankciWorld-specific resource details — ask here:',pl:'Ogólne porady do Minecrafta 🌲 Zacznij od drewna i kamiennych narzędzi, potem żelazo; postaw prostą farmę jedzenia; do kopalni idź z jedzeniem, pochodniami i zapasową bronią; cenne rzeczy chowaj w skrzyni. Nie znam szczegółów zasobów na LankciWorld — zapytaj tutaj:',it:'Consigli generali su Minecraft 🌲 Inizia con legno e strumenti di pietra, poi il ferro; fai una semplice fattoria di cibo; in miniera vai con cibo, torce e un’arma di scorta; metti gli oggetti di valore in un baule. Non conosco i dettagli sulle risorse di LankciWorld — chiedi qui:',fr:'Conseils généraux Minecraft 🌲 Commencez par le bois et les outils en pierre, puis le fer ; faites une ferme simple pour la nourriture ; allez à la mine avec de la nourriture, des torches et une arme de rechange ; rangez vos objets de valeur dans un coffre. Je ne connais pas les détails des ressources sur LankciWorld — demandez ici :'}},
 {p:comp('ти вірус|ти вирус|ти троян|ти шкідлив|ти небезпечн|ти безпечн|ти не вірус|це вірус|ты вирус|ты троян|ты опасн|ты вредн|are you a virus|are you virus|are you malware|are you a trojan|are you dangerous|are you harmful|are you safe|jestes wirusem|jestes grozny|sei un virus|sei pericoloso|es tu un virus|es tu dangereux'),
- r:{ua:'Ні, я не вірус 😄 Я LankciAI 2.3 — AI-помічник LankciWorld.',en:'No, I am not a virus or malware. I am LankciAI 2.3, the LankciWorld assistant.',pl:'Nie, nie jestem wirusem ani szkodliwym programem. Jestem LankciAI 2.3, asystentem LankciWorld.',it:'No, non sono un virus né un programma dannoso. Sono LankciAI 2.3, l’assistente di LankciWorld.',fr:'Non, je ne suis pas un virus ni un programme malveillant. Je suis LankciAI 2.3, l’assistant de LankciWorld.',ru:'Нет, я не вирус и не вредоносная программа. Я LankciAI 2.3 — AI-помощник LankciWorld.'}},
+ r:{ua:'Ні, я не вірус 😄 Я LankciAI 2.4 — AI-помічник LankciWorld.',en:'No, I am not a virus or malware. I am LankciAI 2.4, the LankciWorld assistant.',pl:'Nie, nie jestem wirusem ani szkodliwym programem. Jestem LankciAI 2.4, asystentem LankciWorld.',it:'No, non sono un virus né un programma dannoso. Sono LankciAI 2.4, l’assistente di LankciWorld.',fr:'Non, je ne suis pas un virus ni un programme malveillant. Je suis LankciAI 2.4, l’assistant de LankciWorld.',ru:'Нет, я не вирус и не вредоносная программа. Я LankciAI 2.4 — AI-помощник LankciWorld.'}},
 {p:comp('ти тупий|ти тупа|ти тупой|ти поганий|ти погана|ти нічого не вмієш|ти нічого не можеш|ти безтолковий|ти дебіл|ти ідіот|ти дурний|ти відстій|ты тупой|ты плохой|ты ничего не умеешь|ты бесполезный|ты дурак|ты дебил|you are stupid|you re stupid|you are dumb|you re dumb|you suck|you are useless|you re useless|you are bad|you are trash|you are an idiot|bad bot|stupid bot|jestes glupi|jestes beznadziejny|jestes do niczego|sei stupido|sei inutile|sei scarso|tu es nul|tu es stupide|tu es inutile'),pre:1,
  r:{ua:['Можливо, я ще не вмію всього 😅 Я постійно розвиваюся і можу помилятися.','Буває 😅 Якщо я щось зрозумів не так — підкажи, і я спробую ще раз.','Приймаю критику 🙂 Давай спробуємо інакше: що саме ти хотів дізнатися?'],en:['Maybe I cannot do everything yet 😅 I keep improving and I can make mistakes.','Fair enough 😅 If I misunderstood something, tell me and I will try again.'],pl:'Może jeszcze nie wszystko umiem 😅 Cały czas się rozwijam i mogę się mylić.',it:'Forse non so ancora fare tutto 😅 Continuo a migliorare e posso sbagliare.',fr:'Je ne sais peut-être pas encore tout faire 😅 Je progresse et je peux me tromper.',ru:['Возможно, я пока умею не всё 😅 Я постоянно развиваюсь и могу ошибаться.','Бывает 😅 Если я что-то понял не так — подскажи, и я попробую ещё раз.']}},
 {p:comp('цікавий факт|цікавинку|дай факт|дай мені факт|розкажи факт|факт про|интересный факт|расскажи факт|fun fact|funfact|give me a fact|tell me a fact|random fact|fact about|facts about|ciekawostka|ciekawostke|fatto interessante|fatto curioso|curiosita|le saviez vous|fait amusant|anecdote'),f:fact},
@@ -1507,15 +1587,16 @@ var I=[
 {p:comp('привіт|привет|здоров|вітаю|добрий день|добрий вечір|доброго дня|слава україні|hello|hi|hey|hola|ciao|salut|bonjour|czesc|witaj|buongiorno|buonasera|bonsoir|yo|хай|ку|good morning|good evening|good afternoon|доброго ранку|добрий ранок|доброго вечора|dzien dobry|dobry wieczor|buon pomeriggio|bon apres midi'),ex:['priv','prv','pr','prt','darov','zdraste','kuku','ghbdtn','prvt','io'],m:4,
  r:{ua:['Привіт! 👋 Я LankciAI. Чим можу допомогти?','Хей! 😊 Питай про сервер, донат чи правила.','Привіт-привіт! 👋 Що цікавить?','Привіт! 👋 Як справи?'],en:['Hi! 👋 I am LankciAI. How can I help?','Hey there! 😊 Ask me about the server, donations or rules.','Hello! 👋 What are you curious about?'],pl:'Cześć! 👋 Jestem LankciAI. W czym mogę pomóc?',it:'Ciao! 👋 Sono LankciAI. Come posso aiutarti?',fr:'Salut ! 👋 Je suis LankciAI. Comment puis-je vous aider ?'}}
 ];
-/* ═══ LankciAI 2.3: база знань сервера (лише факти з цього файлу) ═══ */
+/* ═══ LankciAI 2.4: база знань сервера (лише факти з цього файлу) ═══ */
 var RK={
-Imperator:{p:1250,ua:'політ /fly, час та погода, 8 точок дому, блискавка, набір /kit imperator',en:'flight /fly, time and weather, 8 home points, lightning, kit /kit imperator'},
-Second:{p:489,ua:'політ /fly, 5 точок дому, ситість /feed, набір /kit second',en:'flight /fly, 5 home points, hunger refill /feed, kit /kit second'},
-Hacker:{p:1574,ua:'10 точок дому, політ /fly, верстак /workbench, набір /kit h4ck3r',en:'10 home points, flight /fly, crafting table /workbench, kit /kit h4ck3r'},
-Dark:{p:300,ua:'ефекти темряви, підпалити /burn, набір /kit dark_lord',en:'darkness effects, set on fire /burn, kit /kit dark_lord'},
-Chosen:{p:499,ua:'політ /fly, зняття ефектів, загасити вогонь, набір /kit chosen',en:'flight /fly, remove effects, extinguish fire, kit /kit chosen'},
-Dragon:{p:357,ua:'політ /fly, імунітет до лави, блок на голову, набір /kit dragon',en:'flight /fly, lava immunity, block on head, kit /kit dragon'},
-Hero:{p:179,ua:'2 точки дому, лікування /heal, набір /kit hero',en:'2 home points, healing /heal, kit /kit hero'}};
+Hacker:{p:1574,ua:'/heal (з обмеженнями), /repair, /enderchest, /top, /condense, /recipe, розширена статистика боїв і смертей, набір /kit hacker',en:'/heal (limited), /repair, /enderchest, /top, /condense, /recipe, extended combat and death stats, kit /kit hacker'},
+Imperator:{p:1250,ua:'/heal, /repair, /enderchest, /top, /condense, /feed, розширена статистика власних боїв, набір /kit imperator',en:'/heal, /repair, /enderchest, /top, /condense, /feed, extended stats of your own fights, kit /kit imperator'},
+Cobra:{p:650,ua:'/heal (з обмеженнями), /repair, /enderchest, /smithingtable, /cartographytable, /top, набір /kit cobra',en:'/heal (limited), /repair, /enderchest, /smithingtable, /cartographytable, /top, kit /kit cobra'},
+Dragon:{p:400,ua:'/repair, /anvil, /stonecutter, /cartographytable, /smithingtable, /feed, набір /kit dragon',en:'/repair, /anvil, /stonecutter, /cartographytable, /smithingtable, /feed, kit /kit dragon'},
+Elite:{p:350,ua:'/top, /repair, /enderchest, /workbench, /feed, /condense, набір /kit elite',en:'/top, /repair, /enderchest, /workbench, /feed, /condense, kit /kit elite'},
+Dark:{p:300,ua:'/enderchest, /feed, /repair, /ptime, /loom, /grindstone, набір /kit dark',en:'/enderchest, /feed, /repair, /ptime, /loom, /grindstone, kit /kit dark'},
+Sigma:{p:250,ua:'/condense, /enderchest, /stonecutter, /cartographytable, /smithingtable, /recipe, /anvil, набір /kit sigma',en:'/condense, /enderchest, /stonecutter, /cartographytable, /smithingtable, /recipe, /anvil, kit /kit sigma'},
+Hero:{p:179,ua:'/feed, /workbench, /hat, /craft, /ptime, /loom, /grindstone, набір /kit hero',en:'/feed, /workbench, /hat, /craft, /ptime, /loom, /grindstone, kit /kit hero'}};
 function L2(d){return (d==='ua'||d==='ru')?'ua':'en';}
 function ranksList(d){
   var l=L2(d),o=[];
@@ -1537,8 +1618,8 @@ function srvOverview(d){
 function srvFeatures(d){
   var l=L2(d);
   return l==='ua'
-  ?'Що є на LankciWorld (за даними сайту):\n• Anarchy: гріферство й PvP дозволені (окрім спавну та лобі);\n• до 24 гравців одночасно;\n• заплановані режими: Анархія, Виживання, SMP, Хардкор, OneBlock, Дуелі зі ставками;\n• 7 привілеїв: /fly, /feed, /workbench, /burn, /heal та набори /kit;\n• чіткі правила з покараннями (вкладка «Правила»);\n• сайт 5 мовами та цей AI-помічник.\nДеталі режимів уточнюй у Telegram або Discord:'
-  :'What LankciWorld has (from the site):\n• Anarchy: griefing and PvP allowed (except at spawn and in the lobby);\n• up to 24 players at once;\n• planned modes: Anarchy, Survival, SMP, Hardcore, OneBlock, Duels with bets;\n• 7 ranks: /fly, /feed, /workbench, /burn, /heal and /kit kits;\n• clear rules with punishments (Rules tab);\n• the site in 5 languages and this AI helper.\nFor mode details ask on Telegram or Discord:';
+  ?'Що є на LankciWorld (за даними сайту):\\n• Режими: зараз це Anarchy-сервер; заплановані ще Виживання, SMP, Хардкор, OneBlock і Дуелі зі ставками (подробиць про них на сайті немає);\\n• Дозволено (Anarchy): гріферство й PvP, окрім спавну та лобі;\\n• Заборонено: чити, використання багів, реклама інших серверів, спам, образи;\\n• Покарання: мут 5 хв–3 дні (образи, спам), бан 7 днів (реклама), 14 днів (баги), 32 дні (чити);\\n• до 24 гравців одночасно;\\n• 8 привілеїв: Hacker, Imperator, Cobra, Dragon, Elite, Dark, Sigma, Hero (функціонал і набори /kit у списку біля кнопки «Придбати»);\\n• сайт 5 мовами та цей AI-помічник.\\nПро режими, які ще не запущені, питай у Telegram або Discord:'
+  :'What LankciWorld has (from the site):\\n• Modes: right now it is an Anarchy server; Survival, SMP, Hardcore, OneBlock and Duels with bets are planned (the site gives no details about them);\\n• Allowed (Anarchy): griefing and PvP, except at spawn and in the lobby;\\n• Forbidden: cheats, exploiting bugs, advertising other servers, spam, insults;\\n• Punishments: mute 5 min–3 days (insults, spam), 7-day ban (advertising), 14 days (bugs), 32 days (cheats);\\n• up to 24 players at once;\\n• 8 ranks: Hacker, Imperator, Cobra, Dragon, Elite, Dark, Sigma, Hero (features and /kit kits are in the list next to the Buy button);\\n• the site in 5 languages and this AI helper.\\nFor modes that are not launched yet, ask on Telegram or Discord:';
 }
 function hist(d,q,s){
   var l=L2(d),ys=s.match(/20(?:24|25|26)/g)||[],y=ys.length===1?ys[0]:undefined,it=[],n=daysToOpen();
@@ -1702,7 +1783,7 @@ function gen(q,d){
   return {t:'',wikiGen:{subj:sub,n:Math.min(n,10)},v2:1,gen:1};
 }
 
-/* ═══ LankciAI 2.3 ═══ */
+/* ═══ LankciAI 2.4 ═══ */
 function L5(d){return d==='ru'?'ua':d;}
 function bl(l,a,e){return l==='ua'?a:e;}
 /* ── 1. Підтримка людини ── */
@@ -2305,7 +2386,7 @@ I.unshift(
  r:{ua:'Донат можна знайти через LankciDonatbot у Telegram. Бот ще допрацьовується, тому деякі функції можуть не працювати. Привілеї та ціни — у вкладці «Магазин».',en:'You can donate via LankciDonatbot on Telegram. The bot is still being worked on, so some features may not work. Ranks and prices are in the Shop tab.',pl:'Dotację znajdziesz przez bota LankciDonatbot na Telegramie. Bot jest jeszcze dopracowywany, więc niektóre funkcje mogą nie działać.',it:'Puoi donare tramite LankciDonatbot su Telegram. Il bot è ancora in sviluppo, quindi alcune funzioni potrebbero non funzionare.',fr:'Tu peux faire un don via LankciDonatbot sur Telegram. Le bot est encore en cours de finalisation, certaines fonctions peuvent ne pas marcher.'},
  xl:[{title:'🤖 LankciDonatbot',url:'https://t.me/LankciDonatbot'}]});
 
-/* ═══ LankciAI 2.3: контекст, дата/час, погода, зображення, товари, думка ═══ */
+/* ═══ LankciAI 2.4: контекст, дата/час, погода, зображення, товари, думка ═══ */
 var CTX={n:0,topic:null,pend:null,img:null,shop:null,phone:''};
 function lc(q){return q.toLowerCase().replace(/ё/g,'е').replace(/[’`ʼ]/g,"'");}
 function setPend(o){o.n=CTX.n;CTX.pend=o;}
@@ -3116,6 +3197,10 @@ cooldown:'Нову прив’язку можна зробити після {dat
 justLinked:'Нік прив’язано ✓',reqExpired:'Запит прострочено або скасовано. Створи новий.',
 unlinked:'Нік відв’язано.',
 secTitle:'БЕЗПЕКА',
+peopleTitle:'ЛЮДИ',searchPh:'Знайти за ніком…',btnAvatar:'Змінити аватар',btnBanner:'Змінити банер',rmAvatar:'Прибрати аватар',rmBanner:'Прибрати банер',
+followersW:'підписників',followingW:'підписок',btnFollow:'Підписатись',btnUnfollow:'Відписатись',btnBack:'← Назад',
+skinTitle:'Скін',skinNone:'Скін не знайдено (беремо з Ely.by).',
+e_bad_image:'Не вдалося обробити картинку.',e_cannot_follow_self:'На себе підписатись не можна.',e_bad_path:'Невірний файл.',
 secIntro:'Захист входу: якщо хтось заходить на сервер з нового IP, його не пустять, доки ти не підтвердиш тут. Для цього сервер зберігає хеш IP і приблизне місто.',
 secConsent:'Я згоден(на): хеш IP і приблизне місто (його визначає сторонній сервіс за IP) зберігаються до 30 днів, їх бачу лише я. Захист можна вимкнути будь-коли.',
 btnProtOn:'Увімкнути захист',btnProtOff:'Вимкнути захист',protOn:'Захист входу увімкнено. Перший вхід після ввімкнення теж треба буде підтвердити тут.',
@@ -3173,6 +3258,10 @@ cooldown:'You can link a nickname again after {date}.',
 justLinked:'Nickname linked ✓',reqExpired:'The request expired or was cancelled. Create a new one.',
 unlinked:'Nickname unlinked.',
 secTitle:'SECURITY',
+peopleTitle:'PEOPLE',searchPh:'Search by nickname…',btnAvatar:'Change avatar',btnBanner:'Change banner',rmAvatar:'Remove avatar',rmBanner:'Remove banner',
+followersW:'followers',followingW:'following',btnFollow:'Follow',btnUnfollow:'Unfollow',btnBack:'← Back',
+skinTitle:'Skin',skinNone:'Skin not found (taken from Ely.by).',
+e_bad_image:'Could not process the image.',e_cannot_follow_self:'You cannot follow yourself.',e_bad_path:'Invalid file.',
 secIntro:'Login protection: if someone joins from a new IP, they will be refused until you confirm here. The server stores an IP hash and the approximate city.',
 secConsent:'I agree: an IP hash and the approximate city (looked up by a third-party service) are stored for up to 30 days, only I can see them. I can turn this off any time.',
 btnProtOn:'Turn on protection',btnProtOff:'Turn off protection',protOn:'Login protection is on. Your first login after turning it on must be confirmed here too.',
@@ -3235,8 +3324,9 @@ try{
 }catch(e){console.error('[LW account] createClient',e);}
 
 /* ── Стан ── */
-var state={ready:false,mode:'login',busy:false,user:null,acc:null,msg:null,form:{},confirmUnlink:false,sec:null};
+var state={ready:false,mode:'login',busy:false,user:null,acc:null,msg:null,form:{},confirmUnlink:false,sec:null,prof:null,view:null,found:[]};
 var started=false,timer=null,tick=0,polling=false;
+window.__lw={sb:sb,user:function(){return state.user;},uid:function(){return state.user&&state.user.id;},ensure:async function(){if(!started){started=true;await init();}}};
 
 function setErr(e){
   var key=(typeof e==='string')?e:mapErr(e);
@@ -3248,7 +3338,7 @@ function setMsg(kind,key){state.msg={k:kind,key:key,detail:''};}
 
 function mapErr(e){
   var m=(e&&e.message)||'',c=(e&&(e.code||e.error_code))||'';
-  var known=['consent_required','too_fast','not_found','invalid_mc_nick','already_linked','relink_cooldown','mc_nick_taken','too_many_requests','nick_busy','not_linked','not_authenticated','no_profile'];
+  var known=['site_banned','too_many_pending','too_many_posts','bad_file_type','file_required','file_missing','too_many_reports','forbidden','file_or_link','cannot_follow_self','bad_path','consent_required','too_fast','not_found','invalid_mc_nick','already_linked','relink_cooldown','mc_nick_taken','too_many_requests','nick_busy','not_linked','not_authenticated','no_profile'];
   for(var i=0;i<known.length;i++){if(m.indexOf(known[i])>-1)return 'e_'+known[i];}
   if(c==='PGRST202'||/Could not find the function/i.test(m))return 'e_no_sql';
   if(/Failed to fetch|NetworkError|Load failed/i.test(m))return 'e_network';
@@ -3384,6 +3474,8 @@ function viewCabinet(){
   if(!showSec)kids.push(msgEl());
   var out=[cab,h('div',{class:'sp-box'},kids)];
   if(showSec)out.push(viewSecurity());
+  if(state.view)return [viewProfile(state.view,false)];
+  if(state.prof){out.unshift(viewProfile(state.prof,true));out.push(viewPeople());}
   return out;
 }
 
@@ -3425,6 +3517,7 @@ async function loadAccount(){
   if(r.data&&r.data.mc_nick){
     try{var sr=await sb.rpc('get_security');state.sec=sr.error?null:sr.data;}catch(e){state.sec=null;}
   }else{state.sec=null;}
+  try{var pr=await sb.rpc('get_profile',{p_nick:r.data.nick});state.prof=pr.error?null:pr.data;}catch(e){state.prof=null;}
   startTimer();
   return r.data;
 }
@@ -3466,7 +3559,7 @@ async function doLogout(){
   state.busy=true;render();
   try{await sb.auth.signOut({scope:'local'});}catch(e){console.error('[LW account]',e);}
   stopTimer();
-  state.user=null;state.acc=null;state.msg=null;state.mode='login';state.sec=null;state.confirmUnlink=false;state.form={};state.busy=false;
+  state.user=null;state.acc=null;state.msg=null;state.mode='login';state.sec=null;state.prof=null;state.view=null;state.confirmUnlink=false;state.form={};state.busy=false;
   render();
 }
 
@@ -3495,6 +3588,120 @@ function doUnlink(){
     state.acc=r.data;state.sec=null;
     setMsg('inf','unlinked');
   });
+}
+
+/* ── Профіль: аватар, банер, підписки, скін ── */
+var qT=null;
+function mediaUrl(b,path,v){return path?SUPABASE_URL+'/storage/v1/object/public/'+b+'/'+path+'?v='+(v||0):'';}
+function avatarEl(p){
+  return p.avatar?h('img',{class:'ac-av',alt:'',src:mediaUrl('avatars',p.avatar,p.v)}):h('div',{class:'ac-av ac-av0',text:p.nick.charAt(0).toUpperCase()});
+}
+function drawSkin(cv,nick,fail,url){
+  var im=new Image();
+  im.onload=function(){
+    var c=cv.getContext('2d'),s=cv.width/16,old=im.height<64;
+    c.imageSmoothingEnabled=false;
+    function d(sx,sy,w,hh,dx,dy,fx){
+      if(fx){c.save();c.translate((dx+w)*s,0);c.scale(-1,1);c.drawImage(im,sx,sy,w,hh,0,dy*s,w*s,hh*s);c.restore();}
+      else c.drawImage(im,sx,sy,w,hh,dx*s,dy*s,w*s,hh*s);
+    }
+    d(8,8,8,8,4,0);d(20,20,8,12,4,8);d(44,20,4,12,0,8);
+    d(old?44:36,old?20:52,4,12,12,8,old);
+    d(4,20,4,12,4,20);d(old?4:20,old?20:52,4,12,8,20,old);
+    d(40,8,8,8,4,0);
+  };
+  im.onerror=fail;
+  im.src=url||('https://skinsystem.ely.by/skins/'+encodeURIComponent(nick)+'.png');
+}
+function resizeImg(file,w,hh,cb){
+  var im=new Image(),u=URL.createObjectURL(file);
+  im.onload=function(){
+    var cv=document.createElement('canvas');cv.width=w;cv.height=hh;
+    var c=cv.getContext('2d'),k=Math.max(w/im.width,hh/im.height),dw=im.width*k,dh=im.height*k;
+    c.fillStyle='#111';c.fillRect(0,0,w,hh);
+    c.drawImage(im,(w-dw)/2,(hh-dh)/2,dw,dh);
+    URL.revokeObjectURL(u);
+    cv.toBlob(function(b){cb(b);},'image/jpeg',0.85);
+  };
+  im.onerror=function(){URL.revokeObjectURL(u);cb(null);};
+  im.src=u;
+}
+function uploadMedia(kind,file){
+  return run(async function(){
+    var av=kind==='avatar';
+    var blob=await new Promise(function(res){resizeImg(file,av?256:1200,av?256:400,res);});
+    if(!blob)throw 'e_bad_image';
+    var path=state.user.id+'/'+kind+'.jpg';
+    var up=await sb.storage.from(av?'avatars':'banners').upload(path,blob,{upsert:true,contentType:'image/jpeg'});
+    if(up.error)throw up.error;
+    var r=await sb.rpc(av?'set_avatar':'set_banner',{p_path:path});
+    if(r.error)throw r.error;
+    state.prof=r.data;
+  });
+}
+function profCall(fn,args,toView){
+  return run(async function(){
+    var r=await sb.rpc(fn,args);
+    if(r.error)throw r.error;
+    if(toView)state.view=r.data;else state.prof=r.data;
+  });
+}
+function viewProfile(p,own){
+  var ban=h('div',{class:'ac-ban'});
+  if(p.banner)ban.style.backgroundImage='url("'+mediaUrl('banners',p.banner,p.v)+'")';
+  var kids=[];
+  if(!own)kids.push(h('button',{type:'button',class:'sp-btn2',text:t('btnBack'),onclick:function(){state.view=null;state.msg=null;render();}}));
+  kids.push(ban);
+  kids.push(h('div',{class:'ac-phead'},[avatarEl(p),h('div',{},[
+    h('strong',{class:'ac-pn',text:p.nick}),
+    h('div',{class:'sp-hint',text:t('rowCreated')+': '+fmtDate(p.created_at,false)})
+  ])]));
+  kids.push(h('p',{class:'sp-note',text:p.followers+' '+t('followersW')+' · '+p.following+' '+t('followingW')}));
+  if(own){
+    var pick=function(kind,key){
+      return h('label',{class:'sp-btn2 ac-up'},[t(key),h('input',{type:'file',accept:'image/*',class:'ac-file',onchange:function(ev){var f=ev.target.files[0];if(f)uploadMedia(kind,f);}})]);
+    };
+    kids.push(h('div',{class:'ac-btns'},[pick('avatar','btnAvatar'),pick('banner','btnBanner')]));
+    var rm=[];
+    if(p.avatar)rm.push(h('button',{type:'button',class:'sp-btn2 ac-danger',disabled:state.busy,text:t('rmAvatar'),onclick:function(){profCall('set_avatar',{p_path:null},false);}}));
+    if(p.banner)rm.push(h('button',{type:'button',class:'sp-btn2 ac-danger',disabled:state.busy,text:t('rmBanner'),onclick:function(){profCall('set_banner',{p_path:null},false);}}));
+    if(rm.length)kids.push(h('div',{class:'ac-btns'},rm));
+  }else if(!p.is_me){
+    kids.push(h('div',{class:'ac-btns'},[h('button',{type:'button',class:p.is_following?'sp-btn2':'sp-btn',disabled:state.busy,
+      text:p.is_following?t('btnUnfollow'):t('btnFollow'),
+      onclick:function(){profCall(p.is_following?'unfollow_user':'follow_user',{p_nick:p.nick},true);}})]));
+  }
+  if(p.mc_nick){
+    var note=h('p',{class:'sp-note',text:p.mc_nick});
+    var cv=h('canvas',{class:'ac-skin',width:'128',height:'256'});
+    kids.push(h('h3',{class:'ac-h3',text:t('skinTitle')}),cv,note);
+    drawSkin(cv,p.mc_nick,function(){cv.style.display='none';note.textContent=p.mc_nick+' · '+t('skinNone');});
+  }
+  kids.push(msgEl());
+  return h('div',{class:'sp-box'},kids);
+}
+function fillRes(el){
+  if(!el)return;
+  el.textContent='';
+  state.found.forEach(function(f){
+    el.appendChild(h('button',{type:'button',class:'ac-person',onclick:function(){profCall('get_profile',{p_nick:f.nick},true);}},[avatarEl(f),f.nick]));
+  });
+}
+function viewPeople(){
+  var res=h('div',{id:'acRes'});
+  var q=inp('acQ','text',{maxlength:'16',placeholder:t('searchPh'),autocomplete:'off',
+    oninput:function(ev){
+      state.form.acQ=ev.target.value;
+      clearTimeout(qT);
+      qT=setTimeout(async function(){
+        var v=(state.form.acQ||'').trim();
+        if(v.length<2){state.found=[];fillRes($('acRes'));return;}
+        try{var r=await sb.rpc('search_profiles',{p_q:v});state.found=r.error?[]:(r.data||[]);}catch(e){state.found=[];}
+        fillRes($('acRes'));
+      },300);
+    }});
+  fillRes(res);
+  return h('div',{class:'sp-box'},[h('h2',{class:'sp-h',text:t('peopleTitle')}),q,res]);
 }
 
 /* ── Безпека: захист входу, блокування, кік, історія ── */
@@ -3605,6 +3812,342 @@ async function onTick(){
   polling=false;
 }
 
+/* ═══ Стрічка (етап 5): моди, ресурспаки, карти, скіни + модерація ═══ */
+var KINDS=['mod','resourcepack','map','skin'];
+var EXT={mod:['jar','zip'],resourcepack:['zip','mcpack'],map:['zip','mcworld'],skin:['png']};
+var FT={
+ua:{tabFeed:'Стрічка',tabSup:'Підтримка',sInProg:'В роботі',sResolved:'Виконано',sClosed:'Закрити',phReply:'Відповідь (необов’язково)',s_open:'нове',s_in_progress:'в роботі',s_resolved:'виконано',s_closed:'закрито',tabNew:'Опублікувати',tabMine:'Мої пости',tabMod:'Модерація',all:'Усе',
+k_mod:'Мод',k_resourcepack:'Ресурспак',k_map:'Карта',k_skin:'Скін',
+warnDl:'Файли від гравців перевіряє лише модератор вручну. Завантажуєш на власний ризик.',
+empty:'Тут поки нічого немає.',needLogin:'Увійди в акаунт (вкладка «Акаунт»).',
+btnDl:'Скачати',btnLink:'Відкрити посилання',btnRm:'Видалити',report:'Поскаржитись',reported:'Скаргу надіслано.',
+banned:'Тобі заборонено публікувати й лайкати до {date}. Причина: {reason}',
+lKind:'Тип',lTitle:'Назва',lDesc:'Опис',lVer:'Версія Minecraft',lLoader:'Лоадер (Forge, Fabric…)',lLink:'Посилання (https://…)',
+lFile:'Файл (до 50 МБ)',lPrev:'Картинка-прев’ю (необов’язково)',btnPub:'Надіслати на модерацію',
+rules:'Читерські моди й ресурспаки та скіни 18+ не публікуються. Пост з’явиться після перевірки модератором.',
+sentMod:'Надіслано. Пост з’явиться після перевірки.',
+s_draft:'чернетка',s_pending:'на модерації',s_approved:'опубліковано',s_rejected:'відхилено',s_removed:'видалено',
+btnOk:'Схвалити',btnRej:'Відхилити',btnBan:'Відхилити й бан 3 дні',phReason:'Причина',reports:'скарг',
+e_title:'Назва: від 3 символів.',e_link:'Посилання має починатися з https://',e_ext:'Цей тип файлу не підходить.',
+e_big:'Файл більший за 50 МБ. Дай посилання.',e_skin:'Скін має бути PNG 64×64 або 64×32.',e_file_or_link:'Додай файл або посилання.',
+e_site_banned:'Тобі тимчасово заборонено цю дію (бан на сайті).',e_too_many_pending:'Забагато постів на модерації (максимум 5).',
+e_too_many_posts:'Ліміт схвалених постів: 30.',e_bad_file_type:'Невірний тип файлу.',e_file_required:'Для скіна потрібен файл.',
+e_file_missing:'Файл не завантажився. Спробуй ще раз.',e_too_many_reports:'Забагато скарг за добу.',e_forbidden:'Немає доступу.'},
+en:{tabFeed:'Feed',tabSup:'Support',sInProg:'In progress',sResolved:'Done',sClosed:'Close',phReply:'Reply (optional)',s_open:'new',s_in_progress:'in progress',s_resolved:'done',s_closed:'closed',tabNew:'Publish',tabMine:'My posts',tabMod:'Moderation',all:'All',
+k_mod:'Mod',k_resourcepack:'Resource pack',k_map:'Map',k_skin:'Skin',
+warnDl:'Player files are only checked by a moderator by hand. Download at your own risk.',
+empty:'Nothing here yet.',needLogin:'Log in first (the “Account” tab).',
+btnDl:'Download',btnLink:'Open link',btnRm:'Delete',report:'Report',reported:'Report sent.',
+banned:'You cannot post or like until {date}. Reason: {reason}',
+lKind:'Type',lTitle:'Title',lDesc:'Description',lVer:'Minecraft version',lLoader:'Loader (Forge, Fabric…)',lLink:'Link (https://…)',
+lFile:'File (up to 50 MB)',lPrev:'Preview image (optional)',btnPub:'Send for moderation',
+rules:'Cheat mods and resource packs, and 18+ skins are not published. Your post appears after a moderator checks it.',
+sentMod:'Sent. Your post will appear after review.',
+s_draft:'draft',s_pending:'in moderation',s_approved:'published',s_rejected:'rejected',s_removed:'removed',
+btnOk:'Approve',btnRej:'Reject',btnBan:'Reject and 3-day ban',phReason:'Reason',reports:'reports',
+e_title:'Title: at least 3 characters.',e_link:'The link must start with https://',e_ext:'This file type is not allowed.',
+e_big:'The file is over 50 MB. Use a link.',e_skin:'A skin must be a 64×64 or 64×32 PNG.',e_file_or_link:'Add a file or a link.',
+e_site_banned:'This action is temporarily blocked for you (site ban).',e_too_many_pending:'Too many posts in moderation (max 5).',
+e_too_many_posts:'Approved posts limit: 30.',e_bad_file_type:'Wrong file type.',e_file_required:'A skin needs a file.',
+e_file_missing:'The file did not upload. Try again.',e_too_many_reports:'Too many reports today.',e_forbidden:'No access.'}
+};
+var FNAV={ua:'Стрічка',en:'Feed',pl:'Kanał',it:'Feed',fr:'Fil'};
+function ft(k){
+  var d=FT[lang]||FT.en;
+  if(d[k]!==undefined)return d[k];
+  if(FT.en[k]!==undefined)return FT.en[k];
+  return t(k);
+}
+var fs={mode:'feed',kind:null,items:[],urls:{},mine:[],queue:[],ban:null,busy:false,msg:null,loading:true,file:null,prev:null};
+var fstarted=false;
+var froot=$('feRoot');
+
+function fErr(e){
+  var key=(typeof e==='string')?e:mapErr(e);
+  fs.msg={k:'err',key:key,detail:(key==='e_generic')?String((e&&(e.code||e.message))||''):''};
+}
+function fMsgEl(){
+  if(!fs.msg)return null;
+  var kids=[ft(fs.msg.key)];
+  if(fs.msg.detail)kids.push(h('div',{class:'sp-hint',text:fs.msg.detail}));
+  return h('div',{class:'sp-msg '+fs.msg.k,role:'status'},kids);
+}
+async function fRun(fn){
+  if(fs.busy)return;
+  fs.busy=true;fs.msg=null;renderFeed();
+  try{await fn();}catch(e){fErr(e);}
+  fs.busy=false;renderFeed();
+}
+function isStaff(){return !!(state.acc&&(state.acc.role==='owner'||state.acc.role==='moderator'));}
+function fb(key,fn,cls){return h('button',{type:'button',class:cls||'sp-btn2',disabled:fs.busy,text:ft(key),onclick:fn});}
+async function sign(paths){
+  paths=paths.filter(function(p){return p&&!fs.urls[p];});
+  if(!paths.length)return;
+  var r=await sb.storage.from('posts').createSignedUrls(paths,3600);
+  if(r.data)r.data.forEach(function(x){if(x.signedUrl)fs.urls[x.path]=x.signedUrl;});
+}
+function pvPath(p){return p.kind==='skin'?p.file_path:p.preview_path;}
+async function loadFeed(){
+  fs.loading=true;renderFeed();
+  try{
+    var r=await sb.rpc('get_feed',{p_kind:fs.kind,p_before:null,p_limit:30});
+    if(r.error)throw r.error;
+    fs.items=r.data||[];
+    await sign(fs.items.map(pvPath));
+    fs.ban=null;
+    if(state.user){try{var b=await sb.rpc('get_my_ban');fs.ban=b.error?null:b.data;}catch(e){}}
+  }catch(e){fErr(e);}
+  fs.loading=false;renderFeed();
+}
+async function loadMine(){
+  var r=await sb.rpc('my_posts');
+  if(r.error)throw r.error;
+  fs.mine=r.data||[];
+}
+async function loadQueue(){
+  var r=await sb.rpc('staff_queue',{p_status:'pending'});
+  if(r.error)throw r.error;
+  fs.queue=r.data||[];
+  await sign(fs.queue.map(pvPath));
+}
+function setMode(m){
+  fs.mode=m;fs.msg=null;
+  if(m==='feed')loadFeed();
+  else if(m==='mine')fRun(loadMine);
+  else if(m==='mod')fRun(loadQueue);
+  else if(m==='sup')fRun(loadSup);
+  else renderFeed();
+}
+async function download(p){
+  var r=await sb.storage.from('posts').createSignedUrl(p.file_path,300,{download:true});
+  if(r.error||!r.data){fErr(r.error||'e_generic');renderFeed();return;}
+  location.href=r.data.signedUrl;
+}
+function card(p,q){
+  var kids=[
+    h('div',{class:'sp-hint',text:ft('k_'+p.kind)+(p.mc_version?' · '+p.mc_version:'')+(p.loader?' · '+p.loader:'')}),
+    h('strong',{class:'ac-pn',text:p.title}),
+    h('div',{class:'sp-hint',text:p.author+' · '+fmtDate(p.created_at,false)+(q&&p.open_reports?' · '+ft('reports')+': '+p.open_reports:'')})
+  ];
+  if(p.description)kids.push(h('p',{class:'sp-note',text:p.description}));
+  var pu=fs.urls[pvPath(p)];
+  if(pu&&p.kind==='skin'){
+    var cv=h('canvas',{class:'ac-skin',width:'128',height:'256'});
+    kids.push(cv);
+    drawSkin(cv,null,function(){cv.style.display='none';},pu);
+  }else if(pu){
+    kids.push(h('img',{class:'fe-pv',alt:'',src:pu}));
+  }
+  var b=[];
+  if(p.file_path)b.push(fb('btnDl',function(){download(p);}));
+  if(p.link_url&&/^https:\/\//.test(p.link_url)){
+    b.push(h('a',{class:'sp-btn2 ac-up',href:p.link_url,target:'_blank',rel:'noopener noreferrer nofollow',text:ft('btnLink')}));
+  }
+  if(q){
+    kids.push(h('div',{class:'ac-btns'},b));
+    kids.push(inp('fr'+p.id,'text',{maxlength:'200',placeholder:ft('phReason')}));
+    var act=function(a){return function(){modAct(p,a);};};
+    kids.push(h('div',{class:'ac-btns'},[fb('btnOk',act('approve'),'sp-btn'),fb('btnRej',act('reject')),fb('btnBan',act('reject_ban3'),'sp-btn2 ac-danger')]));
+  }else{
+    b.push(h('button',{type:'button',class:'sp-btn2'+(p.liked?' fe-like on':' fe-like'),disabled:fs.busy,text:'♥ '+p.likes,onclick:function(){doLike(p);}}));
+    if(state.user&&state.acc&&p.author!==state.acc.nick)b.push(fb('report',function(){doReport(p);}));
+    if(isStaff())b.push(fb('btnRm',function(){modAct(p,'remove');},'sp-btn2 ac-danger'));
+    kids.push(h('div',{class:'ac-btns'},b));
+  }
+  return h('div',{class:'sp-box'},kids);
+}
+function needLogin(){
+  fs.msg={k:'inf',key:'needLogin',detail:''};renderFeed();
+}
+function doLike(p){
+  if(!state.user)return needLogin();
+  return fRun(async function(){
+    var r=await sb.rpc('like_post',{p_id:p.id});
+    if(r.error)throw r.error;
+    p.liked=r.data.liked;p.likes=r.data.likes;
+  });
+}
+function doReport(p){
+  return fRun(async function(){
+    var r=await sb.rpc('report_post',{p_id:p.id,p_reason:null});
+    if(r.error)throw r.error;
+    fs.msg={k:'ok',key:'reported',detail:''};
+  });
+}
+function modAct(p,action){
+  return fRun(async function(){
+    var reason=(state.form['fr'+p.id]||'').trim()||null;
+    var r=await sb.rpc('moderate_post',{p_id:p.id,p_action:action,p_reason:reason});
+    if(r.error)throw r.error;
+    fs.queue=fs.queue.filter(function(x){return x.id!==p.id;});
+    fs.items=fs.items.filter(function(x){return x.id!==p.id;});
+  });
+}
+function imgDim(file){
+  return new Promise(function(res){
+    var im=new Image(),u=URL.createObjectURL(file);
+    im.onload=function(){URL.revokeObjectURL(u);res({w:im.width,h:im.height});};
+    im.onerror=function(){URL.revokeObjectURL(u);res({w:0,h:0});};
+    im.src=u;
+  });
+}
+function doPublish(){
+  return fRun(async function(){
+    var f=state.form,kind=f.fk||'mod',title=(f.fpT||'').trim(),link=(f.fpL||'').trim()||null,file=fs.file,prev=fs.prev,ext=null;
+    if(title.length<3)throw 'e_title';
+    if(link&&!/^https:\/\//.test(link))throw 'e_link';
+    if(file){
+      ext=(file.name.split('.').pop()||'').toLowerCase();
+      if(EXT[kind].indexOf(ext)<0)throw 'e_ext';
+      if(file.size>52428800)throw 'e_big';
+      if(kind==='skin'){var d=await imgDim(file);if(!(d.w===64&&(d.h===64||d.h===32)))throw 'e_skin';}
+    }
+    if(!file&&!link)throw 'e_file_or_link';
+    var r=await sb.rpc('create_post',{p_kind:kind,p_title:title,p_desc:(f.fpD||'').trim()||null,p_version:(f.fpV||'').trim()||null,
+      p_loader:(f.fpO||'').trim()||null,p_link:link,p_file_ext:ext,p_preview:!!prev&&kind!=='skin'});
+    if(r.error)throw r.error;
+    var c=r.data,bk=sb.storage.from('posts');
+    if(c.file_path){
+      var u=await bk.upload(c.file_path,file,{contentType:file.type||'application/octet-stream',upsert:true});
+      if(u.error)throw u.error;
+    }
+    if(c.preview_path){
+      var pb=await new Promise(function(res){resizeImg(prev,640,360,res);});
+      if(!pb)throw 'e_bad_image';
+      var u2=await bk.upload(c.preview_path,pb,{contentType:'image/jpeg',upsert:true});
+      if(u2.error)throw u2.error;
+    }
+    var s=await sb.rpc('submit_post',{p_id:c.id});
+    if(s.error)throw s.error;
+    ['fpT','fpD','fpV','fpO','fpL'].forEach(function(k){delete f[k];});
+    fs.file=null;fs.prev=null;fs.mode='mine';
+    await loadMine();
+    fs.msg={k:'ok',key:'sentMod',detail:''};
+  });
+}
+function delPost(p){
+  return fRun(async function(){
+    var r=await sb.rpc('delete_post',{p_id:p.id});
+    if(r.error)throw r.error;
+    var paths=[r.data.file_path,r.data.preview_path].filter(Boolean);
+    if(paths.length)await sb.storage.from('posts').remove(paths);
+    await loadMine();
+  });
+}
+function fileRow(label,get,set,accept){
+  return [h('label',{class:'sp-lab',text:label}),
+    h('input',{type:'file',class:'sp-in',accept:accept||'',onchange:function(ev){set(ev.target.files[0]||null);renderFeed();}}),
+    get()?h('div',{class:'sp-hint',text:get().name}):null];
+}
+function viewPublish(){
+  if(!state.user)return [h('div',{class:'sp-box'},[h('p',{class:'sp-note',text:ft('needLogin')})])];
+  var kind=state.form.fk||'mod';
+  var sel=h('select',{id:'fk',class:'sp-in',onchange:function(ev){state.form.fk=ev.target.value;renderFeed();}},
+    KINDS.map(function(k){return h('option',{value:k,selected:k===kind,text:ft('k_'+k)});}));
+  var ta=h('textarea',{id:'fpD',class:'sp-in',rows:'3',maxlength:'1000',oninput:function(ev){state.form.fpD=ev.target.value;}});
+  ta.value=state.form.fpD||'';
+  var acc=EXT[kind].map(function(e){return '.'+e;}).join(',');
+  var kids=[h('p',{class:'sp-note',text:ft('rules')}),
+    h('label',{class:'sp-lab',text:ft('lKind')}),sel,
+    h('label',{class:'sp-lab',text:ft('lTitle')}),inp('fpT','text',{maxlength:'80'}),
+    h('label',{class:'sp-lab',text:ft('lDesc')}),ta,
+    h('label',{class:'sp-lab',text:ft('lVer')}),inp('fpV','text',{maxlength:'20'}),
+    h('label',{class:'sp-lab',text:ft('lLoader')}),inp('fpO','text',{maxlength:'20'}),
+    h('label',{class:'sp-lab',text:ft('lLink')}),inp('fpL','text',{maxlength:'500'})];
+  fileRow(ft('lFile')+' ('+acc+')',function(){return fs.file;},function(f){fs.file=f;},acc).forEach(function(n){if(n)kids.push(n);});
+  if(kind!=='skin')fileRow(ft('lPrev'),function(){return fs.prev;},function(f){fs.prev=f;},'image/*').forEach(function(n){if(n)kids.push(n);});
+  kids.push(h('div',{class:'ac-btns'},[fb('btnPub',doPublish,'sp-btn')]));
+  kids.push(fMsgEl());
+  return [h('div',{class:'sp-box'},kids)];
+}
+function viewMine(){
+  var kids=[];
+  if(!fs.mine.length)kids.push(h('p',{class:'sp-note',text:ft('empty')}));
+  fs.mine.forEach(function(p){
+    kids.push(h('div',{class:'ac-row'},[h('span',{class:'ac-k',text:p.title}),h('span',{class:'ac-v',text:ft('s_'+p.status)})]));
+    if(p.reject_reason)kids.push(h('div',{class:'sp-hint',text:p.reject_reason}));
+    kids.push(h('div',{class:'ac-btns'},[fb('btnRm',function(){delPost(p);},'sp-btn2 ac-danger')]));
+  });
+  kids.push(fMsgEl());
+  return [h('div',{class:'sp-box'},kids)];
+}
+function renderFeed(){
+  if(!froot)return;
+  var nodes=[];
+  var tabs=[['feed','tabFeed']];
+  if(state.user)tabs.push(['new','tabNew'],['mine','tabMine']);
+  if(isStaff())tabs.push(['mod','tabMod'],['sup','tabSup']);
+  nodes.push(h('div',{class:'ac-tabs fe-chips',role:'tablist'},tabs.map(function(x){
+    return h('button',{type:'button',class:'ac-tab'+(fs.mode===x[0]?' active':''),text:ft(x[1]),onclick:function(){setMode(x[0]);}});
+  })));
+  if(fs.ban&&fs.ban.banned_until){
+    nodes.push(h('div',{class:'sp-msg err',text:fill(ft('banned'),{date:fmtDate(fs.ban.banned_until,true),reason:fs.ban.reason||''})}));
+  }
+  if(fs.mode==='feed'){
+    var chips=[[null,ft('all')]].concat(KINDS.map(function(k){return [k,ft('k_'+k)];}));
+    nodes.push(h('div',{class:'ac-tabs fe-chips'},chips.map(function(c){
+      return h('button',{type:'button',class:'ac-tab'+(fs.kind===c[0]?' active':''),text:c[1],onclick:function(){fs.kind=c[0];loadFeed();}});
+    })));
+    nodes.push(h('p',{class:'sp-hint',text:ft('warnDl')}));
+    if(fs.loading)nodes.push(h('p',{class:'sp-note',text:t('loading')}));
+    else if(!fs.items.length)nodes.push(h('p',{class:'sp-note',text:ft('empty')}));
+    fs.items.forEach(function(p){nodes.push(card(p,false));});
+    var m=fMsgEl();if(m)nodes.push(m);
+  }else if(fs.mode==='new'){
+    viewPublish().forEach(function(n){nodes.push(n);});
+  }else if(fs.mode==='mine'){
+    viewMine().forEach(function(n){nodes.push(n);});
+  }else if(fs.mode==='sup'){
+    if(!(fs.sup||[]).length)nodes.push(h('p',{class:'sp-note',text:ft('empty')}));
+    (fs.sup||[]).forEach(function(x){nodes.push(supCard(x));});
+    var m3=fMsgEl();if(m3)nodes.push(m3);
+  }else if(fs.mode==='mod'){
+    if(!fs.queue.length)nodes.push(h('p',{class:'sp-note',text:ft('empty')}));
+    fs.queue.forEach(function(p){nodes.push(card(p,true));});
+    var m2=fMsgEl();if(m2)nodes.push(m2);
+  }
+  froot.textContent='';
+  nodes.forEach(function(n){if(n)froot.appendChild(n);});
+}
+async function loadSup(){
+  var r=await sb.rpc('staff_support');
+  if(r.error)throw r.error;
+  fs.sup=r.data||[];
+  var e=await sb.rpc('staff_support_expired');
+  if(!e.error&&e.data&&e.data.length){
+    var paths=e.data.map(function(x){return x.shot;}).filter(Boolean);
+    if(paths.length)await sb.storage.from('support').remove(paths);
+    await sb.rpc('staff_support_purge',{p_ids:e.data.map(function(x){return x.id;})});
+  }
+}
+function supCard(x){
+  var kids=[h('div',{class:'sp-hint',text:x.author+' · '+fmtDate(x.created_at,true)+' · '+ft('s_'+x.status)}),
+    h('strong',{class:'ac-pn',text:x.title}),h('p',{class:'sp-note',text:x.description})];
+  if(x.shot){
+    var im=h('img',{class:'fe-pv',alt:'',hidden:true});
+    kids.push(im);
+    sb.storage.from('support').download(x.shot).then(function(r){if(r.data){im.src=URL.createObjectURL(r.data);im.hidden=false;}});
+  }
+  kids.push(inp('sr'+x.id,'text',{maxlength:'500',placeholder:ft('phReply')}));
+  var a=function(st){return function(){supAct(x,st);};};
+  kids.push(h('div',{class:'ac-btns'},[fb('sInProg',a('in_progress')),fb('sResolved',a('resolved'),'sp-btn'),fb('sClosed',a('closed'))]));
+  return h('div',{class:'sp-box'},kids);
+}
+function supAct(x,st){
+  return fRun(async function(){
+    var r=await sb.rpc('staff_support_update',{p_id:x.id,p_status:st,p_reply:(state.form['sr'+x.id]||'').trim()||null});
+    if(r.error)throw r.error;
+    if(st==='resolved'||st==='closed')fs.sup=fs.sup.filter(function(y){return y.id!==x.id;});else x.status=st;
+  });
+}
+var navFeed=$('nb-feed');
+if(navFeed)navFeed.addEventListener('click',async function(){
+  if(!started){started=true;await init();}
+  fstarted=true;
+  if(fs.mode==='new'&&!state.user)fs.mode='feed';
+  setMode(fs.mode);
+});
+
 /* ── Запуск (лише коли відкрили вкладку «Акаунт») ── */
 async function init(){
   setInterval(secTick,6000);
@@ -3638,10 +4181,10 @@ var navBtn=$('nb-account');
 if(navBtn)navBtn.addEventListener('click',function(){if(!started){started=true;init();}});
 
 /* ── Мова ── */
-function applyNav(){if(navBtn)navBtn.textContent=NAV[lang]||NAV.en;}
+function applyNav(){if(navBtn)navBtn.textContent=NAV[lang]||NAV.en;var nf=$('nb-feed');if(nf)nf.textContent=FNAV[lang]||FNAV.en;}
 ['ua','en','pl','it','fr'].forEach(function(l){
   var b=$('lb-'+l);
-  if(b)b.addEventListener('click',function(){lang=l;applyNav();if(started)render();});
+  if(b)b.addEventListener('click',function(){lang=l;applyNav();if(started)render();if(fstarted)renderFeed();});
 });
 applyNav();
 render();
